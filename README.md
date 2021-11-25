@@ -4,6 +4,12 @@
 
 This is the working area for the [IETF CCAMP](https://datatracker.ietf.org/wg/ccamp/documents/) WG Internet-Draft, "[A YANG Data Model for Ethernet TE Topology](https://datatracker.ietf.org/doc/draft-ietf-ccamp-eth-client-te-topo-yang/)".
 
+Diff editor copy vs published version:
+- [Side-by-side diff](https://www.ietf.org/rfcdiff?url1=draft-ietf-ccamp-eth-client-te-topo-yang&url2=https://raw.githubusercontent.com/ietf-ccamp-wg/draft-ietf-ccamp-eth-client-te-topo-yang/main/draft-ietf-ccamp-eth-client-te-topo-yang.txt)
+- [Before-after diff](https://www.ietf.org/rfcdiff?difftype=--abdiff&url1=draft-ietf-ccamp-eth-client-te-topo-yang&url2=https://raw.githubusercontent.com/ietf-ccamp-wg/draft-ietf-ccamp-eth-client-te-topo-yang/main/draft-ietf-ccamp-eth-client-te-topo-yang.txt)
+- [Changebars](https://www.ietf.org/rfcdiff?difftype=--chbars&url1=draft-ietf-ccamp-eth-client-te-topo-yang&url2=https://raw.githubusercontent.com/ietf-ccamp-wg/draft-ietf-ccamp-eth-client-te-topo-yang/main/draft-ietf-ccamp-eth-client-te-topo-yang.txt)
+- [Html wdiff](https://www.ietf.org/rfcdiff?difftype=--hwdiff&url1=draft-ietf-ccamp-eth-client-te-topo-yang&url2=https://raw.githubusercontent.com/ietf-ccamp-wg/draft-ietf-ccamp-eth-client-te-topo-yang/main/draft-ietf-ccamp-eth-client-te-topo-yang.txt)
+
 ## Abstract
 
    A transport network is a server-layer network to provide connectivity
