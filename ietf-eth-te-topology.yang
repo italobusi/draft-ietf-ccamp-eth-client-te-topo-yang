@@ -1,43 +1,65 @@
 module ietf-eth-te-topology {
-
+  yang-version 1.1;
   namespace "urn:ietf:params:xml:ns:yang:ietf-eth-te-topology";
-
-  prefix "ethtetopo";
+  prefix "eth-tet";
 
   import ietf-network {
     prefix "nw";
+    reference
+      "RFC 8345: A YANG Data Model for Network Topologies";
   }
 
   import ietf-network-topology {
     prefix "nt";
+    reference
+      "RFC 8345: A YANG Data Model for Network Topologies";
   }
 
   import ietf-te-topology {
     prefix "tet";
+    reference
+      "RFC 8795: YANG Data Model for Traffic Engineering
+       (TE) Topologies";
   }
 
   import ietf-yang-types {
     prefix "yang";
+    reference
+     "RFC 6991: Common YANG Data Types";
   }
 
   import ietf-eth-tran-types {
     prefix "etht-types";
+    reference
+     "RFC YYYY: A YANG Data Model for Transport Network Client 
+     Signals";
   }
+  // RFC Ed.: replace YYYY with actual RFC number, update date
+  // information and remove this note
 
   organization
-    "Internet Engineering Task Force (IETF) CCAMP WG";
+    "IETF CCAMP Working Group";
   contact
-    "
-      WG List: <mailto:ccamp@ietf.org>
+    "WG Web: <https://datatracker.ietf.org/wg/ccamp/>
+     WG List: <mailto:ccamp@ietf.org>
 
-      ID-draft editor:
-        Haomian Zheng (zhenghaomian@huawei.com);
-        Italo Busi (italo.busi@huawei.com);
-        Aihua Guo (aihuaguo.ietf@gmail.com);
-        Yunbin Xu (xuyunbin@caict.ac.cn);
-        Yang Zhao (zhaoyangyjy@chinamobile.com);
-        Xufeng Liu (xufeng.liu.ietf@gmail.com);
-    ";
+     Editor: Haomian Zheng
+       <mailto:zhenghaomian@huawei.com>
+
+     Editor: Italo Busi
+       <mailto:italo.busi@huawei.com>
+
+     Editor: Aihua Guo
+       <mailto:aihuaguo.ietf@gmail.com>
+
+     Editor: Yunbin Xu
+       <mailto:xuyunbin@caict.ac.cn>
+
+     Editor: Yang Zhao
+       <mailto:zhaoyangyjy@chinamobile.com>
+
+     Editor: Xufeng Liu
+       <mailto:xufeng.liu.ietf@gmail.com>";
 
   description
     "This module defines a YANG data model for describing
@@ -45,23 +67,30 @@ module ietf-eth-te-topology {
      conforms to the Network Management Datastore
      Architecture (NMDA).
 
-     Copyright (c) 2019 IETF Trust and the persons
-     identified as authors of the code.  All rights reserved.
+     Copyright (c) 2023 IETF Trust and the persons identified
+     as authors of the code.  All rights reserved.
 
      Redistribution and use in source and binary forms, with or
      without modification, is permitted pursuant to, and subject
-     to the license terms contained in, the Simplified BSD License
+     to the license terms contained in, the Revised BSD License
      set forth in Section 4.c of the IETF Trust's Legal Provisions
      Relating to IETF Documents
      (https://trustee.ietf.org/license-info).
-     This version of this YANG module is part of RFC XXXX; see
-     the RFC itself for full legal notices.";
 
-  revision 2019-11-18 {
+     This version of this YANG module is part of RFC XXXX; see
+     the RFC itself for full legal notices.
+
+     The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL
+     NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'NOT RECOMMENDED',
+     'MAY', and 'OPTIONAL' in this document are to be interpreted as
+     described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
+     they appear in all capitals, as shown here.";
+
+  revision 2023-09-08 {
     description
       "Initial Revision";
     reference
-      "RFC XXXX: A YANG Data Model for Client-layer Topology";
+      "RFC XXXX: A YANG Data Model for Ethernet TE Topology";
     // RFC Ed.: replace XXXX with actual RFC number, update date
     // information and remove this note
   }
@@ -69,6 +98,32 @@ module ietf-eth-te-topology {
   /*
    * Groupings
    */
+
+  grouping label-range-info {
+    description
+      "Ethernet technology-specific label range related 
+      information with a presence container indicating that the 
+      label range is an Ethernet technology-specific label range.
+
+      This grouping SHOULD be used together with the
+      eth-label and eth-label-step groupings to provide Ethernet 
+      technology-specific label information to the models which
+      use the label-restriction-info grouping defined in the module
+      ietf-te-types.";
+
+    container ethernet-label-range {
+      presence
+        "Indicates the label range is an Ethernet label range.
+
+        This container must not be present if there are other
+        presence containers or attributes indicating another type
+        of label range.";
+      description
+        "Ethernet-specific label range related information.";
+
+      uses etht-types:eth-label-restriction; 
+    }
+  }
 
   grouping eth-tran-topology-type {
     description
@@ -122,7 +177,7 @@ module ietf-eth-te-topology {
 
   grouping eth-ltp-attributes {
     description
-      "Ethernet transport link termination point attributes";
+      "Ethernet transport Link Termination Point (LTP) attributes";
 
     /*
      * Open Issue: should we remove this attribute
@@ -130,7 +185,8 @@ module ietf-eth-te-topology {
      */
     leaf ltp-mac-address {
       type yang:mac-address;
-      description "the MAC address of the LTP.";
+      description
+        "The MAC address of the Ethernet LTP.";
     }
     /*
      * Open Issue: should we remove this attribute
@@ -138,7 +194,10 @@ module ietf-eth-te-topology {
      */
     leaf port-vlan-id {
       type etht-types:vlanid;
-      description "the port VLAN ID of the LTP.";
+      description
+        "The Port VLAN ID of the Ethernet LTP.";
+      reference
+        "IEEE 802.1Q: Virtual Bridged Local Area Networks";
     }
     /*
      * Open Issue: should we remove this attribute
@@ -150,6 +209,8 @@ module ietf-eth-te-topology {
       }
       description
         "Maximum frame size";
+      reference
+        "IEEE 802.1Q: Virtual Bridged Local Area Networks";
     }
       uses ltp-bandwidth-profiles;
   }
@@ -170,6 +231,8 @@ module ietf-eth-te-topology {
       description
         "In case VLAN classification is supported, indicates whether
         VLAN bundling classification is also supported.";
+      reference
+        "MEF 10.3: Ethernet Services Attributes Phase 3"
     }
     leaf vlan-range {
       type etht-types:vid-range-type;
@@ -190,6 +253,8 @@ module ietf-eth-te-topology {
         "List of VLAN tag types that can be used to push or swap a
          VLAN tag. In case VLAN push/swap is not supported, the list
          is empty.";
+      reference
+        "IEEE 802.1Q: Virtual Bridged Local Area Networks";
     }
     leaf vlan-range {
       type etht-types:vid-range-type;
@@ -199,13 +264,14 @@ module ietf-eth-te-topology {
     }
   }
 
-  grouping eth-ltp-svc-attributes {
+  grouping eth-svc-attributes {
     description
-      "Ethernet link termination point (LTP) service attributes.";
+      "Ethernet Link Termination Point (LTP) service attributes.";
 
     container supported-classification {
       description
-        "Service classification capability supported by the ETH LTP.";
+        "Service classification capability supported by the 
+        Ethernet Link Termination Point (LTP).";
 
       leaf port-classification {
         type boolean;
@@ -321,36 +387,67 @@ module ietf-eth-te-topology {
    * Data nodes
    */
 
-  augment "/nw:networks/nw:network/nw:network-types/tet:te-topology" {
+  augment "/nw:networks/nw:network/nw:network-types/"
+        + "tet:te-topology" {
     description
       "Augment network types to include ETH transport newtork";
 
     uses eth-tran-topology-type;
   }
 
+  augment "/nw:networks/nw:network/nw:node/tet:te"
+        + "/tet:te-node-attributes" {
+    when "../../../nw:network-types/tet:te-topology/"
+       + "eth-tet:eth-tran-topology" {
+      description "Augment only for Ethernet transport network.";
+    }
+    description "Augment TE node attributes.";
+    container eth-node {
+      presence "The TE node is an Ethernet node.";
+      description
+        "Presence container used only to indicate that the TE node 
+        is an Ethernet node.";
+    }
+  }
+
+  augment "/nw:networks/nw:network/nt:link" {
+    when "../nw:network-types/tet:te-topology/"
+       + "eth-tet:eth-tran-topology" {
+      description "Augment only for Ethernet transport network.";
+    }
+    description "Augment link configuration";
+
+    container eth-svc {
+      presence
+        "When present, indicates that the Link supports Ethernet 
+        client signals.";
+      description
+        "Presence container used only to indicate that the link 
+        supports Ethernet client signals.";
+    }
+  }
+
   augment "/nw:networks/nw:network/nw:node/nt:termination-point" {
     when "../../nw:network-types/tet:te-topology/"
-      + "ethtetopo:eth-tran-topology" {
-      description
-        "Augment only for ETH transport network";
+       + "eth-tet:eth-tran-topology" {
+      description "Augment only for Ethernet transport network.";
     }
     description
       "Augment ETH LTP attributes";
 
-    uses eth-ltp-attributes;
-
     container eth-svc {
-      presence "client-facing LTP.";
+      presence
+        "When present, indicates that the Link Termination Point 
+        (LTP) supports Ethernet client signals.";
       description
         "ETH LTP Service attributes.";
 
-      leaf client-facing {
-        type boolean;
-        default "false";
-        description
-          "Indicates whether this LTP is a client-facing LTP.";
-      }
-      uses eth-ltp-svc-attributes;
+      uses eth-svc-attributes;
+    }
+    container eth-link-tp {
+      description
+        "Attributes of the Ethernet Link Termination Point (LTP).";
+      uses eth-ltp-attributes;
     }
   }
 
@@ -358,377 +455,549 @@ module ietf-eth-te-topology {
    * Augment TE bandwidth
    */
 
-  /* Augment maximum LSP bandwidth of link terminationpoint (LTP) */
   augment "/nw:networks/nw:network/nw:node/nt:termination-point/"
         + "tet:te/"
         + "tet:interface-switching-capability/tet:max-lsp-bandwidth/"
         + "tet:te-bandwidth/tet:technology" {
     when "../../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE bandwidth";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
     }
-    description "Ethernet bandwidth.";
-    case eth {
-      uses etht-types:eth-bandwidth;
-    }
-  }
-  /* Augment bandwidth path constraints of connectivity-matrices */
-  augment "/nw:networks/nw:network/nw:node/tet:te/"
-        + "tet:te-node-attributes/tet:connectivity-matrices/"
-        + "tet:path-constraints/tet:te-bandwidth/tet:technology" {
-    when "../../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE bandwidth";
-    }
-    description "Ethernet bandwidth.";
+    description
+      "Augment maximum LSP TE bandwidth for the link termination
+       point (LTP).";
     case eth {
       uses etht-types:eth-bandwidth;
     }
   }
 
-  /* Augment bandwidth path constraints of connectivity-matrix */
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:te-node-attributes/tet:connectivity-matrices/"
+        + "tet:path-constraints/tet:te-bandwidth/tet:technology" {
+    when "../../../../../../nw:network-types/tet:te-topology/"
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
+    }
+    description
+      "Augment TE bandwidth path constraints of the TE node
+       connectivity matrices.";
+    case eth {
+      uses etht-types:eth-bandwidth;
+    }
+  }
+
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:te-node-attributes/tet:connectivity-matrices/"
         + "tet:connectivity-matrix/"
         + "tet:path-constraints/tet:te-bandwidth/tet:technology" {
     when "../../../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE bandwidth";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
     }
-    description "Ethernet bandwidth.";
+    description
+      "Augment TE bandwidth path constraints of the
+       connectivity matrix entry.";
     case eth {
       uses etht-types:eth-bandwidth;
     }
   }
 
-  /* Augment bandwidth path constraints of connectivity-matrices
-   * information-source */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:information-source-entry/tet:connectivity-matrices/"
         + "tet:path-constraints/tet:te-bandwidth/tet:technology" {
     when "../../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE bandwidth";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
     }
-    description "Ethernet bandwidth.";
+    description
+      "Augment TE bandwidth path constraints of the TE node
+       connectivity matrices information source.";
     case eth {
       uses etht-types:eth-bandwidth;
     }
   }
 
-  /* Augment bandwidth path constraints of connectivity-matrix
-   * information-source */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:information-source-entry/tet:connectivity-matrices/"
         + "tet:connectivity-matrix/"
         + "tet:path-constraints/tet:te-bandwidth/tet:technology" {
     when "../../../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE bandwidth";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
     }
-    description "Ethernet bandwidth.";
+    description
+      "Augment TE bandwidth path constraints of the
+       connectivity matrix entry information source";
     case eth {
       uses etht-types:eth-bandwidth;
     }
   }
 
-  /* Augment client bandwidth of tunnel termination point (TTP) */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:tunnel-termination-point/"
         + "tet:client-layer-adaptation/tet:switching-capability/"
         + "tet:te-bandwidth/tet:technology" {
     when "../../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE bandwidth";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
     }
-    description "Ethernet bandwidth.";
+    description
+      "Augment client TE bandwidth of the tunnel termination point
+       (TTP)";
     case eth {
       uses etht-types:eth-bandwidth;
     }
   }
 
-  /* Augment bandwidth path constraints of local-link-connectivities */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:tunnel-termination-point/"
         + "tet:local-link-connectivities/tet:path-constraints/"
         + "tet:te-bandwidth/tet:technology" {
     when "../../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE bandwidth";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
     }
-    description "Ethernet bandwidth.";
+    description
+      "Augment TE bandwidth path constraints for the TTP
+       Local Link Connectivities.";
     case eth {
       uses etht-types:eth-bandwidth;
     }
   }
 
-  /* Augment bandwidth path constraints of local-link-connectivity */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:tunnel-termination-point/"
         + "tet:local-link-connectivities/"
         + "tet:local-link-connectivity/tet:path-constraints/"
         + "tet:te-bandwidth/tet:technology" {
     when "../../../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE bandwidth";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
     }
-    description "Ethernet bandwidth.";
+    description
+      "Augment TE bandwidth path constraints for the TTP
+       Local Link Connectivity entry.";
     case eth {
       uses etht-types:eth-bandwidth;
     }
   }
 
-  /* Augment maximum LSP bandwidth of TE link */
   augment "/nw:networks/nw:network/nt:link/tet:te/"
         + "tet:te-link-attributes/"
         + "tet:interface-switching-capability/tet:max-lsp-bandwidth/"
         + "tet:te-bandwidth/tet:technology" {
     when "../../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE bandwidth";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
     }
-    description "Ethernet bandwidth.";
+    description
+      "Augment maximum LSP TE bandwidth for the TE link.";
     case eth {
       uses etht-types:eth-bandwidth;
     }
   }
 
-  /* Augment maximum bandwidth of TE link */
   augment "/nw:networks/nw:network/nt:link/tet:te/"
         + "tet:te-link-attributes/"
         + "tet:max-link-bandwidth/"
-        + "tet:te-bandwidth/tet:technology" {
+        + "tet:te-bandwidth" {
     when "../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE bandwidth";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
     }
-    description "Ethernet bandwidth.";
-    case eth {
-      uses etht-types:eth-bandwidth;
-    }
+    description
+      "Augment maximum TE bandwidth for the TE link";
+    uses etht-types:eth-bandwidth;
   }
 
-  /* Augment maximum reservable bandwidth of TE link */
   augment "/nw:networks/nw:network/nt:link/tet:te/"
         + "tet:te-link-attributes/"
         + "tet:max-resv-link-bandwidth/"
-        + "tet:te-bandwidth/tet:technology" {
+        + "tet:te-bandwidth" {
     when "../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE bandwidth";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
     }
-    description "Ethernet bandwidth.";
-    case eth {
-      uses etht-types:eth-bandwidth;
-    }
+    description
+      "Augment maximum reservable TE bandwidth for the TE link";
+    uses etht-types:eth-bandwidth;
   }
 
-  /* Augment unreserved bandwidth of TE Link */
   augment "/nw:networks/nw:network/nt:link/tet:te/"
         + "tet:te-link-attributes/"
         + "tet:unreserved-bandwidth/"
-        + "tet:te-bandwidth/tet:technology" {
+        + "tet:te-bandwidth" {
     when "../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE bandwidth";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
     }
-    description "Ethernet bandwidth.";
-    case eth {
-      uses etht-types:eth-bandwidth;
-    }
+    description
+      "Augment unreserved TE bandwidth for the TE Link";
+    uses etht-types:eth-bandwidth;
   }
-  /* Augment maximum LSP bandwidth of TE link information-source */
+
   augment "/nw:networks/nw:network/nt:link/tet:te/"
         + "tet:information-source-entry/"
         + "tet:interface-switching-capability/"
         + "tet:max-lsp-bandwidth/"
         + "tet:te-bandwidth/tet:technology" {
     when "../../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE bandwidth";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
     }
-    description "Ethernet bandwidth.";
+    description
+      "Augment maximum LSP TE bandwidth for the TE link
+       information source";
     case eth {
       uses etht-types:eth-bandwidth;
     }
   }
 
-  /* Augment maximum bandwidth of TE link information-source */
   augment "/nw:networks/nw:network/nt:link/tet:te/"
         + "tet:information-source-entry/"
         + "tet:max-link-bandwidth/"
-        + "tet:te-bandwidth/tet:technology" {
+        + "tet:te-bandwidth" {
     when "../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE bandwidth";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
     }
-    description "Ethernet bandwidth.";
-    case eth {
-      uses etht-types:eth-bandwidth;
-    }
+    description
+      "Augment maximum TE bandwidth for the TE link
+       information source";
+    uses etht-types:eth-bandwidth;
   }
 
-  /* Augment maximum reservable bandwidth of TE link
-   * information-source */
   augment "/nw:networks/nw:network/nt:link/tet:te/"
         + "tet:information-source-entry/"
         + "tet:max-resv-link-bandwidth/"
-        + "tet:te-bandwidth/tet:technology" {
+        + "tet:te-bandwidth" {
     when "../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE bandwidth";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
     }
-    description "Ethernet bandwidth.";
-    case eth {
-      uses etht-types:eth-bandwidth;
-    }
+    description
+      "Augment maximum reservable TE bandwidth for the TE link
+       information-source";
+    uses etht-types:eth-bandwidth;
   }
 
-  /* Augment unreserved bandwidth of TE link information-source */
   augment "/nw:networks/nw:network/nt:link/tet:te/"
         + "tet:information-source-entry/"
         + "tet:unreserved-bandwidth/"
-        + "tet:te-bandwidth/tet:technology" {
+        + "tet:te-bandwidth" {
     when "../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE bandwidth";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
     }
-    description "Ethernet bandwidth.";
-    case eth {
-      uses etht-types:eth-bandwidth;
-    }
+    description
+      "Augment unreserved TE bandwidth of the TE link
+       information source";
+    uses etht-types:eth-bandwidth;
   }
 
-  /* Augment maximum LSP bandwidth of TE link template */
   augment "/nw:networks/tet:te/tet:templates/"
         + "tet:link-template/tet:te-link-attributes/"
         + "tet:interface-switching-capability/"
         + "tet:max-lsp-bandwidth/"
         + "tet:te-bandwidth/tet:technology" {
-/*
-    when "../../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE bandwidth";
-    }
-*/
-    description "Ethernet bandwidth.";
+    description
+      "Augment maximum LSP TE bandwidth of the TE link
+       template";
     case eth {
       uses etht-types:eth-bandwidth;
     }
   }
-  /* Augment maximum bandwidth of TE link template */
+
   augment "/nw:networks/tet:te/tet:templates/"
         + "tet:link-template/tet:te-link-attributes/"
         + "tet:max-link-bandwidth/"
-        + "tet:te-bandwidth/tet:technology" {
-/*
-    when "../../../../../nw:network-types/tet:te-topology/"
-        + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE bandwidth";
-    }
-*/
-    description "Ethernet bandwidth.";
-    case eth {
-      uses etht-types:eth-bandwidth;
-    }
+        + "tet:te-bandwidth" {
+    description
+      "Augment maximum TE bandwidth the TE link template";
+    uses etht-types:eth-bandwidth;
   }
 
-  /* Augment maximum reservable bandwidth of TE link template */
   augment "/nw:networks/tet:te/tet:templates/"
         + "tet:link-template/tet:te-link-attributes/"
         + "tet:max-resv-link-bandwidth/"
-        + "tet:te-bandwidth/tet:technology" {
-/*
-    when "../../../../../nw:network-types/tet:te-topology/"
-        + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE bandwidth";
-    }
-*/
-    description "Ethernet bandwidth.";
-    case eth {
-      uses etht-types:eth-bandwidth;
-    }
+        + "tet:te-bandwidth" {
+    description
+      "Augment maximum reservable TE bandwidth for the TE link
+       template.";
+    uses etht-types:eth-bandwidth;
   }
 
-  /* Augment unreserved bandwidth of TE link template */
   augment "/nw:networks/tet:te/tet:templates/"
         + "tet:link-template/tet:te-link-attributes/"
         + "tet:unreserved-bandwidth/"
-        + "tet:te-bandwidth/tet:technology" {
-/*
+        + "tet:te-bandwidth" {
+    description
+      "Augment unreserved TE bandwidth the TE link template";
+    uses etht-types:eth-bandwidth;
+  }
+
+  /*
+   * Augment TE label range information
+   */
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:te-node-attributes/tet:connectivity-matrices/"
+        + "tet:label-restrictions/tet:label-restriction" {
     when "../../../../../../nw:network-types/tet:te-topology/"
-        + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE bandwidth";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
     }
-*/
-    description "Ethernet bandwidth.";
-    case eth {
-      uses etht-types:eth-bandwidth;
+    description
+      "Augment TE label range information for the TE node
+       connectivity matrices.";
+    uses label-range-info;
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:te-node-attributes/tet:connectivity-matrices/"
+        + "tet:connectivity-matrix/tet:from/"
+        + "tet:label-restrictions/tet:label-restriction" {
+    when "../../../../../../../../nw:network-types/tet:te-topology/"
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
     }
+    description
+      "Augment TE label range information for the source LTP
+       of the connectivity matrix entry.";
+    uses label-range-info;
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:te-node-attributes/tet:connectivity-matrices/"
+        + "tet:connectivity-matrix/tet:to/"
+        + "tet:label-restrictions/tet:label-restriction" {
+    when "../../../../../../../../nw:network-types/tet:te-topology/"
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
+    }
+    description
+      "Augment TE label range information for the destination LTP
+       of the connectivity matrix entry.";
+    uses label-range-info;
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:information-source-entry/"
+        + "tet:connectivity-matrices/tet:label-restrictions/"
+        + "tet:label-restriction" {
+    when "../../../../../../nw:network-types/tet:te-topology/"
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
+    }
+    description
+      "Augment TE label range information for the TE node
+       connectivity matrices information source.";
+    uses label-range-info;
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:information-source-entry/tet:connectivity-matrices/"
+        + "tet:connectivity-matrix/"
+        + "tet:from/tet:label-restrictions/tet:label-restriction" {
+    when "../../../../../../../../nw:network-types/tet:te-topology/"
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
+    }
+    description
+      "Augment TE label range information for the source LTP
+       of the connectivity matrix entry information source.";
+    uses label-range-info;
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:information-source-entry/tet:connectivity-matrices/"
+        + "tet:connectivity-matrix/"
+        + "tet:to/tet:label-restrictions/tet:label-restriction" {
+    when "../../../../../../../../nw:network-types/tet:te-topology/"
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
+    }
+    description
+      "Augment TE label range information for the destination LTP
+       of the connectivity matrix entry information source.";
+    uses label-range-info;
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:tunnel-termination-point/"
+        + "tet:local-link-connectivities/"
+        + "tet:label-restrictions/tet:label-restriction" {
+    when "../../../../../../nw:network-types/tet:te-topology/"
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
+    }
+    description
+      "Augment TE label range information for the TTP
+       Local Link Connectivities.";
+    uses label-range-info;
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:tunnel-termination-point/"
+        + "tet:local-link-connectivities/"
+        + "tet:local-link-connectivity/"
+        + "tet:label-restrictions/tet:label-restriction" {
+    when "../../../../../../../nw:network-types/tet:te-topology/"
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
+    }
+    description
+      "Augment TE label range information for the TTP
+       Local Link Connectivity entry.";
+    uses label-range-info;
+  }
+
+  augment "/nw:networks/nw:network/nt:link/tet:te/"
+        + "tet:te-link-attributes/"
+        + "tet:label-restrictions/tet:label-restriction" {
+    when "../../../../../nw:network-types/tet:te-topology/"
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
+    }
+    description
+      "Augment TE label range information for the TE link.";
+    uses label-range-info;
+  }
+
+  augment "/nw:networks/nw:network/nt:link/tet:te/"
+        + "tet:information-source-entry/"
+        + "tet:label-restrictions/tet:label-restriction" {
+    when "../../../../../nw:network-types/tet:te-topology/"
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
+    }
+    description
+      "Augment TE label range information for the TE link
+       information source.";
+    uses label-range-info;
+  }
+
+  augment "/nw:networks/tet:te/tet:templates/"
+        + "tet:link-template/tet:te-link-attributes/"
+        + "tet:label-restrictions/tet:label-restriction" {
+    description
+      "Augment TE label range information for the TE link template.";
+    uses label-range-info;
   }
 
   /*
    * Augment TE label.
    */
 
-  /* Augment label restrictions of connectivity-matrices */
-  augment "/nw:networks/nw:network/nw:node/tet:te/"
-        + "tet:te-node-attributes/tet:connectivity-matrices/"
-        + "tet:label-restrictions/tet:label-restriction" {
-    when "../../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
-    }
-    description "Ethernet label restriction.";
-    uses etht-types:eth-label-restriction;
-  }
-
-  /* Augment label restrictions start of connectivity-matrices */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:te-node-attributes/tet:connectivity-matrices/"
         + "tet:label-restrictions/tet:label-restriction/"
-        + "tet:label-start/tet:te-label/tet:technology" {
-    when "../../../../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
-    }
-    description "Ethernet label.";
-    case eth {
-      uses etht-types:eth-label;
-    }
-  }
-
-  /* Augment label restrictions end of connectivity-matrices */
-  augment "/nw:networks/nw:network/nw:node/tet:te/"
-        + "tet:te-node-attributes/tet:connectivity-matrices/"
-        + "tet:label-restrictions/tet:label-restriction/tet:label-end/"
+        + "tet:label-start/"
         + "tet:te-label/tet:technology" {
     when "../../../../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label range start for the TE node
+       connectivity matrices";
     case eth {
       uses etht-types:eth-label;
     }
   }
-  /* Augment label restrictions step of connectivity-matrices */
+
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:te-node-attributes/tet:connectivity-matrices/"
-        + "tet:label-restrictions/tet:label-restriction/"
-        + "tet:label-step/tet:technology" {
-    when "../../../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+        + "tet:label-restrictions/"
+        + "tet:label-restriction/tet:label-end/"
+        + "tet:te-label/tet:technology" {
+    when "../../../../../../../../nw:network-types/tet:te-topology/"
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label range end for the TE node
+       connectivity matrices";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:te-node-attributes/tet:connectivity-matrices/"
+        + "tet:label-restrictions/"
+        + "tet:label-restriction/tet:label-step/"
+        + "tet:technology" {
+    when "../../../../../../../nw:network-types/tet:te-topology/"
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label range step for the TE node
+       connectivity matrices";
     case eth {
       uses etht-types:eth-label-step;
     }
   }
 
-  /* Augment label hop of underlay primary path of
-   * connectivity-matrices */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:te-node-attributes/tet:connectivity-matrices/"
         + "tet:underlay/tet:primary-path/tet:path-element/"
@@ -736,16 +1005,19 @@ module ietf-eth-te-topology {
         + "tet:te-label/tet:technology" {
     when "../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label hop for the underlay primary path of the
+       TE node connectivity matrices";
     case eth {
       uses etht-types:eth-label;
     }
   }
-  /* Augment label hop of underlay backup path of
-   * connectivity-matrices */
+
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:te-node-attributes/tet:connectivity-matrices/"
         + "tet:underlay/tet:backup-path/tet:path-element/"
@@ -753,16 +1025,19 @@ module ietf-eth-te-topology {
         + "tet:te-label/tet:technology" {
     when "../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label hop for the underlay backup path of the
+       TE node connectivity matrices";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment label hop of route-exclude of connectivity-matrices */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:te-node-attributes/tet:connectivity-matrices/"
         + "tet:optimizations/tet:algorithm/tet:metric/"
@@ -773,16 +1048,20 @@ module ietf-eth-te-topology {
         + "tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label hop for the explicit route objects excluded
+       by the path computation of the TE node connectivity
+       matrices";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment label hop of route-include of connectivity-matrices */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:te-node-attributes/tet:connectivity-matrices/"
         + "tet:optimizations/tet:algorithm/tet:metric/"
@@ -793,163 +1072,166 @@ module ietf-eth-te-topology {
         + "tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label hop for the explicit route objects included
+       by the path computation of the TE node connectivity
+       matrices";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment label hop of path-route of connectivity-matrices */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:te-node-attributes/tet:connectivity-matrices/"
         + "tet:path-properties/tet:path-route-objects/"
         + "tet:path-route-object/tet:type/tet:label/tet:label-hop/"
-        + "tet:te-label/tet:technology"{
+        + "tet:te-label/tet:technology" {
     when "../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label hop for the computed path route objects
+       of the TE node connectivity matrices";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment ingress label restrictions of connectivity-matrix */
-  augment "/nw:networks/nw:network/nw:node/tet:te/"
-        + "tet:te-node-attributes/tet:connectivity-matrices/"
-        + "tet:connectivity-matrix/tet:from/"
-        + "tet:label-restrictions/tet:label-restriction" {
-    when "../../../../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
-    }
-    description "Ethernet label.";
-    uses etht-types:eth-label-restriction;
-  }
-
-  /* Augment ingress label restrictions start of
-   * connectivity-matrix */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:te-node-attributes/tet:connectivity-matrices/"
         + "tet:connectivity-matrix/tet:from/"
         + "tet:label-restrictions/tet:label-restriction/"
-        + "tet:label-start/tet:te-label/tet:technology" {
-    when "../../../../../../../../../../"
-       + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
-    }
-    description "Ethernet label.";
-    case eth {
-      uses etht-types:eth-label;
-    }
-  }
-
-  /* Augment ingress label restrictions end of connectivity-matrix */
-  augment "/nw:networks/nw:network/nw:node/tet:te/"
-        + "tet:te-node-attributes/tet:connectivity-matrices/"
-        + "tet:connectivity-matrix/tet:from/"
-        + "tet:label-restrictions/tet:label-restriction/tet:label-end/"
+        + "tet:label-start/"
         + "tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label range start for the source LTP
+       of the connectivity matrix entry.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment ingress label restrictions step of connectivity-matrix */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:te-node-attributes/tet:connectivity-matrices/"
         + "tet:connectivity-matrix/tet:from/"
         + "tet:label-restrictions/tet:label-restriction/"
-        + "tet:label-step/tet:technology" {
+        + "tet:label-end/"
+        + "tet:te-label/tet:technology" {
+    when "../../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label range end for the source LTP
+       of the connectivity matrix entry.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:te-node-attributes/tet:connectivity-matrices/"
+        + "tet:connectivity-matrix/tet:from/"
+        + "tet:label-restrictions/tet:label-restriction/"
+        + "tet:label-step/"
+        + "tet:technology" {
     when "../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label range step for the source LTP
+       of the connectivity matrix entry.";
     case eth {
       uses etht-types:eth-label-step;
     }
   }
-
-  /* Augment egress label restrictions of connectivity-matrix */
-  augment "/nw:networks/nw:network/nw:node/tet:te/"
-        + "tet:te-node-attributes/tet:connectivity-matrices/"
-        + "tet:connectivity-matrix/tet:to/"
-        + "tet:label-restrictions/tet:label-restriction" {
-    when "../../../../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
-    }
-    description "Ethernet label.";
-    uses etht-types:eth-label-restriction;
-  }
-
-  /* Augment egress label restrictions start of
-   * connectivity-matrix */
+  
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:te-node-attributes/tet:connectivity-matrices/"
         + "tet:connectivity-matrix/tet:to/"
         + "tet:label-restrictions/tet:label-restriction/"
-        + "tet:label-start/tet:te-label/tet:technology" {
-    when "../../../../../../../../../../"
-       + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
-    }
-    description "Ethernet label.";
-    case eth {
-      uses etht-types:eth-label;
-    }
-  }
-
-  /* Augment egress label restrictions end of connectivity-matrix */
-  augment "/nw:networks/nw:network/nw:node/tet:te/"
-        + "tet:te-node-attributes/tet:connectivity-matrices/"
-        + "tet:connectivity-matrix/tet:to/"
-        + "tet:label-restrictions/tet:label-restriction/tet:label-end/"
+        + "tet:label-start/"
         + "tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label range start for the destination LTP
+       of the connectivity matrix entry.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment egress label restrictions step of connectivity-matrix */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:te-node-attributes/tet:connectivity-matrices/"
         + "tet:connectivity-matrix/tet:to/"
         + "tet:label-restrictions/tet:label-restriction/"
-        + "tet:label-step/tet:technology" {
+        + "tet:label-end/"
+        + "tet:te-label/tet:technology" {
+    when "../../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label range end for the destination LTP
+       of the connectivity matrix entry.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:te-node-attributes/tet:connectivity-matrices/"
+        + "tet:connectivity-matrix/tet:to/"
+        + "tet:label-restrictions/tet:label-restriction/"
+        + "tet:label-step/"
+        + "tet:technology" {
     when "../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label range step for the destination LTP
+       of the connectivity matrix entry.";
     case eth {
       uses etht-types:eth-label-step;
     }
   }
-
-/* Augment label hop of underlay primary path of connectivity-matrix */
+  
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:te-node-attributes/tet:connectivity-matrices/"
         + "tet:connectivity-matrix/"
@@ -958,16 +1240,19 @@ module ietf-eth-te-topology {
         + "tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label hop for the underlay primary path
+       of the connectivity matrix entry.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-/* Augment label hop of underlay backup path of connectivity-matrix */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:te-node-attributes/tet:connectivity-matrices/"
         + "tet:connectivity-matrix/"
@@ -976,16 +1261,19 @@ module ietf-eth-te-topology {
         + "tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label hop for the underlay backup path
+       of the connectivity matrix entry.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment label hop of route-exclude of connectivity-matrix */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:te-node-attributes/tet:connectivity-matrices/"
         + "tet:connectivity-matrix/tet:optimizations/"
@@ -995,16 +1283,19 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label hop for the explicit route objects excluded
+       by the path computation of the connectivity matrix entry.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment label hop of route-include of connectivity-matrix */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:te-node-attributes/tet:connectivity-matrices/"
         + "tet:connectivity-matrix/tet:optimizations/"
@@ -1014,16 +1305,19 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label hop for the explicit route objects included
+       by the path computation of the connectivity matrix entry.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment label hop of path-route of connectivity-matrix */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:te-node-attributes/tet:connectivity-matrices/"
         + "tet:connectivity-matrix/"
@@ -1032,31 +1326,19 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label hop for the computed path route objects
+       of the connectivity matrix entry.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment label restrictions of connectivity-matrices
-   * information-source */
-  augment "/nw:networks/nw:network/nw:node/tet:te/"
-        + "tet:information-source-entry/"
-        + "tet:connectivity-matrices/tet:label-restrictions/"
-        + "tet:label-restriction" {
-    when "../../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
-    }
-    description "Ethernet label.";
-    uses etht-types:eth-label-restriction;
-  }
-
-  /* Augment label restrictions start of connectivity-matrices
-   * information-source */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:information-source-entry/"
         + "tet:connectivity-matrices/tet:label-restrictions/"
@@ -1064,17 +1346,19 @@ module ietf-eth-te-topology {
         + "tet:label-start/tet:te-label/tet:technology" {
     when "../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label range start for the TE node connectivity
+       matrices information source.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment label restrictions end of connectivity-matrices
-   * information-source */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:information-source-entry/"
         + "tet:connectivity-matrices/tet:label-restrictions/"
@@ -1082,17 +1366,19 @@ module ietf-eth-te-topology {
         + "tet:label-end/tet:te-label/tet:technology" {
     when "../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label range end for the TE node connectivity
+       matrices information source.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment label restrictions step of connectivity-matrices
-   * information-source */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:information-source-entry/"
         + "tet:connectivity-matrices/tet:label-restrictions/"
@@ -1100,51 +1386,59 @@ module ietf-eth-te-topology {
         + "tet:label-step/tet:technology" {
     when "../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label range step for the TE node connectivity
+       matrices information source.";
     case eth {
       uses etht-types:eth-label-step;
     }
   }
-
-  /* Augment label hop of underlay primary path of
-   * connectivity-matrices information-source */
+  
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:information-source-entry/tet:connectivity-matrices/"
         + "tet:underlay/tet:primary-path/tet:path-element/tet:type/"
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label hop for the underlay primary path
+       of the TE node connectivity matrices of the information
+       source entry.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment label hop of underlay backup path of
-   * connectivity-matrices information-source */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:information-source-entry/tet:connectivity-matrices/"
         + "tet:underlay/tet:backup-path/tet:path-element/tet:type/"
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label hop for the underlay backup path
+       of the TE node connectivity matrices of the information
+       source entry.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment label hop of route-exclude of
-   * connectivity-matrices information-source */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:information-source-entry/tet:connectivity-matrices/"
         + "tet:optimizations/tet:algorithm/tet:metric/"
@@ -1154,17 +1448,20 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label hop for the explicit route objects excluded
+       by the path computation of the TE node connectivity matrices
+       information source.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment label hop of route-include of
-   * connectivity-matrices information-source */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:information-source-entry/tet:connectivity-matrices/"
         + "tet:optimizations/tet:algorithm/tet:metric/"
@@ -1174,17 +1471,20 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label hop for the explicit route objects included
+       by the path computation of the TE node connectivity matrices
+       information source.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment label hop of path-route of
-   * connectivity-matrices information-source */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:information-source-entry/tet:connectivity-matrices/"
         + "tet:path-properties/tet:path-route-objects/"
@@ -1192,99 +1492,81 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label hop for the computed path route objects
+       of the TE node connectivity matrices information source.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment ingress label restrictions of
-   * connectivity-matrix information-source */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:information-source-entry/tet:connectivity-matrices/"
         + "tet:connectivity-matrix/"
-        + "tet:from/tet:label-restrictions/tet:label-restriction" {
-    when "../../../../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
-    }
-    description "Ethernet label.";
-    uses etht-types:eth-label-restriction;
-  }
-
-  /* Augment ingress label restrictions start of
-   * connectivity-matrix information-source */
-  augment "/nw:networks/nw:network/nw:node/tet:te/"
-        + "tet:information-source-entry/tet:connectivity-matrices/"
-        + "tet:connectivity-matrix/"
-        + "tet:from/tet:label-restrictions/tet:label-restriction/"
+        + "tet:from/tet:label-restrictions/"
+        + "tet:label-restriction/"
         + "tet:label-start/tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label range start for the source LTP
+       of the connectivity matrix entry information source.";
     case eth {
       uses etht-types:eth-label;
     }
   }
-
-  /* Augment ingress label restrictions end of
-   * connectivity-matrix information-source */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:information-source-entry/tet:connectivity-matrices/"
         + "tet:connectivity-matrix/"
-        + "tet:from/tet:label-restrictions/tet:label-restriction/"
+        + "tet:from/tet:label-restrictions/"
+        + "tet:label-restriction/"
         + "tet:label-end/tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label range end for the source LTP
+       of the connectivity matrix entry information source.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment ingress label restrictions step of
-   * connectivity-matrix information-source */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:information-source-entry/tet:connectivity-matrices/"
         + "tet:connectivity-matrix/"
-        + "tet:from/tet:label-restrictions/tet:label-restriction/"
+        + "tet:from/tet:label-restrictions/"
+        + "tet:label-restriction/"
         + "tet:label-step/tet:technology" {
     when "../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label range step for the source LTP
+       of the connectivity matrix entry information source.";
     case eth {
       uses etht-types:eth-label-step;
     }
   }
-
-  /* Augment egress label restrictions of
-   * connectivity-matrix information-source */
-  augment "/nw:networks/nw:network/nw:node/tet:te/"
-        + "tet:information-source-entry/tet:connectivity-matrices/"
-        + "tet:connectivity-matrix/"
-        + "tet:to/tet:label-restrictions/tet:label-restriction" {
-    when "../../../../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
-    }
-    description "Ethernet label.";
-    uses etht-types:eth-label-restriction;
-  }
-
-  /* Augment egress label restrictions start of
-   * connectivity-matrix information-source */
+  
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:information-source-entry/tet:connectivity-matrices/"
         + "tet:connectivity-matrix/"
@@ -1292,17 +1574,19 @@ module ietf-eth-te-topology {
         + "tet:label-start/tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label range start for the destination LTP
+       of the connectivity matrix entry information source.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment egress label restrictions end of
-   * connectivity-matrix information-source */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:information-source-entry/tet:connectivity-matrices/"
         + "tet:connectivity-matrix/"
@@ -1310,17 +1594,19 @@ module ietf-eth-te-topology {
         + "tet:label-end/tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label range end for the destination LTP
+       of the connectivity matrix entry information source.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment egress label restrictions step of
-   * connectivity-matrix information-source */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:information-source-entry/tet:connectivity-matrices/"
         + "tet:connectivity-matrix/"
@@ -1328,16 +1614,19 @@ module ietf-eth-te-topology {
         + "tet:label-step/tet:technology" {
     when "../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label range step for the destination LTP
+       of the connectivity matrix entry information source.";
     case eth {
       uses etht-types:eth-label-step;
     }
   }
-  /* Augment label hop of underlay primary path of
-   * connectivity-matrix information-source */
+  
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:information-source-entry/tet:connectivity-matrices/"
         + "tet:connectivity-matrix/"
@@ -1345,17 +1634,19 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label hop for the underlay primary path
+       of the connectivity matrix entry information source.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment label hop of underlay backup path of
-   * connectivity-matrix information-source */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:information-source-entry/tet:connectivity-matrices/"
         + "tet:connectivity-matrix/"
@@ -1363,17 +1654,19 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label hop for the underlay backup path
+       of the connectivity matrix entry information source.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment label hop of route-exclude of
-   * connectivity-matrix information-source */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:information-source-entry/tet:connectivity-matrices/"
         + "tet:connectivity-matrix/"
@@ -1384,17 +1677,20 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label hop for the explicit route objects excluded
+       by the path computation of the connectivity matrix entry
+       information source.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment label hop of route-include of
-   * connectivity-matrix information-source */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:information-source-entry/tet:connectivity-matrices/"
         + "tet:connectivity-matrix/"
@@ -1405,17 +1701,20 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label hop for the explicit route objects included
+       by the path computation of the connectivity matrix entry
+       information source.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment label hop of path-route of
-   * connectivity-matrix information-source */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:information-source-entry/tet:connectivity-matrices/"
         + "tet:connectivity-matrix/"
@@ -1424,77 +1723,82 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
-    case eth {
-      uses etht-types:eth-label;
-    }
-  }
-  /* Augment label restrictions of local-link-connectivities */
-  augment "/nw:networks/nw:network/nw:node/tet:te/"
-        + "tet:tunnel-termination-point/"
-        + "tet:local-link-connectivities/"
-        + "tet:label-restrictions/tet:label-restriction" {
-    when "../../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
-    }
-    description "Ethernet label.";
-    uses etht-types:eth-label-restriction;
-  }
-
-  /* Augment label restrictions start of local-link-connectivities */
-  augment "/nw:networks/nw:network/nw:node/tet:te/"
-        + "tet:tunnel-termination-point/"
-        + "tet:local-link-connectivities/"
-        + "tet:label-restrictions/tet:label-restriction/"
-        + "tet:label-start/tet:te-label/tet:technology" {
-    when "../../../../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
-    }
-    description "Ethernet label.";
+    description
+      "Augment TE label hop for the computed path route objects
+       of the connectivity matrix entry information source.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment label restrictions end of local-link-connectivities */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
-        + "tet:tunnel-termination-point/"
-        + "tet:local-link-connectivities/"
-        + "tet:label-restrictions/tet:label-restriction/"
-        + "tet:label-end/tet:te-label/tet:technology"{
-    when "../../../../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+      + "tet:tunnel-termination-point/"
+      + "tet:local-link-connectivities/"
+      + "tet:label-restrictions/tet:label-restriction/"
+      + "tet:label-start/"
+      + "tet:te-label/tet:technology" {
+    when "../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label range start for the TTP
+       Local Link Connectivities.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment label restrictions step of local-link-connectivities */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:tunnel-termination-point/"
         + "tet:local-link-connectivities/"
         + "tet:label-restrictions/tet:label-restriction/"
-        + "tet:label-step/tet:technology"{
-    when "../../../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+        + "tet:label-end/"
+        + "tet:te-label/tet:technology"{
+    when "../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label range end for the TTP
+       Local Link Connectivities.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:tunnel-termination-point/"
+        + "tet:local-link-connectivities/"
+        + "tet:label-restrictions/tet:label-restriction/"
+        + "tet:label-step/"
+        + "tet:technology"{
+    when "../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label range step for the TTP
+       Local Link Connectivities.";
     case eth {
       uses etht-types:eth-label-step;
     }
   }
 
-  /* Augment label hop of underlay primary path of
-   * local-link-connectivities */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:tunnel-termination-point/"
         + "tet:local-link-connectivities/"
@@ -1502,17 +1806,19 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label hop for the underlay primary path
+       of the TTP Local Link Connectivities.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment label hop of underlay backup path of
-   * local-link-connectivities */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:tunnel-termination-point/"
         + "tet:local-link-connectivities/"
@@ -1520,16 +1826,19 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label hop for the underlay backup path
+       of the TTP Local Link Connectivities.";
     case eth {
       uses etht-types:eth-label;
     }
   }
-  /* Augment label hop of route-exclude of
-   * local-link-connectivities */
+
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:tunnel-termination-point/"
         + "tet:local-link-connectivities/"
@@ -1540,17 +1849,20 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label hop for the explicit route objects excluded
+       by the path computation of the TTP Local Link
+       Connectivities.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment label hop of route-include of
-   * local-link-connectivities */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:tunnel-termination-point/"
         + "tet:local-link-connectivities/"
@@ -1561,16 +1873,20 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label hop for the explicit route objects included
+       by the path computation of the TTP Local Link
+       Connectivities.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment label hop of path-route of local-link-connectivities */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:tunnel-termination-point/"
         + "tet:local-link-connectivities/"
@@ -1579,30 +1895,19 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label hop for the computed path route objects
+       of the TTP Local Link Connectivities.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment label restrictions of local-link-connectivity  */
-  augment "/nw:networks/nw:network/nw:node/tet:te/"
-        + "tet:tunnel-termination-point/"
-        + "tet:local-link-connectivities/"
-        + "tet:local-link-connectivity/"
-        + "tet:label-restrictions/tet:label-restriction" {
-    when "../../../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
-    }
-    description "Ethernet label.";
-    uses etht-types:eth-label-restriction;
-  }
-
-  /* Augment label restrictions start of local-link-connectivity */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:tunnel-termination-point/"
         + "tet:local-link-connectivities/"
@@ -1611,16 +1916,19 @@ module ietf-eth-te-topology {
         + "tet:label-start/tet:te-label/tet:technology" {
     when "../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label range start for the TTP
+       Local Link Connectivity entry.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment label restrictions end of local-link-connectivity */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:tunnel-termination-point/"
         + "tet:local-link-connectivities/"
@@ -1629,16 +1937,19 @@ module ietf-eth-te-topology {
         + "tet:label-end/tet:te-label/tet:technology" {
     when "../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label range end for the TTP
+       Local Link Connectivity entry.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment label restrictions step of local-link-connectivity  */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:tunnel-termination-point/"
         + "tet:local-link-connectivities/"
@@ -1647,17 +1958,19 @@ module ietf-eth-te-topology {
         + "tet:label-step/tet:technology" {
     when "../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label range step for the TTP
+       Local Link Connectivity entry.";
     case eth {
       uses etht-types:eth-label-step;
     }
   }
-
-  /* Augment label hop of underlay primary path of
-   * local-link-connectivity */
+  
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:tunnel-termination-point/"
         + "tet:local-link-connectivities/"
@@ -1666,17 +1979,19 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label hop for the underlay primary path
+       of the TTP Local Link Connectivity entry.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment label hop of underlay backup path of
-   * local-link-connectivity (LLC) */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:tunnel-termination-point/"
         + "tet:local-link-connectivities/"
@@ -1685,17 +2000,19 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label hop for the underlay backup path
+       of the TTP Local Link Connectivity entry.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment label hop of route-exclude of
-   * local-link-connectivity (LLC) */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:tunnel-termination-point/"
         + "tet:local-link-connectivities/"
@@ -1707,17 +2024,20 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label hop for the explicit route objects excluded
+       by the path computation of the TTP Local Link
+       Connectivity entry.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment label hop of route-include of
-   * local-link-connectivity (LLC) */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:tunnel-termination-point/"
         + "tet:local-link-connectivities/"
@@ -1729,17 +2049,20 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label hop for the explicit route objects included
+       by the path computation of the TTP Local Link
+       Connectivity entry.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment label hop of path-route of
-   * local-link-connectivity (LLC) */
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:tunnel-termination-point/"
         + "tet:local-link-connectivities/"
@@ -1749,254 +2072,213 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label hop for the computed path route objects
+       of the TTP Local Link Connectivity entry.";
     case eth {
       uses etht-types:eth-label;
     }
   }
-
-  /* Augment label hop of underlay primary path of TE link */
   augment "/nw:networks/nw:network/nt:link/tet:te/"
         + "tet:te-link-attributes/"
         + "tet:underlay/tet:primary-path/tet:path-element/tet:type/"
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label hop for the underlay primary path
+       of the TE link.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment label hop of underlay backup path of TE link */
   augment "/nw:networks/nw:network/nt:link/tet:te/"
         + "tet:te-link-attributes/"
         + "tet:underlay/tet:backup-path/tet:path-element/tet:type/"
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label hop for the underlay backup path
+       of the TE link.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment label restrictions of TE link */
-  augment "/nw:networks/nw:network/nt:link/tet:te/"
-        + "tet:te-link-attributes/"
-        + "tet:label-restrictions/tet:label-restriction" {
-    when "../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
-    }
-    description "Ethernet label.";
-    uses etht-types:eth-label-restriction;
-  }
-
-  /* Augment label restrictions start of TE link */
   augment "/nw:networks/nw:network/nt:link/tet:te/"
         + "tet:te-link-attributes/"
         + "tet:label-restrictions/tet:label-restriction/"
         + "tet:label-start/tet:te-label/tet:technology" {
     when "../../../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label range start for the TE link.";
     case eth {
       uses etht-types:eth-label;
     }
   }
-  /* Augment label restrictions end of TE link */
+
   augment "/nw:networks/nw:network/nt:link/tet:te/"
         + "tet:te-link-attributes/"
         + "tet:label-restrictions/tet:label-restriction/"
         + "tet:label-end/tet:te-label/tet:technology" {
     when "../../../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label range end for the TE link.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment label restrictions step of TE link */
   augment "/nw:networks/nw:network/nt:link/tet:te/"
         + "tet:te-link-attributes/"
         + "tet:label-restrictions/tet:label-restriction/"
         + "tet:label-step/tet:technology" {
     when "../../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label range step for the TE link.";
     case eth {
       uses etht-types:eth-label-step;
     }
   }
-
-  /* Augment label restrictions of TE link information-source */
-  augment "/nw:networks/nw:network/nt:link/tet:te/"
-        + "tet:information-source-entry/"
-        + "tet:label-restrictions/tet:label-restriction" {
-    when "../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
-    }
-    description "Ethernet label.";
-    uses etht-types:eth-label-restriction;
-  }
-
-  /* Augment label restrictions start of TE link information-source */
+  
   augment "/nw:networks/nw:network/nt:link/tet:te/"
         + "tet:information-source-entry/"
         + "tet:label-restrictions/tet:label-restriction/"
         + "tet:label-start/tet:te-label/tet:technology" {
     when "../../../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label range start for the TE link
+       information source.";
     case eth {
       uses etht-types:eth-label;
     }
   }
-  /* Augment label restrictions end of TE link information-source */
+
   augment "/nw:networks/nw:network/nt:link/tet:te/"
         + "tet:information-source-entry/"
         + "tet:label-restrictions/tet:label-restriction/"
         + "tet:label-end/tet:te-label/tet:technology" {
     when "../../../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label range end for the TE link
+       information source.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment label restrictions step of TE link information-source */
   augment "/nw:networks/nw:network/nt:link/tet:te/"
         + "tet:information-source-entry/"
         + "tet:label-restrictions/tet:label-restriction/"
         + "tet:label-step/tet:technology" {
     when "../../../../../../nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
+       + "eth-tet:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
     }
-    description "Ethernet label.";
+    description
+      "Augment TE label range step for the TE link
+       information source.";
     case eth {
       uses etht-types:eth-label-step;
     }
   }
-
-  /* Augment label hop of underlay primary path of TE link template */
+  
   augment "/nw:networks/tet:te/tet:templates/"
         + "tet:link-template/tet:te-link-attributes/"
         + "tet:underlay/tet:primary-path/tet:path-element/tet:type/"
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
-/*
-    when "../../../../../../../../../../"
-       + "nw:network-types/tet:te-topology/"
-       + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
-    }
-*/
-    description "Ethernet label.";
+    description
+      "Augment TE label hop for the underlay primary path
+       of the TE link template.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment label hop of underlay backup path of TE link template */
   augment "/nw:networks/tet:te/tet:templates/"
         + "tet:link-template/tet:te-link-attributes/"
         + "tet:underlay/tet:backup-path/tet:path-element/tet:type/"
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
-/*
-    when "../../../../../../../../../../nw:network-types/"
-        + "tet:te-topology/ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
-    }
-*/
-    description "Ethernet label.";
+    description
+      "Augment TE label hop for the underlay backup path
+       of the TE link template.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment label restrictions of TE link template */
-  augment "/nw:networks/tet:te/tet:templates/"
-        + "tet:link-template/tet:te-link-attributes/"
-        + "tet:label-restrictions/tet:label-restriction" {
-/*
-    when "../../../../../nw:network-types/tet:te-topology/"
-        + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
-    }
-*/
-    description "Ethernet label.";
-    uses etht-types:eth-label-restriction;
-  }
-
-  /* Augment label restrictions start of TE link template */
   augment "/nw:networks/tet:te/tet:templates/"
         + "tet:link-template/tet:te-link-attributes/"
         + "tet:label-restrictions/tet:label-restriction/"
         + "tet:label-start/tet:te-label/tet:technology" {
-/*
-    when "../../../../../../../nw:network-types/tet:te-topology/"
-        + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
-    }
-*/
-    description "Ethernet label.";
+    description
+      "Augment TE label range start for the TE link template.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment label restrictions end of TE link template */
   augment "/nw:networks/tet:te/tet:templates/"
         + "tet:link-template/tet:te-link-attributes/"
         + "tet:label-restrictions/tet:label-restriction/"
         + "tet:label-end/tet:te-label/tet:technology" {
-/*
-    when "../../../../../../../nw:network-types/tet:te-topology/"
-        + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
-    }
-*/
-    description "Ethernet label.";
+    description
+      "Augment TE label range end for the TE link template.";
     case eth {
       uses etht-types:eth-label;
     }
   }
 
-  /* Augment label restrictions step of TE link template */
   augment "/nw:networks/tet:te/tet:templates/"
         + "tet:link-template/tet:te-link-attributes/"
         + "tet:label-restrictions/tet:label-restriction/"
         + "tet:label-step/tet:technology" {
-/*
-    when "../../../../../../nw:network-types/tet:te-topology/"
-        + "ethtetopo:eth-tran-topology" {
-      description "Ethernet TE label";
-    }
-*/
-    description "Ethernet label.";
+    description
+      "Augment TE label range step for the TE link template.";
     case eth {
       uses etht-types:eth-label-step;
     }
