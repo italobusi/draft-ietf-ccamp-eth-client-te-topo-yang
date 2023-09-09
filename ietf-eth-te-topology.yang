@@ -179,19 +179,11 @@ module ietf-eth-te-topology {
     description
       "Ethernet transport Link Termination Point (LTP) attributes";
 
-    /*
-     * Open Issue: should we remove this attribute
-     * (duplicates with I2RS L2 attributes)?
-     */
     leaf ltp-mac-address {
       type yang:mac-address;
       description
         "The MAC address of the Ethernet LTP.";
     }
-    /*
-     * Open Issue: should we remove this attribute
-     * (duplicates with I2RS L2 attributes)?
-     */
     leaf port-vlan-id {
       type etht-types:vlanid;
       description
@@ -199,10 +191,6 @@ module ietf-eth-te-topology {
       reference
         "IEEE 802.1Q: Virtual Bridged Local Area Networks";
     }
-    /*
-     * Open Issue: should we remove this attribute
-     * (duplicates with I2RS L2 attributes)?
-     */
     leaf maximum-frame-size {
       type uint16 {
         range "64 .. 65535";
@@ -232,7 +220,7 @@ module ietf-eth-te-topology {
         "In case VLAN classification is supported, indicates whether
         VLAN bundling classification is also supported.";
       reference
-        "MEF 10.3: Ethernet Services Attributes Phase 3"
+        "MEF 10.3: Ethernet Services Attributes Phase 3";
     }
     leaf vlan-range {
       type etht-types:vid-range-type;
@@ -300,12 +288,15 @@ module ietf-eth-te-topology {
           description
             "Service classification capabilities based on the second
              VLAN tag, supported by the ETH LTP.";
-        /*
-         * Open issue: indicates that second-tag-classification
-         * can be True only if outer-tag-classification is also True.
-        */
           leaf second-tag-classification {
             type boolean;
+            must ". = 'false' or " 
+               + "../../vlan-tag-classification = 'true'" {
+              description
+                "VLAN service classification based on the second 
+                VLAN tag can be supported only when VLAN service 
+                classification";
+            }
             description
               "Indicates that the ETH LTP support  VLAN service
                classification based on the second VLAN tag.";
