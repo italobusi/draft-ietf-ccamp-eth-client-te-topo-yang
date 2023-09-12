@@ -17,6 +17,12 @@
   <front>
     <title abbrev="ETH Topology Transport YANG Model">A YANG Data Model for Ethernet TE Topology</title>
 
+    <author initials="C." surname="Yu" fullname="Chaode Yu">
+      <organization>Huawei Technologies</organization>
+      <address>
+        <email>yuchaode@huawei.com</email>
+      </address>
+    </author>
     <author initials="H." surname="Zheng" fullname="Haomian Zheng">
       <organization>Huawei Technologies</organization>
       <address>
@@ -55,13 +61,13 @@
       </address>
     </author>
     <author initials="X." surname="Liu" fullname="Xufeng Liu">
-      <organization>Volta Networks</organization>
+      <organization>Alef Edge</organization>
       <address>
         <email>xufeng.liu.ietf@gmail.com</email>
       </address>
     </author>
 
-    <date year="2023" month="September" day="11"/>
+    <date year="2023" month="September" day="12"/>
 
     
     <workgroup>CCAMP Working Group</workgroup>
@@ -70,9 +76,7 @@
     <abstract>
 
 
-<t>A transport network is a server-layer network to provide connectivity
-   services to its client.  In this draft the topology of Ethernet with
-   TE is described with YANG data model.</t>
+<t>This document describes a YANG data model for Ethernet networks when used either as a client-layer network of an underlay transport network (e.g., an Optical Transport Network (OTN)) or as a transport network technology.</t>
 
 
 
@@ -87,57 +91,183 @@
 
 <section anchor="introduction"><name>Introduction</name>
 
+<t>To be added</t>
+
 <t>A transport network is a server-layer network designed to provide
    connectivity services for a client-layer network to carry the client
-   traffic transparently across the server-layer network resources.  The
-   topology model in Traffic-Engineered network has been defined in both
-   generic way and technology-specific way.  The generic model, which is
-   the base TE YANG model, can be found at <xref target="RFC8795"/>.  Technology-
-   specific models, such as OTN/WSON topology model, have also been
-   defined in <xref target="I-D.ietf-ccamp-otn-topo-yang"/> and <xref target="RFC9094"/> respectively.
-   Corresponding topology on client-layer is also required, to have a
-   complete topology view from the perspective of network controllers.</t>
+   traffic transparently across the server-layer network resources.</t>
 
-<t>This document defines a data model of all client-layer Topology,
-   using YANG language defined in <xref target="RFC7950"/>.  The model is augmenting
-   the generic TE topology model, and can be used by either applications
-   exposing to a network controller or among controllers.  Furthermore,
-   it can be used by an application for topology description in client-
-   layer network.</t>
+<t>A transport network typically utilizes several different transport technologies such as the Optical Transport Networks (OTN) or packet transport such as provided by the MPLS-Transport Profile (MPLS-TP).</t>
 
-</section>
+<t>An Ethernet network can be either a client-layer network of an underlay transport network or a transport network technology.</t>
+
+<t>This document describes a YANG data model for Ethernet networks when used either a client-layer network of an underlay transport network (e.g., an Optical Transport Network (OTN)) or a transport network technology.</t>
+
+<t>The YANG model defined in this document augments from the TE topology YANG model defined in <xref target="RFC8795"/>, and imports from the generic Ethernet types defined in <xref target="I-D.ietf-ccamp-client-signal-yang"/>.</t>
+
+<t>The YANG data model in this document conforms to the Network Management Datastore Architecture defined in <xref target="RFC8342"/>.</t>
+
 <section anchor="terminology-and-notations"><name>Terminology and Notations</name>
 
-<t>A simplified graphical representation of the data model is used in
-   this document.  The meaning of the symbols in the YANG data tree
-   presented later in this document is defined in <xref target="RFC8340"/>.  They are
-   provided below for reference.</t>
+<t>The following terms are defined in <xref target="RFC7950"/> and are not redefined
+here:</t>
 
 <t><list style="symbols">
-  <t>Brackets "[" and "]" enclose list keys.</t>
-  <t>Abbreviations before data node names: "rw" means configuration
-  (read-write) and "ro" state data (read-only).</t>
-  <t>Symbols after data node names: "?" means an optional node, "!"
-  means a presence container, and "*" denotes a list and leaf-list.</t>
-  <t>Parentheses enclose choice and case nodes, and case nodes are also
-  marked with a colon (":").</t>
-  <t>Ellipsis ("...") stands for contents of subtrees that are not
-  shown.</t>
+  <t>client</t>
+  <t>server</t>
+  <t>augment</t>
+  <t>data model</t>
+  <t>data node</t>
+</list></t>
+
+<t>The following terms are defined in <xref target="RFC6241"/> and are not redefined
+here:</t>
+
+<t><list style="symbols">
+  <t>configuration data</t>
+  <t>state data</t>
+</list></t>
+
+<t>The terminology for describing YANG data models is found in
+<xref target="RFC7950"/>.</t>
+
+</section>
+<section anchor="tree-diagram"><name>Tree Diagram</name>
+
+<t>A simplified graphical representation of the data model is used in
+<xref target="eth-topology-tree"/> of this document.  The meaning of the symbols in these
+diagrams is defined in <xref target="RFC8340"/>.</t>
+
+</section>
+<section anchor="prefix-in-data-node-names"><name>Prefix in Data Node Names</name>
+
+<t>In this document, the names of data nodes and other data model
+objects are prefixed using the standard prefix associated with the
+corresponding YANG imported modules, as shown in <xref target="tab-prefixes"/>.</t>
+
+<t>In this document, names of data nodes and other data model objects
+  are prefixed using the standard prefix associated with the
+  corresponding YANG imported modules, as shown in <xref target="tab-prefixes"/>.</t>
+
+<texttable title="Prefixes and corresponding YANG modules" anchor="tab-prefixes">
+      <ttcol align='left'>Prefix</ttcol>
+      <ttcol align='left'>YANG module</ttcol>
+      <ttcol align='left'>Reference</ttcol>
+      <c>yang</c>
+      <c>ietf-yang-types</c>
+      <c><xref target="RFC6991"/></c>
+      <c>etht-types</c>
+      <c>ietf-eth-tran-types</c>
+      <c>[RFCYYYY]</c>
+      <c>nw</c>
+      <c>ietf-network</c>
+      <c><xref target="RFC8345"/></c>
+      <c>nt</c>
+      <c>ietf-network-topology</c>
+      <c><xref target="RFC8345"/></c>
+      <c>tet</c>
+      <c>ietf-te-topology</c>
+      <c><xref target="RFC8795"/></c>
+      <c>eth-tet</c>
+      <c>ietf-eth-te-topology</c>
+      <c>RFCXXXX</c>
+</texttable>
+
+<t>RFC Editor Note: Please replace YYYY and XXXX with the number
+assigned to the RFC once this draft becomes an RFC.</t>
+
+</section>
+</section>
+<section anchor="eth-topo-overview"><name>Ethernet Topology Model Overview</name>
+
+<t>This document aims to describe the data model for Ethernet topology.</t>
+
+<t>As a classic Traffic-engineering (TE) technology, Ethernet can provide packet
+switching in transport network <xref target="ITU_G.8021"/>.</t>
+
+<t>Therefore, the YANG
+module presented in this document augments from a more generic
+Traffic Engineered (TE) network topology data model, i.e., the ietf-
+te-topology, as specified in <xref target="RFC8795"/>.  In section 6 of <xref target="RFC8795"/>,
+the guideline for augmenting TE topology model was provided, and in
+this draft, we augment the TE topology model to describe the topology
+in Ethernet network.  Common types, identities and groupings defined in
+<xref target="I-D.ietf-ccamp-client-signal-yang"/> is reused in this document.  <xref target="RFC8345"/>
+describes a network topology model and provides the fundamental model
+for <xref target="RFC8795"/>.  However, this work is not directly augmenting
+<xref target="RFC8345"/>.  <xref target="fig-eth-topo"/> shows the augmentation relationship.</t>
+
+<figure title="Relationship between Ethernet and TE topology models" anchor="fig-eth-topo"><artwork type="ascii-art"><![CDATA[
+                      +-------------------------+
+         TE generic   |    ietf-te-topology     |
+                      +------------+------------+
+                                   ^
+                                   |
+                                   | Augments
+                                   |
+                      +------------+------------+
+         Ethernet     |  ietf-eth-te-topology   |
+                      +-------------------------+
+]]></artwork></figure>
+
+<t>The entities and TE attributes, such as node, termination points and
+   links, are still applicable for describing an Ethernet topology and the
+   model presented in this document only specifies technology-specific
+   attributes/information.</t>
+
+<section anchor="attributes-augmentation"><name>Attributes Augmentation</name>
+
+<t>Given the guidance for augmentation in <xref target="RFC8795"/>, the following
+  technology-specific augmentations need to be provided:</t>
+
+<t><list style="symbols">
+  <t>A network-type to indicate that the TE topology is an Ethernet
+Topology, as follow:</t>
+</list></t>
+
+<figure><artwork><![CDATA[
+       augment /nw:networks/nw:network/nw:network-types/tet:te-topology:
+         +--rw eth-tran-topology!
+]]></artwork></figure>
+
+<t><list style="symbols">
+  <t>TE Bandwidth Augmentations as described in <xref target="eth-bandwidth"/>.</t>
+  <t>TE Label Augmentations as described in <xref target="eth-label"/>.</t>
 </list></t>
 
 </section>
-<section anchor="yang-model-for-topology-of-client-layer"><name>YANG Model for Topology of Client Layer</name>
+<section anchor="eth-bandwidth"><name>TE Bandwidth Augmentations</name>
 
-<section anchor="yang-tree-for-ethernet-topology"><name>YANG Tree for Ethernet Topology</name>
+<t>Following the guidelines in <xref target="RFC8795"/>, the model augments
+all the occurrences of the te-bandwidth container with the Ethernet technology
+specific attributes using the eth-bandwidth grouping defined in <xref target="I-D.ietf-ccamp-client-signal-yang"/>.</t>
+
+</section>
+<section anchor="eth-label"><name>TE Label Augmentations</name>
+
+<t>The model augments all the occurrences of the label-restriction list
+with Ethernet technology specific attributes using the eth-label-restriction grouping defined in <xref target="I-D.ietf-ccamp-client-signal-yang"/>.</t>
+
+<t>Moreover, following the guidelines in <xref target="RFC8795"/>, the model augments
+all the occurrences of the te-label container with the Ethernet technology
+specific attributes using the eth-label and
+eth-label-step groupings defined in <xref target="I-D.ietf-ccamp-client-signal-yang"/>.</t>
+
+</section>
+</section>
+<section anchor="eth-topology-tree"><name>YANG Tree for Ethernet Topology</name>
 
 <figure title="Ethernet topology YANG tree" anchor="fig-eth-topology-tree"><artwork type="ascii-art" name="ietf-eth-te-topology.tree"><![CDATA[
+=============== NOTE: '\' line wrapping per RFC 8792 ================
+
 module: ietf-eth-te-topology
 
   augment /nw:networks/nw:network/nw:network-types/tet:te-topology:
     +--rw eth-tran-topology!
   augment /nw:networks/nw:network/nw:node/nt:termination-point:
     +--rw ltp-mac-address?                          yang:mac-address
-    +--rw port-vlan-id?                             etht-types:vlanid
+    +--rw port-vlan-id?                             etht-types:vlani\
+d
     +--rw maximum-frame-size?                       uint16
     +--rw (direction)?
     |  +--:(symmetrical)
@@ -205,8 +335,10 @@ module: ietf-eth-te-topology
                 +--rw supported-tag-types*   etht-types:eth-tag-type
                 +--rw vlan-range?
                         etht-types:vid-range-type
-  augment /nw:networks/nw:network/nw:node/nt:termination-point/tet:te
-            /tet:interface-switching-capability/tet:max-lsp-bandwidth
+  augment /nw:networks/nw:network/nw:node/nt:termination-point/tet:t\
+e
+            /tet:interface-switching-capability/tet:max-lsp-bandwidt\
+h
             /tet:te-bandwidth/tet:technology:
     +--:(eth)
        +--rw eth-bandwidth?   uint64
@@ -233,7 +365,8 @@ module: ietf-eth-te-topology
     +--:(eth)
        +--ro eth-bandwidth?   uint64
   augment /nw:networks/nw:network/nw:node/tet:te
-            /tet:tunnel-termination-point/tet:client-layer-adaptation
+            /tet:tunnel-termination-point/tet:client-layer-adaptatio\
+n
             /tet:switching-capability/tet:te-bandwidth
             /tet:technology:
     +--:(eth)
@@ -253,7 +386,8 @@ module: ietf-eth-te-topology
        +--rw eth-bandwidth?   uint64
   augment /nw:networks/nw:network/nt:link/tet:te
             /tet:te-link-attributes
-            /tet:interface-switching-capability/tet:max-lsp-bandwidth
+            /tet:interface-switching-capability/tet:max-lsp-bandwidt\
+h
             /tet:te-bandwidth/tet:technology:
     +--:(eth)
        +--rw eth-bandwidth?   uint64
@@ -274,7 +408,8 @@ module: ietf-eth-te-topology
        +--rw eth-bandwidth?   uint64
   augment /nw:networks/nw:network/nt:link/tet:te
             /tet:information-source-entry
-            /tet:interface-switching-capability/tet:max-lsp-bandwidth
+            /tet:interface-switching-capability/tet:max-lsp-bandwidt\
+h
             /tet:te-bandwidth/tet:technology:
     +--:(eth)
        +--ro eth-bandwidth?   uint64
@@ -284,7 +419,8 @@ module: ietf-eth-te-topology
     +--:(eth)
        +--ro eth-bandwidth?   uint64
   augment /nw:networks/nw:network/nt:link/tet:te
-            /tet:information-source-entry/tet:max-resv-link-bandwidth
+            /tet:information-source-entry/tet:max-resv-link-bandwidt\
+h
             /tet:te-bandwidth/tet:technology:
     +--:(eth)
        +--ro eth-bandwidth?   uint64
@@ -295,7 +431,8 @@ module: ietf-eth-te-topology
        +--ro eth-bandwidth?   uint64
   augment /nw:networks/tet:te/tet:templates/tet:link-template
             /tet:te-link-attributes
-            /tet:interface-switching-capability/tet:max-lsp-bandwidth
+            /tet:interface-switching-capability/tet:max-lsp-bandwidt\
+h
             /tet:te-bandwidth/tet:technology:
     +--:(eth)
        +--rw eth-bandwidth?   uint64
@@ -722,7 +859,8 @@ module: ietf-eth-te-topology
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:tunnel-termination-point
             /tet:local-link-connectivities
-            /tet:local-link-connectivity/tet:underlay/tet:backup-path
+            /tet:local-link-connectivity/tet:underlay/tet:backup-pat\
+h
             /tet:path-element/tet:type/tet:label/tet:label-hop
             /tet:te-label/tet:technology:
     +--:(eth)
@@ -848,12 +986,9 @@ module: ietf-eth-te-topology
 ]]></artwork></figure>
 
 </section>
-</section>
-<section anchor="yang-code-for-topology-client-layer"><name>YANG Code for Topology Client Layer</name>
+<section anchor="eth-topology-yang"><name>Ethernet Topology YANG Code</name>
 
-<section anchor="the-eth-topology-yang-code"><name>The ETH Topology YANG Code</name>
-
-<figure title="Ethernet topology YANG module" anchor="fig-te-yang"><sourcecode type="yang" markers="true" name="ietf-eth-te-topology@2019-11-18.yang"><![CDATA[
+<figure title="Ethernet topology YANG module" anchor="fig-te-yang"><sourcecode type="yang" markers="true" name="ietf-eth-te-topology@2023-09-08.yang"><![CDATA[
 module ietf-eth-te-topology {
 
   namespace "urn:ietf:params:xml:ns:yang:ietf-eth-te-topology";
@@ -2862,29 +2997,6 @@ module ietf-eth-te-topology {
 ]]></sourcecode></figure>
 
 </section>
-</section>
-<section anchor="considerations-and-open-issue"><name>Considerations and Open Issue</name>
-
-<t>Editor Notes: This section is used to note temporary discussion/
-   conclusion that to be fixed in the future version, and will be
-   removed before publication.</t>
-
-<t>Update in draft-zheng-ccamp-client-topo-yang-10: there is no open
-   issue in this version.</t>
-
-<t>201902: we have noticed that Ethernet is the only client signal (on
-   the perspective of OTN) which need a topology.  So it is possible
-   that the title of this document will be changed to "A YANG Data Model
-   for Ethernet Topology".  The proposal of this work is that the
-   document will follow up the progress of draft-zheng-ccamp-client-
-   signal-yang, with draft-zheng-ccamp-client-tunnel-yang together.
-   (solved in -06)</t>
-
-<t>201902: will have to align with TE topology model, currently is a
-   totally different format with necessary parameters, a big change is
-   expected.  (solved in -06.)</t>
-
-</section>
 <section anchor="iana-considerations"><name>IANA Considerations</name>
 
 <t>It is proposed that IANA should assign new URIs from the "IETF XML
@@ -2902,7 +3014,7 @@ module ietf-eth-te-topology {
 <figure><artwork><![CDATA[
       name:      ietf-eth-te-topology
       namespace: urn:ietf:params:xml:ns:yang:ietf-eth-te-topology
-      prefix:    ethtetopo
+      prefix:    eth-tet
       reference: RFC XXXX
 ]]></artwork></figure>
 
@@ -2946,6 +3058,16 @@ module ietf-eth-te-topology {
 
     <references title='Normative References'>
 
+<reference anchor="ITU_G.8021" >
+  <front>
+    <title>Generic protection switching - Linear trail and subnetwork protection</title>
+    <author >
+      <organization>ITU-T Recommendation G.808.1</organization>
+    </author>
+    <date year="2014" month="May"/>
+  </front>
+  <seriesInfo name="ITU-T G.808.1" value=""/>
+</reference>
 
 
 <reference anchor='RFC8795' target='https://www.rfc-editor.org/info/rfc8795'>
@@ -2967,40 +3089,62 @@ module ietf-eth-te-topology {
 </reference>
 
 
-<reference anchor='I-D.ietf-ccamp-otn-topo-yang' target='https://datatracker.ietf.org/doc/html/draft-ietf-ccamp-otn-topo-yang-17'>
+<reference anchor='I-D.ietf-ccamp-client-signal-yang' target='https://datatracker.ietf.org/doc/html/draft-ietf-ccamp-client-signal-yang-09'>
    <front>
-      <title>A YANG Data Model for Optical Transport Network Topology</title>
+      <title>A YANG Data Model for Transport Network Client Signals</title>
       <author fullname='Haomian Zheng' initials='H.' surname='Zheng'>
          <organization>Huawei Technologies</organization>
+      </author>
+      <author fullname='Aihua Guo' initials='A.' surname='Guo'>
+         <organization>Futurewei</organization>
       </author>
       <author fullname='Italo Busi' initials='I.' surname='Busi'>
          <organization>Huawei Technologies</organization>
       </author>
-      <author fullname='Xufeng Liu' initials='X.' surname='Liu'>
-         <organization>IBM Corporation</organization>
+      <author fullname='Anton Snitser' initials='A.' surname='Snitser'>
+         <organization>Cisco</organization>
       </author>
-      <author fullname='Sergio Belotti' initials='S.' surname='Belotti'>
-         <organization>Nokia</organization>
+      <author fullname='Francesco Lazzeri' initials='F.' surname='Lazzeri'>
+         <organization>Ericsson</organization>
       </author>
-      <author fullname='Oscar Gonzalez de Dios' initials='O. G.' surname='de Dios'>
-         <organization>Telefonica</organization>
-      </author>
-      <date day='10' month='July' year='2023'/>
+      <date day='9' month='July' year='2023'/>
       <abstract>
-	 <t>   This document describes a YANG data model to describe the topologies
-   of an Optical Transport Network (OTN).  It is independent of control
-   plane protocols and captures topological and resource-related
-   information pertaining to OTN.  This model enables clients, which
-   interact with a transport domain controller, for OTN topology-related
-   operations such as obtaining the relevant topology resource
-   information.
+	 <t>   A transport network is a server-layer network to provide connectivity
+   services to its client.  The topology and tunnel information in the
+   transport layer has already been defined by generic Traffic-
+   engineered models and technology-specific models (e.g., OTN, WSON).
+   However, how the client signals are accessing to the network has not
+   been described.  These information is necessary to both client and
+   provider.
 
+   This draft describes how the client signals are carried over
+   transport network and defines YANG data models which are required
+   during configuration procedure.  More specifically, several client
+   signal (of transport network) models including ETH, STM-n, FC and so
+   on, are defined in this draft.
 
 	 </t>
       </abstract>
    </front>
-   <seriesInfo name='Internet-Draft' value='draft-ietf-ccamp-otn-topo-yang-17'/>
+   <seriesInfo name='Internet-Draft' value='draft-ietf-ccamp-client-signal-yang-09'/>
    
+</reference>
+
+<reference anchor='RFC8342' target='https://www.rfc-editor.org/info/rfc8342'>
+  <front>
+    <title>Network Management Datastore Architecture (NMDA)</title>
+    <author fullname='M. Bjorklund' initials='M.' surname='Bjorklund'/>
+    <author fullname='J. Schoenwaelder' initials='J.' surname='Schoenwaelder'/>
+    <author fullname='P. Shafer' initials='P.' surname='Shafer'/>
+    <author fullname='K. Watsen' initials='K.' surname='Watsen'/>
+    <author fullname='R. Wilton' initials='R.' surname='Wilton'/>
+    <date month='March' year='2018'/>
+    <abstract>
+      <t>Datastores are a fundamental concept binding the data models written in the YANG data modeling language to network management protocols such as the Network Configuration Protocol (NETCONF) and RESTCONF. This document defines an architectural framework for datastores based on the experience gained with the initial simpler model, addressing requirements that were not well supported in the initial model. This document updates RFC 7950.</t>
+    </abstract>
+  </front>
+  <seriesInfo name='RFC' value='8342'/>
+  <seriesInfo name='DOI' value='10.17487/RFC8342'/>
 </reference>
 
 <reference anchor='RFC7950' target='https://www.rfc-editor.org/info/rfc7950'>
@@ -3014,6 +3158,53 @@ module ietf-eth-te-topology {
   </front>
   <seriesInfo name='RFC' value='7950'/>
   <seriesInfo name='DOI' value='10.17487/RFC7950'/>
+</reference>
+
+<reference anchor='RFC6241' target='https://www.rfc-editor.org/info/rfc6241'>
+  <front>
+    <title>Network Configuration Protocol (NETCONF)</title>
+    <author fullname='R. Enns' initials='R.' role='editor' surname='Enns'/>
+    <author fullname='M. Bjorklund' initials='M.' role='editor' surname='Bjorklund'/>
+    <author fullname='J. Schoenwaelder' initials='J.' role='editor' surname='Schoenwaelder'/>
+    <author fullname='A. Bierman' initials='A.' role='editor' surname='Bierman'/>
+    <date month='June' year='2011'/>
+    <abstract>
+      <t>The Network Configuration Protocol (NETCONF) defined in this document provides mechanisms to install, manipulate, and delete the configuration of network devices. It uses an Extensible Markup Language (XML)-based data encoding for the configuration data as well as the protocol messages. The NETCONF protocol operations are realized as remote procedure calls (RPCs). This document obsoletes RFC 4741. [STANDARDS-TRACK]</t>
+    </abstract>
+  </front>
+  <seriesInfo name='RFC' value='6241'/>
+  <seriesInfo name='DOI' value='10.17487/RFC6241'/>
+</reference>
+
+<reference anchor='RFC6991' target='https://www.rfc-editor.org/info/rfc6991'>
+  <front>
+    <title>Common YANG Data Types</title>
+    <author fullname='J. Schoenwaelder' initials='J.' role='editor' surname='Schoenwaelder'/>
+    <date month='July' year='2013'/>
+    <abstract>
+      <t>This document introduces a collection of common data types to be used with the YANG data modeling language. This document obsoletes RFC 6021.</t>
+    </abstract>
+  </front>
+  <seriesInfo name='RFC' value='6991'/>
+  <seriesInfo name='DOI' value='10.17487/RFC6991'/>
+</reference>
+
+<reference anchor='RFC8345' target='https://www.rfc-editor.org/info/rfc8345'>
+  <front>
+    <title>A YANG Data Model for Network Topologies</title>
+    <author fullname='A. Clemm' initials='A.' surname='Clemm'/>
+    <author fullname='J. Medved' initials='J.' surname='Medved'/>
+    <author fullname='R. Varga' initials='R.' surname='Varga'/>
+    <author fullname='N. Bahadur' initials='N.' surname='Bahadur'/>
+    <author fullname='H. Ananthakrishnan' initials='H.' surname='Ananthakrishnan'/>
+    <author fullname='X. Liu' initials='X.' surname='Liu'/>
+    <date month='March' year='2018'/>
+    <abstract>
+      <t>This document defines an abstract (generic, or base) YANG data model for network/service topologies and inventories. The data model serves as a base model that is augmented with technology-specific details in other, more specific topology and inventory data models.</t>
+    </abstract>
+  </front>
+  <seriesInfo name='RFC' value='8345'/>
+  <seriesInfo name='DOI' value='10.17487/RFC8345'/>
 </reference>
 
 <reference anchor='RFC3688' target='https://www.rfc-editor.org/info/rfc3688'>
@@ -3045,22 +3236,6 @@ module ietf-eth-te-topology {
   <seriesInfo name='DOI' value='10.17487/RFC8040'/>
 </reference>
 
-<reference anchor='RFC6241' target='https://www.rfc-editor.org/info/rfc6241'>
-  <front>
-    <title>Network Configuration Protocol (NETCONF)</title>
-    <author fullname='R. Enns' initials='R.' role='editor' surname='Enns'/>
-    <author fullname='M. Bjorklund' initials='M.' role='editor' surname='Bjorklund'/>
-    <author fullname='J. Schoenwaelder' initials='J.' role='editor' surname='Schoenwaelder'/>
-    <author fullname='A. Bierman' initials='A.' role='editor' surname='Bierman'/>
-    <date month='June' year='2011'/>
-    <abstract>
-      <t>The Network Configuration Protocol (NETCONF) defined in this document provides mechanisms to install, manipulate, and delete the configuration of network devices. It uses an Extensible Markup Language (XML)-based data encoding for the configuration data as well as the protocol messages. The NETCONF protocol operations are realized as remote procedure calls (RPCs). This document obsoletes RFC 4741. [STANDARDS-TRACK]</t>
-    </abstract>
-  </front>
-  <seriesInfo name='RFC' value='6241'/>
-  <seriesInfo name='DOI' value='10.17487/RFC6241'/>
-</reference>
-
 
 
 
@@ -3069,23 +3244,6 @@ module ietf-eth-te-topology {
     <references title='Informative References'>
 
 
-
-<reference anchor='RFC9094' target='https://www.rfc-editor.org/info/rfc9094'>
-  <front>
-    <title>A YANG Data Model for Wavelength Switched Optical Networks (WSONs)</title>
-    <author fullname='H. Zheng' initials='H.' surname='Zheng'/>
-    <author fullname='Y. Lee' initials='Y.' surname='Lee'/>
-    <author fullname='A. Guo' initials='A.' surname='Guo'/>
-    <author fullname='V. Lopez' initials='V.' surname='Lopez'/>
-    <author fullname='D. King' initials='D.' surname='King'/>
-    <date month='August' year='2021'/>
-    <abstract>
-      <t>This document provides a YANG data model for the routing and wavelength assignment (RWA) TE topology in Wavelength Switched Optical Networks (WSONs). The YANG data model defined in this document conforms to the Network Management Datastore Architecture (NMDA).</t>
-    </abstract>
-  </front>
-  <seriesInfo name='RFC' value='9094'/>
-  <seriesInfo name='DOI' value='10.17487/RFC9094'/>
-</reference>
 
 <reference anchor='RFC8340' target='https://www.rfc-editor.org/info/rfc8340'>
   <front>
@@ -3152,207 +3310,219 @@ module ietf-eth-te-topology {
   </back>
 
 <!-- ##markdown-source:
-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
-DEkdo6lJBdMY6wY8tcWdGSTQiYbDUEvdwfbcMcmM6C0fRSOrHwDWLcl/Z1XE
-IpDj6fdm3yMHwprKsI5/0tf/ULc6R+CGRgzWDeDljtM7fyT9wF+hNBbT//QA
-emPugNLBofTTlY/ukQ421UqJ9FOh7R/TMpd3LB3j/PJjhfQo/PfPyzu9ul6+
-08V9Rrq4z0g4+wOLjmHyFjr3hAD/41X0iiBeeQOr79LBT7N6KXvTUoOTosGr
-LU0MeMyztMntMpY2x1jY0rlOi+rf7LSwpXOd7jPS4pbO91rU0iT1jwtYkyxh
-TXJPa5L7WJPcx5rkPtYk97EmuZc1yZLWzOKcvLG/0tcyGjrd7VMbCBUZz5FJ
-u8jIx3jEHMt2qZS4YksTMhKzaYStfKOfSsim7VWEqyZKcu1COliMdtpNRBCr
-sV/h7h/TkiFxhcxvptuWwFclERk/k6oBFOM9WA27OW2XM53vBSnKIJlJZpPk
-YwZ+7ujmxiQqqEIyyPycEl2UtFhYyyUIqdQjuY8eyRw9ztImma9N4zNfm0VJ
-FVkBy3hjRZtraoZNo2HCfZHrtJ9RMioOUmaKvJy+8M07fxRvzieWdoHkUfUA
-+5hpLHq1F1WjR3Jo3pq+m41fMTypnrwF/spAR0rRlbNjmWIK6EibJJ/56DA5
-L5lrhRZKE1mzGZDI0X2IwGS+wMZnpsAPWSvFS7P8yOoi3GQBhCVYp8DSFjcQ
-wC1Qn/a4y8OJaoKIdKWf5SYlZGDZl96OLyRFx2yd1jkCAY8LUxuVl3ZFk2Tx
-e1GJK4UDrrCBRUO93xKvUc1yM6wa0VcwWdLdp7i/CXMWfAMwJXdX0ul2t6Ua
-2BrL4951MNIzQBf3LYZ7qpuzv6i/vBtAwXq1EkYgkGuVu0OzbG9Rh/phPhPO
-yFR6RlPqUqXUYCZU6aCkqSswZ4Jc77NlQIHHvmRrfcEqNLBw20m9dQVsA8Mz
-44iSKIsju5YzLK+BTCC8vlMSBUze7JhYkYfbRcEN5OvbJ1NVGK/fJHxY4L6v
-HtY/FTcs13on5AaFW/O0XF4yTTz+Z+Tjxr2+qLSfXNqbELlCddQxXq5DvLoF
-z1XLWOtIuuaCiEt7sGQA+bGFqtuWX84dQkhqgCjKzPJgXI4MuAiAj0TyF9sk
-eGVXGdIgTGGFl5YDhT5OUVBhdsZi6/XDPKfRzgz0MH95J4K9klmkj9NsWhGR
-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
-ZYzZYqRG0eynqSZK///nULhrwK8BAA==
+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
+STljrhipUTT7XLoJ+Cst/f8DfUybLxq9AQA=
 
 -->
 
