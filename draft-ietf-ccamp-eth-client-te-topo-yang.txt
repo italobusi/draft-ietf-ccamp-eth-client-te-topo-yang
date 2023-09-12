@@ -82,12 +82,12 @@ Table of Contents
    5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  63
    6.  Manageability Considerations  . . . . . . . . . . . . . . . .  63
    7.  Security Considerations . . . . . . . . . . . . . . . . . . .  63
-   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  64
+   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  63
      8.1.  Normative References  . . . . . . . . . . . . . . . . . .  64
      8.2.  Informative References  . . . . . . . . . . . . . . . . .  65
    Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  65
    Contributors  . . . . . . . . . . . . . . . . . . . . . . . . . .  65
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  66
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  65
 
 1.  Introduction
 
@@ -289,16 +289,13 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 3.  YANG Tree for Ethernet Topology
 
-   =============== NOTE: '\' line wrapping per RFC 8792 ================
-
    module: ietf-eth-te-topology
 
      augment /nw:networks/nw:network/nw:network-types/tet:te-topology:
        +--rw eth-tran-topology!
      augment /nw:networks/nw:network/nw:node/nt:termination-point:
        +--rw ltp-mac-address?                          yang:mac-address
-       +--rw port-vlan-id?                             etht-types:vlani\
-   d
+       +--rw port-vlan-id?                             etht-types:vlanid
        +--rw maximum-frame-size?                       uint16
        +--rw (direction)?
        |  +--:(symmetrical)
@@ -330,6 +327,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
        |        +--rw EBS?                      uint64
        |        +--rw color-aware?              boolean
        |        +--rw coupling-flag?            boolean
+       +--rw eth-svc!
+          +--rw client-facing?               boolean
+          +--rw supported-classification
 
 
 
@@ -338,9 +338,6 @@ Yu, et al.                Expires 15 March 2024                 [Page 6]
 Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
-       +--rw eth-svc!
-          +--rw client-facing?               boolean
-          +--rw supported-classification
           |  +--rw port-classification?   boolean
           |  +--rw vlan-classification
           |     +--rw vlan-tag-classification?   boolean
@@ -374,10 +371,8 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
                    +--rw supported-tag-types*   etht-types:eth-tag-type
                    +--rw vlan-range?
                            etht-types:vid-range-type
-     augment /nw:networks/nw:network/nw:node/nt:termination-point/tet:t\
-   e
-               /tet:interface-switching-capability/tet:max-lsp-bandwidt\
-   h
+     augment /nw:networks/nw:network/nw:node/nt:termination-point/tet:te
+               /tet:interface-switching-capability/tet:max-lsp-bandwidth
                /tet:te-bandwidth/tet:technology:
        +--:(eth)
           +--rw eth-bandwidth?   uint64
@@ -386,6 +381,11 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
                /tet:path-constraints/tet:te-bandwidth/tet:technology:
        +--:(eth)
           +--rw eth-bandwidth?   uint64
+     augment /nw:networks/nw:network/nw:node/tet:te
+               /tet:te-node-attributes/tet:connectivity-matrices
+               /tet:connectivity-matrix/tet:path-constraints
+               /tet:te-bandwidth/tet:technology:
+       +--:(eth)
 
 
 
@@ -394,11 +394,6 @@ Yu, et al.                Expires 15 March 2024                 [Page 7]
 Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
-     augment /nw:networks/nw:network/nw:node/tet:te
-               /tet:te-node-attributes/tet:connectivity-matrices
-               /tet:connectivity-matrix/tet:path-constraints
-               /tet:te-bandwidth/tet:technology:
-       +--:(eth)
           +--rw eth-bandwidth?   uint64
      augment /nw:networks/nw:network/nw:node/tet:te
                /tet:information-source-entry/tet:connectivity-matrices
@@ -412,8 +407,7 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
        +--:(eth)
           +--ro eth-bandwidth?   uint64
      augment /nw:networks/nw:network/nw:node/tet:te
-               /tet:tunnel-termination-point/tet:client-layer-adaptatio\
-   n
+               /tet:tunnel-termination-point/tet:client-layer-adaptation
                /tet:switching-capability/tet:te-bandwidth
                /tet:technology:
        +--:(eth)
@@ -433,8 +427,7 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
           +--rw eth-bandwidth?   uint64
      augment /nw:networks/nw:network/nt:link/tet:te
                /tet:te-link-attributes
-               /tet:interface-switching-capability/tet:max-lsp-bandwidt\
-   h
+               /tet:interface-switching-capability/tet:max-lsp-bandwidth
                /tet:te-bandwidth/tet:technology:
        +--:(eth)
           +--rw eth-bandwidth?   uint64
@@ -442,6 +435,13 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
                /tet:te-link-attributes/tet:max-link-bandwidth
                /tet:te-bandwidth/tet:technology:
        +--:(eth)
+          +--rw eth-bandwidth?   uint64
+     augment /nw:networks/nw:network/nt:link/tet:te
+               /tet:te-link-attributes/tet:max-resv-link-bandwidth
+               /tet:te-bandwidth/tet:technology:
+       +--:(eth)
+          +--rw eth-bandwidth?   uint64
+     augment /nw:networks/nw:network/nt:link/tet:te
 
 
 
@@ -450,21 +450,13 @@ Yu, et al.                Expires 15 March 2024                 [Page 8]
 Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
-          +--rw eth-bandwidth?   uint64
-     augment /nw:networks/nw:network/nt:link/tet:te
-               /tet:te-link-attributes/tet:max-resv-link-bandwidth
-               /tet:te-bandwidth/tet:technology:
-       +--:(eth)
-          +--rw eth-bandwidth?   uint64
-     augment /nw:networks/nw:network/nt:link/tet:te
                /tet:te-link-attributes/tet:unreserved-bandwidth
                /tet:te-bandwidth/tet:technology:
        +--:(eth)
           +--rw eth-bandwidth?   uint64
      augment /nw:networks/nw:network/nt:link/tet:te
                /tet:information-source-entry
-               /tet:interface-switching-capability/tet:max-lsp-bandwidt\
-   h
+               /tet:interface-switching-capability/tet:max-lsp-bandwidth
                /tet:te-bandwidth/tet:technology:
        +--:(eth)
           +--ro eth-bandwidth?   uint64
@@ -474,8 +466,7 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
        +--:(eth)
           +--ro eth-bandwidth?   uint64
      augment /nw:networks/nw:network/nt:link/tet:te
-               /tet:information-source-entry/tet:max-resv-link-bandwidt\
-   h
+               /tet:information-source-entry/tet:max-resv-link-bandwidth
                /tet:te-bandwidth/tet:technology:
        +--:(eth)
           +--ro eth-bandwidth?   uint64
@@ -486,8 +477,7 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
           +--ro eth-bandwidth?   uint64
      augment /nw:networks/tet:te/tet:templates/tet:link-template
                /tet:te-link-attributes
-               /tet:interface-switching-capability/tet:max-lsp-bandwidt\
-   h
+               /tet:interface-switching-capability/tet:max-lsp-bandwidth
                /tet:te-bandwidth/tet:technology:
        +--:(eth)
           +--rw eth-bandwidth?   uint64
@@ -498,14 +488,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
           +--rw eth-bandwidth?   uint64
      augment /nw:networks/tet:te/tet:templates/tet:link-template
                /tet:te-link-attributes/tet:max-resv-link-bandwidth
-
-
-
-Yu, et al.                Expires 15 March 2024                 [Page 9]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
                /tet:te-bandwidth/tet:technology:
        +--:(eth)
           +--rw eth-bandwidth?   uint64
@@ -516,6 +498,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
           +--rw eth-bandwidth?   uint64
      augment /nw:networks/nw:network/nw:node/tet:te
                /tet:te-node-attributes/tet:connectivity-matrices
+
+
+
+Yu, et al.                Expires 15 March 2024                 [Page 9]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
                /tet:label-restrictions/tet:label-restriction:
        +--rw tag-type?   etht-types:eth-tag-type
        +--rw priority?   uint8
@@ -554,6 +544,16 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
                /tet:optimizations/tet:algorithm/tet:metric
                /tet:optimization-metric
                /tet:explicit-route-exclude-objects
+               /tet:route-object-exclude-object/tet:type/tet:label
+               /tet:label-hop/tet:te-label/tet:technology:
+       +--:(eth)
+          +--rw vlanid?   etht-types:vlanid
+     augment /nw:networks/nw:network/nw:node/tet:te
+               /tet:te-node-attributes/tet:connectivity-matrices
+               /tet:optimizations/tet:algorithm/tet:metric
+               /tet:optimization-metric
+               /tet:explicit-route-include-objects
+               /tet:route-object-include-object/tet:type/tet:label
 
 
 
@@ -562,16 +562,6 @@ Yu, et al.                Expires 15 March 2024                [Page 10]
 Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
-               /tet:route-object-exclude-object/tet:type/tet:label
-               /tet:label-hop/tet:te-label/tet:technology:
-       +--:(eth)
-          +--rw vlanid?   etht-types:vlanid
-     augment /nw:networks/nw:network/nw:node/tet:te
-               /tet:te-node-attributes/tet:connectivity-matrices
-               /tet:optimizations/tet:algorithm/tet:metric
-               /tet:optimization-metric
-               /tet:explicit-route-include-objects
-               /tet:route-object-include-object/tet:type/tet:label
                /tet:label-hop/tet:te-label/tet:technology:
        +--:(eth)
           +--rw vlanid?   etht-types:vlanid
@@ -610,14 +600,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
           +--rw eth-step?   uint16
      augment /nw:networks/nw:network/nw:node/tet:te
                /tet:te-node-attributes/tet:connectivity-matrices
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 11]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
                /tet:connectivity-matrix/tet:to/tet:label-restrictions
                /tet:label-restriction:
        +--rw tag-type?   etht-types:eth-tag-type
@@ -628,6 +610,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
                /tet:label-restriction/tet:label-start/tet:te-label
                /tet:technology:
        +--:(eth)
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 11]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
           +--rw vlanid?   etht-types:vlanid
      augment /nw:networks/nw:network/nw:node/tet:te
                /tet:te-node-attributes/tet:connectivity-matrices
@@ -666,14 +656,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
        +--:(eth)
           +--rw vlanid?   etht-types:vlanid
      augment /nw:networks/nw:network/nw:node/tet:te
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 12]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
                /tet:te-node-attributes/tet:connectivity-matrices
                /tet:connectivity-matrix/tet:optimizations/tet:algorithm
                /tet:metric/tet:optimization-metric
@@ -684,6 +666,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
           +--rw vlanid?   etht-types:vlanid
      augment /nw:networks/nw:network/nw:node/tet:te
                /tet:te-node-attributes/tet:connectivity-matrices
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 12]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
                /tet:connectivity-matrix/tet:path-properties
                /tet:path-route-objects/tet:path-route-object/tet:type
                /tet:label/tet:label-hop/tet:te-label/tet:technology:
@@ -722,14 +712,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
                /tet:information-source-entry/tet:connectivity-matrices
                /tet:underlay/tet:backup-path/tet:path-element/tet:type
                /tet:label/tet:label-hop/tet:te-label/tet:technology:
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 13]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
        +--:(eth)
           +--ro vlanid?   etht-types:vlanid
      augment /nw:networks/nw:network/nw:node/tet:te
@@ -740,6 +722,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
                /tet:route-object-exclude-object/tet:type/tet:label
                /tet:label-hop/tet:te-label/tet:technology:
        +--:(eth)
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 13]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
           +--ro vlanid?   etht-types:vlanid
      augment /nw:networks/nw:network/nw:node/tet:te
                /tet:information-source-entry/tet:connectivity-matrices
@@ -778,14 +768,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
        +--:(eth)
           +--ro vlanid?   etht-types:vlanid
      augment /nw:networks/nw:network/nw:node/tet:te
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 14]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
                /tet:information-source-entry/tet:connectivity-matrices
                /tet:connectivity-matrix/tet:from/tet:label-restrictions
                /tet:label-restriction/tet:label-step/tet:technology:
@@ -796,6 +778,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
                /tet:connectivity-matrix/tet:to/tet:label-restrictions
                /tet:label-restriction:
        +--ro tag-type?   etht-types:eth-tag-type
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 14]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
        +--ro priority?   uint8
      augment /nw:networks/nw:network/nw:node/tet:te
                /tet:information-source-entry/tet:connectivity-matrices
@@ -834,14 +824,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
      augment /nw:networks/nw:network/nw:node/tet:te
                /tet:information-source-entry/tet:connectivity-matrices
                /tet:connectivity-matrix/tet:optimizations/tet:algorithm
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 15]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
                /tet:metric/tet:optimization-metric
                /tet:explicit-route-exclude-objects
                /tet:route-object-exclude-object/tet:type/tet:label
@@ -852,6 +834,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
                /tet:information-source-entry/tet:connectivity-matrices
                /tet:connectivity-matrix/tet:optimizations/tet:algorithm
                /tet:metric/tet:optimization-metric
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 15]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
                /tet:explicit-route-include-objects
                /tet:route-object-include-object/tet:type/tet:label
                /tet:label-hop/tet:te-label/tet:technology:
@@ -890,14 +880,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
                /tet:label-restriction/tet:label-step/tet:technology:
        +--:(eth)
           +--rw eth-step?   uint16
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 16]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
      augment /nw:networks/nw:network/nw:node/tet:te
                /tet:tunnel-termination-point
                /tet:local-link-connectivities/tet:underlay
@@ -908,6 +890,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
      augment /nw:networks/nw:network/nw:node/tet:te
                /tet:tunnel-termination-point
                /tet:local-link-connectivities/tet:underlay
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 16]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
                /tet:backup-path/tet:path-element/tet:type/tet:label
                /tet:label-hop/tet:te-label/tet:technology:
        +--:(eth)
@@ -946,14 +936,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
        +--rw priority?   uint8
      augment /nw:networks/nw:network/nw:node/tet:te
                /tet:tunnel-termination-point
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 17]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
                /tet:local-link-connectivities
                /tet:local-link-connectivity/tet:label-restrictions
                /tet:label-restriction/tet:label-start/tet:te-label
@@ -964,6 +946,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
                /tet:tunnel-termination-point
                /tet:local-link-connectivities
                /tet:local-link-connectivity/tet:label-restrictions
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 17]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
                /tet:label-restriction/tet:label-end/tet:te-label
                /tet:technology:
        +--:(eth)
@@ -986,8 +976,7 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
      augment /nw:networks/nw:network/nw:node/tet:te
                /tet:tunnel-termination-point
                /tet:local-link-connectivities
-               /tet:local-link-connectivity/tet:underlay/tet:backup-pat\
-   h
+               /tet:local-link-connectivity/tet:underlay/tet:backup-path
                /tet:path-element/tet:type/tet:label/tet:label-hop
                /tet:te-label/tet:technology:
        +--:(eth)
@@ -1002,14 +991,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
                /tet:label-hop/tet:te-label/tet:technology:
        +--:(eth)
           +--rw vlanid?   etht-types:vlanid
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 18]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
      augment /nw:networks/nw:network/nw:node/tet:te
                /tet:tunnel-termination-point
                /tet:local-link-connectivities
@@ -1021,6 +1002,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
        +--:(eth)
           +--rw vlanid?   etht-types:vlanid
      augment /nw:networks/nw:network/nw:node/tet:te
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 18]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
                /tet:tunnel-termination-point
                /tet:local-link-connectivities
                /tet:local-link-connectivity/tet:path-properties
@@ -1058,14 +1047,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
        +--:(eth)
           +--rw vlanid?   etht-types:vlanid
      augment /nw:networks/nw:network/nt:link/tet:te
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 19]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
                /tet:te-link-attributes/tet:label-restrictions
                /tet:label-restriction/tet:label-step/tet:technology:
        +--:(eth)
@@ -1077,6 +1058,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
        +--ro priority?   uint8
      augment /nw:networks/nw:network/nt:link/tet:te
                /tet:information-source-entry/tet:label-restrictions
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 19]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
                /tet:label-restriction/tet:label-start/tet:te-label
                /tet:technology:
        +--:(eth)
@@ -1114,14 +1103,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
                /tet:label-restriction/tet:label-start/tet:te-label
                /tet:technology:
        +--:(eth)
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 20]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
           +--rw vlanid?   etht-types:vlanid
      augment /nw:networks/tet:te/tet:templates/tet:link-template
                /tet:te-link-attributes/tet:label-restrictions
@@ -1133,6 +1114,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
                /tet:te-link-attributes/tet:label-restrictions
                /tet:label-restriction/tet:label-step/tet:technology:
        +--:(eth)
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 20]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
           +--rw eth-step?   uint16
 
                    Figure 2: Ethernet topology YANG tree
@@ -1170,14 +1159,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
        "Internet Engineering Task Force (IETF) CCAMP WG";
      contact
        "
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 21]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
          WG List: <mailto:ccamp@ietf.org>
 
          ID-draft editor:
@@ -1188,6 +1169,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
            Yang Zhao (zhaoyangyjy@chinamobile.com);
            Xufeng Liu (xufeng.liu.ietf@gmail.com);
        ";
+
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 21]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
 
      description
        "This module defines a YANG data model for describing
@@ -1226,14 +1215,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
        container eth-tran-topology {
          presence "indicates a topology type of
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 22]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
                    Ethernet Transport Network.";
          description "Eth transport topology type";
        }
@@ -1245,6 +1226,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
          for the ETH LTP.";
 
        choice direction {
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 22]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
          description
            "Whether the bandwidth profiles are symmetrical or
             asymmetrical";
@@ -1282,14 +1271,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
        description
          "Ethernet transport link termination point attributes";
 
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 23]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
        /*
         * Open Issue: should we remove this attribute
         * (duplicates with I2RS L2 attributes)?
@@ -1301,6 +1282,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
        /*
         * Open Issue: should we remove this attribute
         * (duplicates with I2RS L2 attributes)?
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 23]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
         */
        leaf port-vlan-id {
          type etht-types:vlanid;
@@ -1338,14 +1327,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
            VLAN bundling classification is also supported.";
        }
        leaf vlan-range {
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 24]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
          type etht-types:vid-range-type;
          description
            "In case VLAN classification is supported, indicates the
@@ -1357,6 +1338,13 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
        description
          "Grouping defining the capabilities for VLAN push or swap
           operations.";
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 24]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
 
        leaf-list supported-tag-types {
          type etht-types:eth-tag-type;
@@ -1394,14 +1382,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
            leaf vlan-tag-classification {
              type boolean;
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 25]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
              description
                "Indicates that the ETH LTP supports VLAN service
                classification.";
@@ -1414,6 +1394,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
            }
            container second-tag {
              description
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 25]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
                "Service classification capabilities based on the second
                 VLAN tag, supported by the ETH LTP.";
            /*
@@ -1450,14 +1438,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
          }
          container vlan-pop {
            description
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 26]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
              "Indicates VLAN pop or swap operations capabilities.";
 
            leaf vlan-pop-operations {
@@ -1470,6 +1450,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
              type uint8 {
                range "1..2";
              }
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 26]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
              description
                "Indicates the maximum number of tags that can be
                 popped/swapped.";
@@ -1507,13 +1495,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
        }
      }
 
-
-
-Yu, et al.                Expires 15 March 2024                [Page 27]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
      /*
       * Data nodes
       */
@@ -1524,6 +1505,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
        uses eth-tran-topology-type;
      }
+
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 27]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
 
      augment "/nw:networks/nw:network/nw:node/nt:termination-point" {
        when "../../nw:network-types/tet:te-topology/"
@@ -1562,14 +1551,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
            + "tet:te-bandwidth/tet:technology" {
        when "../../../../../../nw:network-types/tet:te-topology/"
           + "ethtetopo:eth-tran-topology" {
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 28]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
          description "Ethernet TE bandwidth";
        }
        description "Ethernet bandwidth.";
@@ -1581,6 +1562,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
      augment "/nw:networks/nw:network/nw:node/tet:te/"
            + "tet:te-node-attributes/tet:connectivity-matrices/"
            + "tet:path-constraints/tet:te-bandwidth/tet:technology" {
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 28]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
        when "../../../../../../nw:network-types/tet:te-topology/"
           + "ethtetopo:eth-tran-topology" {
          description "Ethernet TE bandwidth";
@@ -1618,14 +1607,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
        description "Ethernet bandwidth.";
        case eth {
          uses etht-types:eth-bandwidth;
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 29]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
        }
      }
 
@@ -1637,6 +1618,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
            + "tet:path-constraints/tet:te-bandwidth/tet:technology" {
        when "../../../../../../../nw:network-types/tet:te-topology/"
           + "ethtetopo:eth-tran-topology" {
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 29]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
          description "Ethernet TE bandwidth";
        }
        description "Ethernet bandwidth.";
@@ -1675,13 +1664,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
        }
      }
 
-
-
-Yu, et al.                Expires 15 March 2024                [Page 30]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
      /* Augment bandwidth path constraints of local-link-connectivity */
      augment "/nw:networks/nw:network/nw:node/tet:te/"
            + "tet:tunnel-termination-point/"
@@ -1692,6 +1674,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
           + "ethtetopo:eth-tran-topology" {
          description "Ethernet TE bandwidth";
        }
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 30]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
        description "Ethernet bandwidth.";
        case eth {
          uses etht-types:eth-bandwidth;
@@ -1730,14 +1720,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
      /* Augment maximum reservable bandwidth of TE link */
      augment "/nw:networks/nw:network/nt:link/tet:te/"
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 31]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
            + "tet:te-link-attributes/"
            + "tet:max-resv-link-bandwidth/"
            + "tet:te-bandwidth/tet:technology" {
@@ -1748,6 +1730,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
        description "Ethernet bandwidth.";
        case eth {
          uses etht-types:eth-bandwidth;
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 31]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
        }
      }
 
@@ -1786,14 +1776,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
            + "tet:information-source-entry/"
            + "tet:max-link-bandwidth/"
            + "tet:te-bandwidth/tet:technology" {
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 32]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
        when "../../../../../nw:network-types/tet:te-topology/"
           + "ethtetopo:eth-tran-topology" {
          description "Ethernet TE bandwidth";
@@ -1803,6 +1785,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
          uses etht-types:eth-bandwidth;
        }
      }
+
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 32]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
 
      /* Augment maximum reservable bandwidth of TE link
       * information-source */
@@ -1842,14 +1832,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
            + "tet:max-lsp-bandwidth/"
            + "tet:te-bandwidth/tet:technology" {
    /*
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 33]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
        when "../../../../../../nw:network-types/tet:te-topology/"
           + "ethtetopo:eth-tran-topology" {
          description "Ethernet TE bandwidth";
@@ -1860,6 +1842,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
          uses etht-types:eth-bandwidth;
        }
      }
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 33]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
      /* Augment maximum bandwidth of TE link template */
      augment "/nw:networks/tet:te/tet:templates/"
            + "tet:link-template/tet:te-link-attributes/"
@@ -1898,14 +1888,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
      augment "/nw:networks/tet:te/tet:templates/"
            + "tet:link-template/tet:te-link-attributes/"
            + "tet:unreserved-bandwidth/"
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 34]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
            + "tet:te-bandwidth/tet:technology" {
    /*
        when "../../../../../../nw:network-types/tet:te-topology/"
@@ -1916,6 +1898,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
        description "Ethernet bandwidth.";
        case eth {
          uses etht-types:eth-bandwidth;
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 34]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
        }
      }
 
@@ -1954,14 +1944,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
      augment "/nw:networks/nw:network/nw:node/tet:te/"
            + "tet:te-node-attributes/tet:connectivity-matrices/"
            + "tet:label-restrictions/tet:label-restriction/tet:label-end/"
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 35]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
            + "tet:te-label/tet:technology" {
        when "../../../../../../../../nw:network-types/tet:te-topology/"
           + "ethtetopo:eth-tran-topology" {
@@ -1972,6 +1954,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
          uses etht-types:eth-label;
        }
      }
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 35]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
      /* Augment label restrictions step of connectivity-matrices */
      augment "/nw:networks/nw:network/nw:node/tet:te/"
            + "tet:te-node-attributes/tet:connectivity-matrices/"
@@ -2010,14 +2000,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
            + "tet:te-node-attributes/tet:connectivity-matrices/"
            + "tet:underlay/tet:backup-path/tet:path-element/"
            + "tet:type/tet:label/tet:label-hop/"
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 36]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
            + "tet:te-label/tet:technology" {
        when "../../../../../../../../../"
           + "nw:network-types/tet:te-topology/"
@@ -2028,6 +2010,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
        case eth {
          uses etht-types:eth-label;
        }
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 36]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
      }
 
      /* Augment label hop of route-exclude of connectivity-matrices */
@@ -2066,14 +2056,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
        }
        description "Ethernet label.";
        case eth {
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 37]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
          uses etht-types:eth-label;
        }
      }
@@ -2084,6 +2066,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
            + "tet:path-properties/tet:path-route-objects/"
            + "tet:path-route-object/tet:type/tet:label/tet:label-hop/"
            + "tet:te-label/tet:technology"{
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 37]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
        when "../../../../../../../../../"
           + "nw:network-types/tet:te-topology/"
           + "ethtetopo:eth-tran-topology" {
@@ -2122,14 +2112,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
        }
        description "Ethernet label.";
        case eth {
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 38]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
          uses etht-types:eth-label;
        }
      }
@@ -2140,6 +2122,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
            + "tet:connectivity-matrix/tet:from/"
            + "tet:label-restrictions/tet:label-restriction/tet:label-end/"
            + "tet:te-label/tet:technology" {
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 38]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
        when "../../../../../../../../../../"
           + "nw:network-types/tet:te-topology/"
           + "ethtetopo:eth-tran-topology" {
@@ -2178,14 +2168,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
          description "Ethernet TE label";
        }
        description "Ethernet label.";
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 39]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
        uses etht-types:eth-label-restriction;
      }
 
@@ -2196,6 +2178,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
            + "tet:connectivity-matrix/tet:to/"
            + "tet:label-restrictions/tet:label-restriction/"
            + "tet:label-start/tet:te-label/tet:technology" {
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 39]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
        when "../../../../../../../../../../"
           + "nw:network-types/tet:te-topology/"
           + "ethtetopo:eth-tran-topology" {
@@ -2234,14 +2224,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
           + "nw:network-types/tet:te-topology/"
           + "ethtetopo:eth-tran-topology" {
          description "Ethernet TE label";
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 40]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
        }
        description "Ethernet label.";
        case eth {
@@ -2252,6 +2234,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
    /* Augment label hop of underlay primary path of connectivity-matrix */
      augment "/nw:networks/nw:network/nw:node/tet:te/"
            + "tet:te-node-attributes/tet:connectivity-matrices/"
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 40]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
            + "tet:connectivity-matrix/"
            + "tet:underlay/tet:primary-path/tet:path-element/"
            + "tet:type/tet:label/tet:label-hop/"
@@ -2290,14 +2280,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
            + "tet:te-node-attributes/tet:connectivity-matrices/"
            + "tet:connectivity-matrix/tet:optimizations/"
            + "tet:algorithm/tet:metric/tet:optimization-metric/"
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 41]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
            + "tet:explicit-route-exclude-objects/"
            + "tet:route-object-exclude-object/tet:type/"
            + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
@@ -2308,6 +2290,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
        }
        description "Ethernet label.";
        case eth {
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 41]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
          uses etht-types:eth-label;
        }
      }
@@ -2346,14 +2336,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
        description "Ethernet label.";
        case eth {
          uses etht-types:eth-label;
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 42]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
        }
      }
 
@@ -2364,6 +2346,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
            + "tet:connectivity-matrices/tet:label-restrictions/"
            + "tet:label-restriction" {
        when "../../../../../../nw:network-types/tet:te-topology/"
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 42]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
           + "ethtetopo:eth-tran-topology" {
          description "Ethernet TE label";
        }
@@ -2402,14 +2392,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
          description "Ethernet TE label";
        }
        description "Ethernet label.";
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 43]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
        case eth {
          uses etht-types:eth-label;
        }
@@ -2420,6 +2402,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
      augment "/nw:networks/nw:network/nw:node/tet:te/"
            + "tet:information-source-entry/"
            + "tet:connectivity-matrices/tet:label-restrictions/"
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 43]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
            + "tet:label-restriction/"
            + "tet:label-step/tet:technology" {
        when "../../../../../../../"
@@ -2458,14 +2448,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
            + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
        when "../../../../../../../../../"
           + "nw:network-types/tet:te-topology/"
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 44]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
           + "ethtetopo:eth-tran-topology" {
          description "Ethernet TE label";
        }
@@ -2476,6 +2458,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
      }
 
      /* Augment label hop of route-exclude of
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 44]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
       * connectivity-matrices information-source */
      augment "/nw:networks/nw:network/nw:node/tet:te/"
            + "tet:information-source-entry/tet:connectivity-matrices/"
@@ -2515,13 +2505,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
        }
      }
 
-
-
-Yu, et al.                Expires 15 March 2024                [Page 45]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
      /* Augment label hop of path-route of
       * connectivity-matrices information-source */
      augment "/nw:networks/nw:network/nw:node/tet:te/"
@@ -2531,6 +2514,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
            + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
        when "../../../../../../../../../"
           + "nw:network-types/tet:te-topology/"
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 45]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
           + "ethtetopo:eth-tran-topology" {
          description "Ethernet TE label";
        }
@@ -2570,14 +2561,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
        case eth {
          uses etht-types:eth-label;
        }
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 46]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
      }
 
      /* Augment ingress label restrictions end of
@@ -2587,6 +2570,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
            + "tet:connectivity-matrix/"
            + "tet:from/tet:label-restrictions/tet:label-restriction/"
            + "tet:label-end/tet:te-label/tet:technology" {
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 46]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
        when "../../../../../../../../../../"
           + "nw:network-types/tet:te-topology/"
           + "ethtetopo:eth-tran-topology" {
@@ -2626,14 +2617,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
           + "ethtetopo:eth-tran-topology" {
          description "Ethernet TE label";
        }
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 47]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
        description "Ethernet label.";
        uses etht-types:eth-label-restriction;
      }
@@ -2643,6 +2626,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
      augment "/nw:networks/nw:network/nw:node/tet:te/"
            + "tet:information-source-entry/tet:connectivity-matrices/"
            + "tet:connectivity-matrix/"
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 47]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
            + "tet:to/tet:label-restrictions/tet:label-restriction/"
            + "tet:label-start/tet:te-label/tet:technology" {
        when "../../../../../../../../../../"
@@ -2682,14 +2673,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
            + "tet:to/tet:label-restrictions/tet:label-restriction/"
            + "tet:label-step/tet:technology" {
        when "../../../../../../../../../"
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 48]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
           + "nw:network-types/tet:te-topology/"
           + "ethtetopo:eth-tran-topology" {
          description "Ethernet TE label";
@@ -2699,6 +2682,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
          uses etht-types:eth-label-step;
        }
      }
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 48]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
      /* Augment label hop of underlay primary path of
       * connectivity-matrix information-source */
      augment "/nw:networks/nw:network/nw:node/tet:te/"
@@ -2738,14 +2729,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
      /* Augment label hop of route-exclude of
       * connectivity-matrix information-source */
      augment "/nw:networks/nw:network/nw:node/tet:te/"
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 49]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
            + "tet:information-source-entry/tet:connectivity-matrices/"
            + "tet:connectivity-matrix/"
            + "tet:optimizations/tet:algorithm/tet:metric/"
@@ -2755,6 +2738,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
            + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
        when "../../../../../../../../../../../"
           + "nw:network-types/tet:te-topology/"
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 49]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
           + "ethtetopo:eth-tran-topology" {
          description "Ethernet TE label";
        }
@@ -2794,14 +2785,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
            + "tet:path-route-object/tet:type/"
            + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
        when "../../../../../../../../../../"
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 50]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
           + "nw:network-types/tet:te-topology/"
           + "ethtetopo:eth-tran-topology" {
          description "Ethernet TE label";
@@ -2811,6 +2794,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
          uses etht-types:eth-label;
        }
      }
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 50]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
      /* Augment label restrictions of local-link-connectivities */
      augment "/nw:networks/nw:network/nw:node/tet:te/"
            + "tet:tunnel-termination-point/"
@@ -2850,14 +2841,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
           + "ethtetopo:eth-tran-topology" {
          description "Ethernet TE label";
        }
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 51]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
        description "Ethernet label.";
        case eth {
          uses etht-types:eth-label;
@@ -2867,6 +2850,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
      /* Augment label restrictions step of local-link-connectivities */
      augment "/nw:networks/nw:network/nw:node/tet:te/"
            + "tet:tunnel-termination-point/"
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 51]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
            + "tet:local-link-connectivities/"
            + "tet:label-restrictions/tet:label-restriction/"
            + "tet:label-step/tet:technology"{
@@ -2906,14 +2897,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
            + "tet:underlay/tet:backup-path/tet:path-element/tet:type/"
            + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
        when "../../../../../../../../../"
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 52]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
           + "nw:network-types/tet:te-topology/"
           + "ethtetopo:eth-tran-topology" {
          description "Ethernet TE label";
@@ -2923,6 +2906,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
          uses etht-types:eth-label;
        }
      }
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 52]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
      /* Augment label hop of route-exclude of
       * local-link-connectivities */
      augment "/nw:networks/nw:network/nw:node/tet:te/"
@@ -2962,14 +2953,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
        description "Ethernet label.";
        case eth {
          uses etht-types:eth-label;
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 53]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
        }
      }
 
@@ -2979,6 +2962,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
            + "tet:local-link-connectivities/"
            + "tet:path-properties/tet:path-route-objects/"
            + "tet:path-route-object/tet:type/"
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 53]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
            + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
        when "../../../../../../../../../"
           + "nw:network-types/tet:te-topology/"
@@ -3018,14 +3009,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
          description "Ethernet TE label";
        }
        description "Ethernet label.";
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 54]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
        case eth {
          uses etht-types:eth-label;
        }
@@ -3035,6 +3018,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
      augment "/nw:networks/nw:network/nw:node/tet:te/"
            + "tet:tunnel-termination-point/"
            + "tet:local-link-connectivities/"
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 54]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
            + "tet:local-link-connectivity/"
            + "tet:label-restrictions/tet:label-restriction/"
            + "tet:label-end/tet:te-label/tet:technology" {
@@ -3074,14 +3065,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
            + "tet:local-link-connectivities/"
            + "tet:local-link-connectivity/"
            + "tet:underlay/tet:primary-path/tet:path-element/tet:type/"
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 55]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
            + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
        when "../../../../../../../../../../"
           + "nw:network-types/tet:te-topology/"
@@ -3091,6 +3074,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
        description "Ethernet label.";
        case eth {
          uses etht-types:eth-label;
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 55]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
        }
      }
 
@@ -3130,14 +3121,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
          description "Ethernet TE label";
        }
        description "Ethernet label.";
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 56]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
        case eth {
          uses etht-types:eth-label;
        }
@@ -3147,6 +3130,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
       * local-link-connectivity (LLC) */
      augment "/nw:networks/nw:network/nw:node/tet:te/"
            + "tet:tunnel-termination-point/"
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 56]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
            + "tet:local-link-connectivities/"
            + "tet:local-link-connectivity/"
            + "tet:optimizations/tet:algorithm/tet:metric/"
@@ -3186,14 +3177,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
      }
 
      /* Augment label hop of underlay primary path of TE link */
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 57]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
      augment "/nw:networks/nw:network/nt:link/tet:te/"
            + "tet:te-link-attributes/"
            + "tet:underlay/tet:primary-path/tet:path-element/tet:type/"
@@ -3203,6 +3186,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
           + "ethtetopo:eth-tran-topology" {
          description "Ethernet TE label";
        }
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 57]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
        description "Ethernet label.";
        case eth {
          uses etht-types:eth-label;
@@ -3242,14 +3233,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
            + "tet:te-link-attributes/"
            + "tet:label-restrictions/tet:label-restriction/"
            + "tet:label-start/tet:te-label/tet:technology" {
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 58]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
        when "../../../../../../../nw:network-types/tet:te-topology/"
           + "ethtetopo:eth-tran-topology" {
          description "Ethernet TE label";
@@ -3259,6 +3242,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
          uses etht-types:eth-label;
        }
      }
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 58]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
      /* Augment label restrictions end of TE link */
      augment "/nw:networks/nw:network/nt:link/tet:te/"
            + "tet:te-link-attributes/"
@@ -3298,14 +3289,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
          description "Ethernet TE label";
        }
        description "Ethernet label.";
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 59]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
        uses etht-types:eth-label-restriction;
      }
 
@@ -3315,6 +3298,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
            + "tet:label-restrictions/tet:label-restriction/"
            + "tet:label-start/tet:te-label/tet:technology" {
        when "../../../../../../../nw:network-types/tet:te-topology/"
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 59]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
           + "ethtetopo:eth-tran-topology" {
          description "Ethernet TE label";
        }
@@ -3354,14 +3345,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
      }
 
      /* Augment label hop of underlay primary path of TE link template */
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 60]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
      augment "/nw:networks/tet:te/tet:templates/"
            + "tet:link-template/tet:te-link-attributes/"
            + "tet:underlay/tet:primary-path/tet:path-element/tet:type/"
@@ -3371,6 +3354,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
           + "nw:network-types/tet:te-topology/"
           + "ethtetopo:eth-tran-topology" {
          description "Ethernet TE label";
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 60]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
        }
    */
        description "Ethernet label.";
@@ -3410,14 +3401,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
        uses etht-types:eth-label-restriction;
      }
 
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 61]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
      /* Augment label restrictions start of TE link template */
      augment "/nw:networks/tet:te/tet:templates/"
            + "tet:link-template/tet:te-link-attributes/"
@@ -3427,6 +3410,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
        when "../../../../../../../nw:network-types/tet:te-topology/"
            + "ethtetopo:eth-tran-topology" {
          description "Ethernet TE label";
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 61]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
        }
    */
        description "Ethernet label.";
@@ -3466,14 +3457,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
        description "Ethernet label.";
        case eth {
          uses etht-types:eth-label-step;
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 62]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
        }
      }
 
@@ -3481,6 +3464,15 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
    <CODE ENDS>
 
                   Figure 3: Ethernet topology YANG module
+
+
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 62]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
 
 5.  IANA Considerations
 
@@ -3518,18 +3510,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
    RESTCONF protocol defined in [RFC8040], or maybe via the NETCONF
    protocol [RFC6241].
 
-
-
-
-
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 63]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
    There are a number of data nodes defined in the YANG module which are
    writable/creatable/deletable (i.e., config true, which is the
    default).  These data nodes may be considered sensitive or vulnerable
@@ -3542,6 +3522,14 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 8.  References
 
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 63]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
 8.1.  Normative References
 
    [I-D.ietf-ccamp-client-signal-yang]
@@ -3553,9 +3541,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
               client-signal-yang-09>.
 
    [ITU_G.8021]
-              ITU-T Recommendation G.808.1, "Generic protection
-              switching - Linear trail and subnetwork protection", ITU-T
-              G.808.1 , May 2014.
+              ITU-T Recommendation G.8021, "Characteristics of Ethernet
+              transport network equipment functional blocks", ITU-T
+              G.8021 , April 2023.
 
    [RFC3688]  Mealling, M., "The IETF XML Registry", BCP 81, RFC 3688,
               DOI 10.17487/RFC3688, January 2004,
@@ -3578,14 +3566,6 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
               Protocol", RFC 8040, DOI 10.17487/RFC8040, January 2017,
               <https://www.rfc-editor.org/info/rfc8040>.
 
-
-
-
-Yu, et al.                Expires 15 March 2024                [Page 64]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
    [RFC8342]  Bjorklund, M., Schoenwaelder, J., Shafer, P., Watsen, K.,
               and R. Wilton, "Network Management Datastore Architecture
               (NMDA)", RFC 8342, DOI 10.17487/RFC8342, March 2018,
@@ -3595,6 +3575,16 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
               Ananthakrishnan, H., and X. Liu, "A YANG Data Model for
               Network Topologies", RFC 8345, DOI 10.17487/RFC8345, March
               2018, <https://www.rfc-editor.org/info/rfc8345>.
+
+
+
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 64]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
 
    [RFC8795]  Liu, X., Bryskin, I., Beeram, V., Saad, T., Shah, H., and
               O. Gonzalez de Dios, "YANG Data Model for Traffic
@@ -3635,13 +3625,6 @@ Contributors
    Email: yingxi.yao@nokia-sbell.com
 
 
-
-
-Yu, et al.                Expires 15 March 2024                [Page 65]
-
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
-
-
    Giuseppe Fioccola
    Huawei Technologies
    Email: giuseppe.fioccola@huawei.com
@@ -3651,6 +3634,14 @@ Authors' Addresses
 
    Chaode Yu
    Huawei Technologies
+
+
+
+Yu, et al.                Expires 15 March 2024                [Page 65]
+
+Internet-Draft      ETH Topology Transport YANG Model     September 2023
+
+
    Email: yuchaode@huawei.com
 
 
@@ -3686,6 +3677,15 @@ Authors' Addresses
    Xufeng Liu
    Alef Edge
    Email: xufeng.liu.ietf@gmail.com
+
+
+
+
+
+
+
+
+
 
 
 

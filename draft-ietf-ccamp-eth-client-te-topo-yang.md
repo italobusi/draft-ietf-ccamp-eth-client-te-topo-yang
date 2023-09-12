@@ -72,11 +72,11 @@ contributor:
 
 normative:
   ITU_G.8021:
-    title: Generic protection switching - Linear trail and subnetwork protection
+    title: Characteristics of Ethernet transport network equipment functional blocks
     author:
-      org: ITU-T Recommendation G.808.1
-    date: May 2014
-    seriesinfo: ITU-T G.808.1
+      org: ITU-T Recommendation G.8021
+    date: April 2023
+    seriesinfo: ITU-T G.8021
 
 --- abstract
 
