@@ -13,7 +13,7 @@
 
 <?rfc comments="yes"?>
 
-<rfc ipr="trust200902" docName="draft-ietf-ccamp-eth-client-te-topo-yang-04" category="info" submissionType="IETF" tocInclude="true" sortRefs="true" symRefs="true">
+<rfc ipr="trust200902" docName="draft-ietf-ccamp-eth-client-te-topo-yang-05" category="info" submissionType="IETF" tocInclude="true" sortRefs="true" symRefs="true">
   <front>
     <title abbrev="ETH Topology Transport YANG Model">A YANG Data Model for Ethernet TE Topology</title>
 
@@ -3303,7 +3303,7 @@ H4sIAAAAAAAAA+1d/3fbNpL/3e/5f0DdH87pmnKSftlUvV7jOk7qd4mbl3i3
 6e7t3YNISMKGIrgEaVtNvH/7zQAECVKkRNmSTcnU221kEhjMlw9mBgNQdBxn
 d8cVHg9GfZLEQ+fZ7s7uTsxjn/XJEfn96OwVeUFjSt4Ij/lkKCJyEo9ZFLCY
 nJ+QcxEKX4ymuzt0MIjYRZ/snZz/kl0m5xENZCiiWFNSRPZgQBqzkYimfcKD
-ocARPeEGdAJjehEdxg5nwIrr0knosHjsuD5nQezEzImBsjOlwch5/M3ujkwG
+ocARPeEGdAJjehEdxg5nwIrr0knosHjsuD5nQezEzImBsjOlwch5/O3ujkwG
 Ey4lF0E8DaHz6cn5y90d4OLr3Z1LEX0cRSIJ++T4+OjNW/IbXAAxySu8iGPK
 mAbe/1FfBNB1yuTuTsj75O+xcA+IBJ4jNpTwbTrRX1wxmQAX8h/YlybxWET9
 3R1CHPwPIZr94zEFGcnvib4oIlDrLwm9ZJycM3ccoFo4DoV32YRyH4ZOXNXr
@@ -3510,7 +3510,7 @@ QP03YBW6hQbgZJ/1RsDe21/fnz/ShoXhNU85Czj9RBITfTRSqZWpgK6sOKYX
 SodsRBVTbDiEu0RosBlG8jGNAfSElzBGDE4BxvbBlREZMpcPuUtkMogjxqSC
 v8UM/glc8kgRMbrAA51GFWrGq1Ecx1GVGD3Jj9yPgbj0macyJImhVBueeT/u
 DQHibC/NwMhvYGMVpXz+kWm9UMi1Tkeg8Z+jqfzIA8XICxpwmB7/jfMHZ1LO
-mCsmahTNPpduAv5KS///KhoGZcW8AQA=
+mCsmahTNPpduAv5KS///ziiZncW8AQA=
 
 -->
 

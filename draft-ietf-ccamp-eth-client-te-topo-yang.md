@@ -5,7 +5,7 @@ title: A YANG Data Model for Ethernet TE Topology
 abbrev: "ETH Topology Transport YANG Model"
 category: info
 
-docname: draft-ietf-ccamp-eth-client-te-topo-yang-04
+docname: draft-ietf-ccamp-eth-client-te-topo-yang-05
 submissiontype: IETF
 v: 3
 workgroup: CCAMP Working Group
