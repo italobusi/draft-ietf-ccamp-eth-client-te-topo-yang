@@ -3,7 +3,7 @@ coding: utf-8
 
 title: A YANG Data Model for Ethernet TE Topology
 abbrev: "ETH Topology Transport YANG Model"
-category: info
+category: std
 
 docname: draft-ietf-ccamp-eth-client-te-topo-yang-05
 submissiontype: IETF
