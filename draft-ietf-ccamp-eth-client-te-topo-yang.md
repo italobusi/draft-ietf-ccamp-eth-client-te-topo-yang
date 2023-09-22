@@ -50,10 +50,6 @@ author:
 
 contributor:
   -
-    name: Yanlei Zheng
-    org: China Unicom
-    email: zhengyanlei@chinaunicom.cn
-  -
     name: Zhe Liu
     org: Huawei Technologies
     email: liuzhe123@huawei.com
