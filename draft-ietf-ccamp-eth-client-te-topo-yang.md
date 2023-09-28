@@ -76,13 +76,11 @@ normative:
 
 --- abstract
 
-This document describes a YANG data model for Ethernet networks when used either as a client-layer network of an underlay transport network (e.g., an Optical Transport Network (OTN)) or as a transport network technology.
+This document describes a YANG data model for Ethernet networks when used either as a client-layer network of an underlay transport network (e.g., an Optical Transport Network (OTN)) or as a transport network itself.
 
 --- middle
 
 # Introduction
-
-To be added
 
    A transport network is a server-layer network designed to provide
    connectivity services for a client-layer network to carry the client
@@ -90,9 +88,9 @@ To be added
 
 A transport network typically utilizes several different transport technologies such as the Optical Transport Networks (OTN) or packet transport such as provided by the MPLS-Transport Profile (MPLS-TP).
 
-An Ethernet network can be either a client-layer network of an underlay transport network or a transport network technology.
+An Ethernet network can be either a client-layer network of an underlay transport network or a transport network itself.
 
-This document describes a YANG data model for Ethernet networks when used either a client-layer network of an underlay transport network (e.g., an Optical Transport Network (OTN)) or a transport network technology.
+This document describes a YANG data model for Ethernet networks when used as a client-layer network of an underlay transport network (e.g., an Optical Transport Network (OTN)) or as a transport network technology.
 
 The YANG model defined in this document augments from the TE topology YANG model defined in {{!RFC8795}}, and imports from the generic Ethernet types defined in {{!I-D.ietf-ccamp-client-signal-yang}}.
 
@@ -145,7 +143,7 @@ corresponding YANG imported modules, as shown in {{tab-prefixes}}.
 | nw         | ietf-network          | {{!RFC8345}}
 | nt         | ietf-network-topology | {{!RFC8345}}
 | tet        | ietf-te-topology      | {{!RFC8795}}
-| eth-tet    | ietf-eth-te-topology  | RFCXXXX
+| etht       | ietf-eth-te-topology  | RFCXXXX
 {: #tab-prefixes title="Prefixes and corresponding YANG modules"}
 
 RFC Editor Note: Please replace YYYY and XXXX with the number
@@ -264,7 +262,7 @@ sourcecode-markers="true" sourcecode-name="ietf-eth-te-topology@2023-09-08.yang"
 ~~~~
       name:      ietf-eth-te-topology
       namespace: urn:ietf:params:xml:ns:yang:ietf-eth-te-topology
-      prefix:    eth-tet
+      prefix:    etht
       reference: RFC XXXX
 ~~~~
 
