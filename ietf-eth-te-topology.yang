@@ -1,7 +1,7 @@
 module ietf-eth-te-topology {
   yang-version 1.1;
   namespace "urn:ietf:params:xml:ns:yang:ietf-eth-te-topology";
-  prefix "eth-tet";
+  prefix "etht";
 
   import ietf-network {
     prefix "nw";
@@ -86,7 +86,7 @@ module ietf-eth-te-topology {
      described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
      they appear in all capitals, as shown here.";
 
-  revision 2023-09-08 {
+  revision 2023-09-28 {
     description
       "Initial Revision";
     reference
@@ -389,7 +389,7 @@ module ietf-eth-te-topology {
   augment "/nw:networks/nw:network/nw:node/tet:te"
         + "/tet:te-node-attributes" {
     when "../../../nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description "Augment only for Ethernet transport network.";
     }
     description "Augment TE node attributes.";
@@ -403,7 +403,7 @@ module ietf-eth-te-topology {
 
   augment "/nw:networks/nw:network/nt:link" {
     when "../nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description "Augment only for Ethernet transport network.";
     }
     description "Augment link configuration";
@@ -420,7 +420,7 @@ module ietf-eth-te-topology {
 
   augment "/nw:networks/nw:network/nw:node/nt:termination-point" {
     when "../../nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description "Augment only for Ethernet transport network.";
     }
     description
@@ -451,7 +451,7 @@ module ietf-eth-te-topology {
         + "tet:interface-switching-capability/tet:max-lsp-bandwidth/"
         + "tet:te-bandwidth/tet:technology" {
     when "../../../../../../nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
         Ethernet topology type.";
@@ -468,7 +468,7 @@ module ietf-eth-te-topology {
         + "tet:te-node-attributes/tet:connectivity-matrices/"
         + "tet:path-constraints/tet:te-bandwidth/tet:technology" {
     when "../../../../../../nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
         Ethernet topology type.";
@@ -486,7 +486,7 @@ module ietf-eth-te-topology {
         + "tet:connectivity-matrix/"
         + "tet:path-constraints/tet:te-bandwidth/tet:technology" {
     when "../../../../../../../nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
         Ethernet topology type.";
@@ -503,7 +503,7 @@ module ietf-eth-te-topology {
         + "tet:information-source-entry/tet:connectivity-matrices/"
         + "tet:path-constraints/tet:te-bandwidth/tet:technology" {
     when "../../../../../../nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
         Ethernet topology type.";
@@ -521,7 +521,7 @@ module ietf-eth-te-topology {
         + "tet:connectivity-matrix/"
         + "tet:path-constraints/tet:te-bandwidth/tet:technology" {
     when "../../../../../../../nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
         Ethernet topology type.";
@@ -539,7 +539,7 @@ module ietf-eth-te-topology {
         + "tet:client-layer-adaptation/tet:switching-capability/"
         + "tet:te-bandwidth/tet:technology" {
     when "../../../../../../nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
         Ethernet topology type.";
@@ -557,7 +557,7 @@ module ietf-eth-te-topology {
         + "tet:local-link-connectivities/tet:path-constraints/"
         + "tet:te-bandwidth/tet:technology" {
     when "../../../../../../nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
         Ethernet topology type.";
@@ -576,7 +576,7 @@ module ietf-eth-te-topology {
         + "tet:local-link-connectivity/tet:path-constraints/"
         + "tet:te-bandwidth/tet:technology" {
     when "../../../../../../../nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
         Ethernet topology type.";
@@ -594,7 +594,7 @@ module ietf-eth-te-topology {
         + "tet:interface-switching-capability/tet:max-lsp-bandwidth/"
         + "tet:te-bandwidth/tet:technology" {
     when "../../../../../../nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
         Ethernet topology type.";
@@ -611,7 +611,7 @@ module ietf-eth-te-topology {
         + "tet:max-link-bandwidth/"
         + "tet:te-bandwidth" {
     when "../../../../../nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
         Ethernet topology type.";
@@ -626,7 +626,7 @@ module ietf-eth-te-topology {
         + "tet:max-resv-link-bandwidth/"
         + "tet:te-bandwidth" {
     when "../../../../../nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
         Ethernet topology type.";
@@ -641,7 +641,7 @@ module ietf-eth-te-topology {
         + "tet:unreserved-bandwidth/"
         + "tet:te-bandwidth" {
     when "../../../../../nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
         Ethernet topology type.";
@@ -657,7 +657,7 @@ module ietf-eth-te-topology {
         + "tet:max-lsp-bandwidth/"
         + "tet:te-bandwidth/tet:technology" {
     when "../../../../../../nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
         Ethernet topology type.";
@@ -675,7 +675,7 @@ module ietf-eth-te-topology {
         + "tet:max-link-bandwidth/"
         + "tet:te-bandwidth" {
     when "../../../../../nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
         Ethernet topology type.";
@@ -691,7 +691,7 @@ module ietf-eth-te-topology {
         + "tet:max-resv-link-bandwidth/"
         + "tet:te-bandwidth" {
     when "../../../../../nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
         Ethernet topology type.";
@@ -707,7 +707,7 @@ module ietf-eth-te-topology {
         + "tet:unreserved-bandwidth/"
         + "tet:te-bandwidth" {
     when "../../../../../nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
         Ethernet topology type.";
@@ -767,7 +767,7 @@ module ietf-eth-te-topology {
         + "tet:te-node-attributes/tet:connectivity-matrices/"
         + "tet:label-restrictions/tet:label-restriction" {
     when "../../../../../../nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
         Ethernet topology type.";
@@ -783,7 +783,7 @@ module ietf-eth-te-topology {
         + "tet:connectivity-matrix/tet:from/"
         + "tet:label-restrictions/tet:label-restriction" {
     when "../../../../../../../../nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
         Ethernet topology type.";
@@ -799,7 +799,7 @@ module ietf-eth-te-topology {
         + "tet:connectivity-matrix/tet:to/"
         + "tet:label-restrictions/tet:label-restriction" {
     when "../../../../../../../../nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
         Ethernet topology type.";
@@ -815,7 +815,7 @@ module ietf-eth-te-topology {
         + "tet:connectivity-matrices/tet:label-restrictions/"
         + "tet:label-restriction" {
     when "../../../../../../nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
         Ethernet topology type.";
@@ -831,7 +831,7 @@ module ietf-eth-te-topology {
         + "tet:connectivity-matrix/"
         + "tet:from/tet:label-restrictions/tet:label-restriction" {
     when "../../../../../../../../nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
         Ethernet topology type.";
@@ -847,7 +847,7 @@ module ietf-eth-te-topology {
         + "tet:connectivity-matrix/"
         + "tet:to/tet:label-restrictions/tet:label-restriction" {
     when "../../../../../../../../nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
         Ethernet topology type.";
@@ -863,7 +863,7 @@ module ietf-eth-te-topology {
         + "tet:local-link-connectivities/"
         + "tet:label-restrictions/tet:label-restriction" {
     when "../../../../../../nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
         Ethernet topology type.";
@@ -880,7 +880,7 @@ module ietf-eth-te-topology {
         + "tet:local-link-connectivity/"
         + "tet:label-restrictions/tet:label-restriction" {
     when "../../../../../../../nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
         Ethernet topology type.";
@@ -895,7 +895,7 @@ module ietf-eth-te-topology {
         + "tet:te-link-attributes/"
         + "tet:label-restrictions/tet:label-restriction" {
     when "../../../../../nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
         Ethernet topology type.";
@@ -909,7 +909,7 @@ module ietf-eth-te-topology {
         + "tet:information-source-entry/"
         + "tet:label-restrictions/tet:label-restriction" {
     when "../../../../../nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
         Ethernet topology type.";
@@ -938,7 +938,7 @@ module ietf-eth-te-topology {
         + "tet:label-start/"
         + "tet:te-label/tet:technology" {
     when "../../../../../../../../nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -957,7 +957,7 @@ module ietf-eth-te-topology {
         + "tet:label-restriction/tet:label-end/"
         + "tet:te-label/tet:technology" {
     when "../../../../../../../../nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -976,7 +976,7 @@ module ietf-eth-te-topology {
         + "tet:label-restriction/tet:label-step/"
         + "tet:technology" {
     when "../../../../../../../nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -996,7 +996,7 @@ module ietf-eth-te-topology {
         + "tet:te-label/tet:technology" {
     when "../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1016,7 +1016,7 @@ module ietf-eth-te-topology {
         + "tet:te-label/tet:technology" {
     when "../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1039,7 +1039,7 @@ module ietf-eth-te-topology {
         + "tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1063,7 +1063,7 @@ module ietf-eth-te-topology {
         + "tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1084,7 +1084,7 @@ module ietf-eth-te-topology {
         + "tet:te-label/tet:technology" {
     when "../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1105,7 +1105,7 @@ module ietf-eth-te-topology {
         + "tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1126,7 +1126,7 @@ module ietf-eth-te-topology {
         + "tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1147,7 +1147,7 @@ module ietf-eth-te-topology {
         + "tet:technology" {
     when "../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1168,7 +1168,7 @@ module ietf-eth-te-topology {
         + "tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1189,7 +1189,7 @@ module ietf-eth-te-topology {
         + "tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1210,7 +1210,7 @@ module ietf-eth-te-topology {
         + "tet:technology" {
     when "../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1231,7 +1231,7 @@ module ietf-eth-te-topology {
         + "tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1252,7 +1252,7 @@ module ietf-eth-te-topology {
         + "tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1274,7 +1274,7 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1296,7 +1296,7 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1317,7 +1317,7 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1337,7 +1337,7 @@ module ietf-eth-te-topology {
         + "tet:label-start/tet:te-label/tet:technology" {
     when "../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1357,7 +1357,7 @@ module ietf-eth-te-topology {
         + "tet:label-end/tet:te-label/tet:technology" {
     when "../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1377,7 +1377,7 @@ module ietf-eth-te-topology {
         + "tet:label-step/tet:technology" {
     when "../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1396,7 +1396,7 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1416,7 +1416,7 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1439,7 +1439,7 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1462,7 +1462,7 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1483,7 +1483,7 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1504,7 +1504,7 @@ module ietf-eth-te-topology {
         + "tet:label-start/tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1524,7 +1524,7 @@ module ietf-eth-te-topology {
         + "tet:label-end/tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1545,7 +1545,7 @@ module ietf-eth-te-topology {
         + "tet:label-step/tet:technology" {
     when "../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1565,7 +1565,7 @@ module ietf-eth-te-topology {
         + "tet:label-start/tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1585,7 +1585,7 @@ module ietf-eth-te-topology {
         + "tet:label-end/tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1605,7 +1605,7 @@ module ietf-eth-te-topology {
         + "tet:label-step/tet:technology" {
     when "../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1625,7 +1625,7 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1645,7 +1645,7 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1668,7 +1668,7 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1692,7 +1692,7 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1714,7 +1714,7 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1735,7 +1735,7 @@ module ietf-eth-te-topology {
       + "tet:te-label/tet:technology" {
     when "../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1756,7 +1756,7 @@ module ietf-eth-te-topology {
         + "tet:te-label/tet:technology"{
     when "../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1777,7 +1777,7 @@ module ietf-eth-te-topology {
         + "tet:technology"{
     when "../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1797,7 +1797,7 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1817,7 +1817,7 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1840,7 +1840,7 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1864,7 +1864,7 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1886,7 +1886,7 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1907,7 +1907,7 @@ module ietf-eth-te-topology {
         + "tet:label-start/tet:te-label/tet:technology" {
     when "../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1928,7 +1928,7 @@ module ietf-eth-te-topology {
         + "tet:label-end/tet:te-label/tet:technology" {
     when "../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1949,7 +1949,7 @@ module ietf-eth-te-topology {
         + "tet:label-step/tet:technology" {
     when "../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1970,7 +1970,7 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -1991,7 +1991,7 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -2015,7 +2015,7 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -2040,7 +2040,7 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -2063,7 +2063,7 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -2081,7 +2081,7 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -2100,7 +2100,7 @@ module ietf-eth-te-topology {
         + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
     when "../../../../../../../../"
        + "nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -2118,7 +2118,7 @@ module ietf-eth-te-topology {
         + "tet:label-restrictions/tet:label-restriction/"
         + "tet:label-start/tet:te-label/tet:technology" {
     when "../../../../../../../nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -2135,7 +2135,7 @@ module ietf-eth-te-topology {
         + "tet:label-restrictions/tet:label-restriction/"
         + "tet:label-end/tet:te-label/tet:technology" {
     when "../../../../../../../nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -2152,7 +2152,7 @@ module ietf-eth-te-topology {
         + "tet:label-restrictions/tet:label-restriction/"
         + "tet:label-step/tet:technology" {
     when "../../../../../../nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -2169,7 +2169,7 @@ module ietf-eth-te-topology {
         + "tet:label-restrictions/tet:label-restriction/"
         + "tet:label-start/tet:te-label/tet:technology" {
     when "../../../../../../../nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -2187,7 +2187,7 @@ module ietf-eth-te-topology {
         + "tet:label-restrictions/tet:label-restriction/"
         + "tet:label-end/tet:te-label/tet:technology" {
     when "../../../../../../../nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
@@ -2205,7 +2205,7 @@ module ietf-eth-te-topology {
         + "tet:label-restrictions/tet:label-restriction/"
         + "tet:label-step/tet:technology" {
     when "../../../../../../nw:network-types/tet:te-topology/"
-       + "eth-tet:eth-tran-topology" {
+       + "etht:eth-tran-topology" {
       description
         "Augmentation parameters apply only for networks with
          Ethernet topology type.";
