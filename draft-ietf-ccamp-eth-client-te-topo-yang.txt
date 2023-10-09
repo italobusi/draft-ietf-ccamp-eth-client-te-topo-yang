@@ -5,7 +5,7 @@
 CCAMP Working Group                                                C. Yu
 Internet-Draft                                                  H. Zheng
 Intended status: Standards Track                     Huawei Technologies
-Expires: 31 March 2024                                            A. Guo
+Expires: 11 April 2024                                            A. Guo
                                                                Futurewei
                                                                  I. Busi
                                                      Huawei Technologies
@@ -15,7 +15,7 @@ Expires: 31 March 2024                                            A. Guo
                                                             China Mobile
                                                                   X. Liu
                                                                Alef Edge
-                                                       28 September 2023
+                                                          9 October 2023
 
 
                A YANG Data Model for Ethernet TE Topology
@@ -43,7 +43,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 31 March 2024.
+   This Internet-Draft will expire on 11 April 2024.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Yu, et al.                Expires 31 March 2024                 [Page 1]
+Yu, et al.                Expires 11 April 2024                 [Page 1]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Yu, et al.                Expires 31 March 2024                 [Page 2]
+Yu, et al.                Expires 11 April 2024                 [Page 2]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
    The YANG model defined in this document augments from the TE topology
@@ -165,9 +165,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                 [Page 3]
+Yu, et al.                Expires 11 April 2024                 [Page 3]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
             +============+=======================+===========+
@@ -221,9 +221,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                 [Page 4]
+Yu, et al.                Expires 11 April 2024                 [Page 4]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
                          +-------------------------+
@@ -277,9 +277,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                 [Page 5]
+Yu, et al.                Expires 11 April 2024                 [Page 5]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
    Moreover, following the guidelines in [RFC8795], the model augments
@@ -333,9 +333,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                 [Page 6]
+Yu, et al.                Expires 11 April 2024                 [Page 6]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
        |           +--rw push-second-tag?       boolean
@@ -389,9 +389,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                 [Page 7]
+Yu, et al.                Expires 11 April 2024                 [Page 7]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
        +--:(eth)
@@ -445,9 +445,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                 [Page 8]
+Yu, et al.                Expires 11 April 2024                 [Page 8]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
      augment /nw:networks/nw:network/nt:link/tet:te
@@ -501,9 +501,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                 [Page 9]
+Yu, et al.                Expires 11 April 2024                 [Page 9]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
           +--rw tag-type?   etht-types:eth-tag-type
@@ -557,9 +557,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 10]
+Yu, et al.                Expires 11 April 2024                [Page 10]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
        +--rw ethernet-label-range!
@@ -613,9 +613,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 11]
+Yu, et al.                Expires 11 April 2024                [Page 11]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
                /tet:label/tet:label-hop/tet:te-label/tet:technology:
@@ -669,9 +669,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 12]
+Yu, et al.                Expires 11 April 2024                [Page 12]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
      augment /nw:networks/nw:network/nw:node/tet:te
@@ -725,9 +725,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 13]
+Yu, et al.                Expires 11 April 2024                [Page 13]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
                /tet:route-object-include-object/tet:type/tet:label
@@ -781,9 +781,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 14]
+Yu, et al.                Expires 11 April 2024                [Page 14]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
        +--:(eth)
@@ -837,9 +837,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 15]
+Yu, et al.                Expires 11 April 2024                [Page 15]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
                /tet:label-restriction/tet:label-end/tet:te-label
@@ -893,9 +893,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 16]
+Yu, et al.                Expires 11 April 2024                [Page 16]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
           +--ro vlanid?   etht-types:vlanid
@@ -949,9 +949,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 17]
+Yu, et al.                Expires 11 April 2024                [Page 17]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
                /tet:explicit-route-include-objects
@@ -1005,9 +1005,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 18]
+Yu, et al.                Expires 11 April 2024                [Page 18]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
                /tet:te-label/tet:technology:
@@ -1061,9 +1061,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 19]
+Yu, et al.                Expires 11 April 2024                [Page 19]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
           +--rw vlanid?   etht-types:vlanid
@@ -1117,9 +1117,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 20]
+Yu, et al.                Expires 11 April 2024                [Page 20]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
                /tet:te-link-attributes/tet:label-restrictions
@@ -1173,9 +1173,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 21]
+Yu, et al.                Expires 11 April 2024                [Page 21]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
        reference
@@ -1229,9 +1229,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 22]
+Yu, et al.                Expires 11 April 2024                [Page 22]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
         the RFC itself for full legal notices.
@@ -1285,9 +1285,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 23]
+Yu, et al.                Expires 11 April 2024                [Page 23]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
        description
@@ -1341,9 +1341,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 24]
+Yu, et al.                Expires 11 April 2024                [Page 24]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
      grouping eth-ltp-attributes {
@@ -1397,9 +1397,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 25]
+Yu, et al.                Expires 11 April 2024                [Page 25]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
          type etht-types:vid-range-type;
@@ -1453,9 +1453,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 26]
+Yu, et al.                Expires 11 April 2024                [Page 26]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
            leaf vlan-tag-classification {
@@ -1509,9 +1509,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 27]
+Yu, et al.                Expires 11 April 2024                [Page 27]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
              "Indicates that the ETH LTP supports transparent
@@ -1565,9 +1565,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 28]
+Yu, et al.                Expires 11 April 2024                [Page 28]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
              uses svc-vlan-push;
@@ -1621,9 +1621,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 29]
+Yu, et al.                Expires 11 April 2024                [Page 29]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
      }
@@ -1677,9 +1677,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 30]
+Yu, et al.                Expires 11 April 2024                [Page 30]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
      augment "/nw:networks/nw:network/nw:node/tet:te/"
@@ -1733,9 +1733,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 31]
+Yu, et al.                Expires 11 April 2024                [Page 31]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
          uses etht-types:eth-bandwidth;
@@ -1789,9 +1789,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 32]
+Yu, et al.                Expires 11 April 2024                [Page 32]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
            Ethernet topology type.";
@@ -1845,9 +1845,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 33]
+Yu, et al.                Expires 11 April 2024                [Page 33]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
            + "tet:max-link-bandwidth/"
@@ -1901,9 +1901,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 34]
+Yu, et al.                Expires 11 April 2024                [Page 34]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
        when "../../../../../../nw:network-types/tet:te-topology/"
@@ -1957,9 +1957,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 35]
+Yu, et al.                Expires 11 April 2024                [Page 35]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
            + "tet:unreserved-bandwidth/"
@@ -2013,9 +2013,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 36]
+Yu, et al.                Expires 11 April 2024                [Page 36]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
            + "tet:unreserved-bandwidth/"
@@ -2069,9 +2069,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 37]
+Yu, et al.                Expires 11 April 2024                [Page 37]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
          description
@@ -2125,9 +2125,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 38]
+Yu, et al.                Expires 11 April 2024                [Page 38]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
          description
@@ -2181,9 +2181,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 39]
+Yu, et al.                Expires 11 April 2024                [Page 39]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
          description
@@ -2237,9 +2237,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 40]
+Yu, et al.                Expires 11 April 2024                [Page 40]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
          "Augment TE label range start for the TE node
@@ -2293,9 +2293,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 41]
+Yu, et al.                Expires 11 April 2024                [Page 41]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
            + "tet:type/tet:label/tet:label-hop/"
@@ -2349,9 +2349,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 42]
+Yu, et al.                Expires 11 April 2024                [Page 42]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
          description
@@ -2405,9 +2405,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 43]
+Yu, et al.                Expires 11 April 2024                [Page 43]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
        }
@@ -2461,9 +2461,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 44]
+Yu, et al.                Expires 11 April 2024                [Page 44]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
        }
@@ -2517,9 +2517,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 45]
+Yu, et al.                Expires 11 April 2024                [Page 45]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
            + "tet:label-restrictions/tet:label-restriction/"
@@ -2573,9 +2573,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 46]
+Yu, et al.                Expires 11 April 2024                [Page 46]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
          description
@@ -2629,9 +2629,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 47]
+Yu, et al.                Expires 11 April 2024                [Page 47]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
          "Augment TE label hop for the explicit route objects excluded
@@ -2685,9 +2685,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 48]
+Yu, et al.                Expires 11 April 2024                [Page 48]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
      }
@@ -2741,9 +2741,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 49]
+Yu, et al.                Expires 11 April 2024                [Page 49]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
           + "nw:network-types/tet:te-topology/"
@@ -2797,9 +2797,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 50]
+Yu, et al.                Expires 11 April 2024                [Page 50]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
           source entry.";
@@ -2853,9 +2853,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 51]
+Yu, et al.                Expires 11 April 2024                [Page 51]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
          uses etht-types:eth-label;
@@ -2909,9 +2909,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 52]
+Yu, et al.                Expires 11 April 2024                [Page 52]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
            + "tet:label-restriction/"
@@ -2965,9 +2965,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 53]
+Yu, et al.                Expires 11 April 2024                [Page 53]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
             Ethernet topology type.";
@@ -3021,9 +3021,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 54]
+Yu, et al.                Expires 11 April 2024                [Page 54]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
      }
@@ -3077,9 +3077,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 55]
+Yu, et al.                Expires 11 April 2024                [Page 55]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
            + "tet:route-object-exclude-object/tet:type/"
@@ -3133,9 +3133,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 56]
+Yu, et al.                Expires 11 April 2024                [Page 56]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
        when "../../../../../../../../../../"
@@ -3189,9 +3189,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 57]
+Yu, et al.                Expires 11 April 2024                [Page 57]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
        }
@@ -3245,9 +3245,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 58]
+Yu, et al.                Expires 11 April 2024                [Page 58]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
      }
@@ -3301,9 +3301,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 59]
+Yu, et al.                Expires 11 April 2024                [Page 59]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
            + "tet:local-link-connectivities/"
@@ -3357,9 +3357,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 60]
+Yu, et al.                Expires 11 April 2024                [Page 60]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
            + "tet:label-start/tet:te-label/tet:technology" {
@@ -3413,9 +3413,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 61]
+Yu, et al.                Expires 11 April 2024                [Page 61]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
             Ethernet topology type.";
@@ -3469,9 +3469,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 62]
+Yu, et al.                Expires 11 April 2024                [Page 62]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
          uses etht-types:eth-label;
@@ -3525,9 +3525,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 63]
+Yu, et al.                Expires 11 April 2024                [Page 63]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
           Connectivity entry.";
@@ -3581,9 +3581,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 64]
+Yu, et al.                Expires 11 April 2024                [Page 64]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
            + "tet:underlay/tet:backup-path/tet:path-element/tet:type/"
@@ -3637,9 +3637,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 65]
+Yu, et al.                Expires 11 April 2024                [Page 65]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
        }
@@ -3693,9 +3693,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 66]
+Yu, et al.                Expires 11 April 2024                [Page 66]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
        description
@@ -3749,9 +3749,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 67]
+Yu, et al.                Expires 11 April 2024                [Page 67]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
      }
@@ -3805,9 +3805,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 68]
+Yu, et al.                Expires 11 April 2024                [Page 68]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
    This document registers following YANG modules in the YANG Module
@@ -3861,9 +3861,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 69]
+Yu, et al.                Expires 11 April 2024                [Page 69]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
    [ITU_G.8021]
@@ -3917,9 +3917,9 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 70]
+Yu, et al.                Expires 11 April 2024                [Page 70]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
 Acknowledgments
@@ -3973,9 +3973,9 @@ Authors' Addresses
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 71]
+Yu, et al.                Expires 11 April 2024                [Page 71]
 
-Internet-Draft      ETH Topology Transport YANG Model     September 2023
+Internet-Draft      ETH Topology Transport YANG Model       October 2023
 
 
    Italo Busi
@@ -4029,4 +4029,4 @@ Internet-Draft      ETH Topology Transport YANG Model     September 2023
 
 
 
-Yu, et al.                Expires 31 March 2024                [Page 72]
+Yu, et al.                Expires 11 April 2024                [Page 72]
