@@ -75,6 +75,7 @@ contributor:
     name: Giuseppe Fioccola
     org: Huawei Technologies
     email: giuseppe.fioccola@huawei.com
+{::include contributor.yml}
 
 normative:
   ITU_G.8021:
