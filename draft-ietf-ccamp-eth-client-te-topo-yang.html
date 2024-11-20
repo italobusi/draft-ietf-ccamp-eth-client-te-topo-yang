@@ -1,0 +1,4770 @@
+<!DOCTYPE html>
+<html lang="en" class="Internet-Draft">
+<head>
+<meta charset="utf-8">
+<meta content="Common,Latin" name="scripts">
+<meta content="initial-scale=1.0" name="viewport">
+<title>A YANG Data Model for Ethernet TE Topology</title>
+<meta content="Chaode Yu" name="author">
+<meta content="Haomian Zheng" name="author">
+<meta content="Aihua Guo" name="author">
+<meta content="Italo Busi" name="author">
+<meta content="Yunbin Xu" name="author">
+<meta content="Yang Zhao" name="author">
+<meta content="Xufeng Liu" name="author">
+<meta content="
+       This document describes a YANG data model for Ethernet networks when used either as a client-layer network of an underlay transport network (e.g., an Optical Transport Network (OTN)) or as a transport network itself. 
+    " name="description">
+<meta content="xml2rfc 3.24.0" name="generator">
+<meta content="next generation" name="keyword">
+<meta content="unicorn" name="keyword">
+<meta content="sparkling distributed ledger" name="keyword">
+<meta content="draft-ietf-ccamp-eth-client-te-topo-yang-latest" name="ietf.draft">
+<!-- Generator version information:
+  xml2rfc 3.24.0
+    Python 3.12.7
+    ConfigArgParse 1.7
+    google-i18n-address 3.1.1
+    intervaltree 3.1.0
+    Jinja2 3.1.4
+    lxml 5.3.0
+    platformdirs 4.3.6
+    pycountry 22.3.5
+    PyYAML 6.0.1
+    requests 2.32.3
+    setuptools 70.3.0
+    wcwidth 0.2.13
+-->
+<link href="draft-ietf-ccamp-eth-client-te-topo-yang.xml" rel="alternate" type="application/rfc+xml">
+<link href="#copyright" rel="license">
+<style type="text/css">@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-cyrillic.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-cyrillic.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Lora SemiBold'), local('Lora-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-semibold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Oxygen Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Oxygen Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-greek.woff2') format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-greek.woff2') format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  color-scheme: light dark;
+  --background-color: #fff;
+  --text-color: #222;
+  --title-color: #191919;
+  --link-color: #2a6496;
+  --highlight-color: #f9f9f9;
+  --line-color: #eee;
+  --pilcrow-weak: #ddd;
+  --pilcrow-strong: #bbb;
+  --small-font-size: 14.5px;
+  --font-mono: 'Oxygen Mono', monospace;
+  --font-title: "Sofia Sans Semi Condensed", sans-serif;
+  scrollbar-color: #bbb #eee;
+}
+body {
+  max-width: 600px;
+  margin: 75px auto;
+  padding: 0 5px;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  font: 16px/22px "Lora", serif;
+  scroll-behavior: smooth;
+}
+
+.ears {
+  display: none;
+}
+
+/* headings */
+section {
+  clear: both;
+}
+.section-number {
+  padding-right: 0.5em;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-title);
+  font-weight: 680;
+  margin: 0.8em 0 0.3em;
+  font-size-adjust: 0.5;
+  color: var(--title-color);
+}
+h1#title {
+  font-size: 32px;
+  line-height: 40px;
+  clear: both;
+}
+h1#title, h1#rfcnum {
+  margin: 1.5em 0 0.2em;
+}
+h1#rfcnum + h1#title {
+  margin: 0.2em 0;
+}
+
+h1, h2, h3 {
+  font-size: 22px;
+  line-height: 27px;
+}
+h4, h5, h6 {
+  font-size: 20px;
+  line-height: 24px;
+}
+
+/* general structure */
+.author {
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+#abstract+p {
+  font-size: 18px;
+  line-height: 24px;
+}
+#abstract+p code, #abstract+p samp, #abstract+p tt {
+  font-size: 16px;
+  line-height: 0;
+}
+
+p {
+  padding: 0;
+  margin: 0.5em 0;
+  text-align: left;
+}
+div {
+  margin: 0;
+}
+.alignRight.art-text {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  padding: 0.5em 1em 0;
+  margin-bottom: 0.5em;
+}
+.alignRight.art-text pre {
+  padding: 0;
+  width: auto;
+}
+.alignRight {
+  margin: 1em 0;
+}
+.alignRight > *:first-child {
+  border: none;
+  margin: 0;
+  float: right;
+  clear: both;
+}
+.alignRight > *:nth-child(2) {
+  clear: both;
+  display: block;
+  border: none;
+}
+svg {
+  display: block;
+}
+/* font-family isn't space-separated, but =~ will have to do */
+svg[font-family~="monospace" i], svg [font-family~="monospace" i] {
+  font-family: var(--font-mono);
+}
+.alignCenter.art-text {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  padding: 0.5em 1em 0;
+  margin-bottom: 0.5em;
+}
+.alignCenter.art-text pre {
+  padding: 0;
+  width: auto;
+}
+.alignCenter {
+  margin: 1em 0;
+}
+.alignCenter > *:first-child {
+  border: none;
+  /* this isn't optimal, but it's an existence proof.  PrinceXML doesn't
+     support flexbox yet.
+  */
+  display: table;
+  margin: 0 auto;
+}
+
+/* lists */
+ol, ul {
+  padding: 0;
+  margin: 0 0 0.5em 2em;
+  & :is(ol, ul) {
+    margin-left: 1em;
+  }
+}
+li {
+  margin: 0 0 0.25em 0;
+}
+ul.empty, .ulEmpty {
+  list-style-type: none;
+  & li {
+    margin-top: 0.5em;
+  }
+}
+:is(ul, ol).compact, .ulCompact, .olCompact {
+  margin: 0 0 0 2em;
+  & li {
+    margin: 0;
+    & :first-child { margin-top: 0; }
+    & :last-child { margin-bottom: 0; }
+  }
+}
+
+/* definition lists */
+dl {
+  clear: left;
+  --indent: 3ch;
+  /* --indent: attr(indent ch); not supported in any browser, but we can dream */
+  &.olPercent {
+    --indent: 5ch;
+    & > dt {
+      min-width: calc(var(--indent) - 2ch);
+    }
+  }
+  &.olPercent > dt {
+    float: none;
+  }
+
+  dl > dd > & {
+    margin-top: 0.5em;
+    margin-bottom: 0;
+  }
+}
+dl > dt {
+  float: left;
+  margin-right: 2ch;
+  min-width: 8ch;
+}
+dl > dd {
+  margin-bottom: .8em;
+  margin-left: var(--indent) !important; /* stupid element overrides */
+  min-height: 2ex;
+}
+:is(dl.compact, .dlCompact) > dd {
+  margin-bottom: 0;
+  & > :is(:first-child, .break:first-child + *) {
+    margin-top: 0;
+  }
+  & > :is(:last-child) {
+    margin-bottom: 0;
+  }
+}
+:is(dd, span).break {
+  display: none;
+}
+
+/* links */
+a, a[href].selfRef:hover {
+  text-decoration: none;
+}
+a[href] {
+  color: var(--link-color);
+}
+a[href].selfRef, .iref + a[href].internal {
+  color: var(--text-color);
+}
+a[href]:hover {
+  text-decoration: underline;
+}
+a[href].selfRef:hover {
+  background-color: var(--highlight-color);
+}
+a.xref:is(.cite, .auto), :is(#status-of-memo, #copyright) a {
+  white-space: nowrap;
+}
+
+/* Figures */
+tt, code, pre {
+  background-color: var(--highlight-color);
+  font: 14px/22px var(--font-mono);
+}
+tt, code {
+  /* changing the font for inline elements leads to different ascender
+     and descender heights; as we want to retain baseline alignment,
+     remove leading to avoid altering the final height of lines
+     note: this fails if these blocks take an entire line,
+     a different solution would be great */
+  line-height: 0;
+}
+:is(h1, h2, h3, h4, h5, h6) :is(tt, code) {
+  font-size: 84%;
+}
+pre {
+  border: 1px solid var(--line-color);
+  font-size: 13.5px;
+  line-height: 16px;
+  letter-spacing: -0.2px;
+  margin: 5px;
+  padding: 5px;
+}
+img {
+  max-width: 100%;
+}
+figure {
+  margin: 0.5em 0;
+  padding: 0;
+}
+figure blockquote {
+  margin: 0.8em 0.4em 0.4em;
+}
+figcaption, caption {
+  font-style: italic;
+  margin: 0.5em 1.5em;
+  text-align: left;
+  caption-side: bottom;
+}
+@media screen {
+  /* Auto-collapse boilerplate. */
+  :is(#status-of-memo, #copyright) p {
+    margin: -2px 0;
+    max-height: 0;
+    transition: max-height 2s ease, margin 0.5s ease 0.5s;
+    overflow: hidden;
+  }
+  :is(#status-of-memo, #copyright):hover p,
+  :is(#status-of-memo, #copyright) h2:target ~ p {
+    margin: 0.5em 0;
+    max-height: 500px;
+    overflow: auto;
+  }
+  pre, svg {
+    display: inline-block;
+    overflow-x: auto;
+  }
+  pre {
+    max-width: 100%;
+    width: calc(100% - 22px - 1em);
+  }
+  svg {
+    max-width: calc(100% - 22px - 1em);
+  }
+  figure pre {
+    display: block;
+    width: calc(100% - 25px);
+  }
+  :is(pre, svg) + .pilcrow {
+    display: inline-block;
+    vertical-align: text-bottom;
+    padding-bottom: 8px;
+  }
+}
+
+/* aside, blockquote */
+aside, blockquote {
+  margin-left: 0;
+  padding: 0 2em;
+  font-style: italic;
+}
+blockquote {
+  margin: 1em 0;
+}
+cite {
+  display: block;
+  text-align: right;
+  font-style: italic;
+}
+
+/* tables */
+table {
+  width: auto;
+  max-width: 100%;
+  margin: 0 0 1em;
+  border-collapse: collapse;
+}
+table.right {
+  margin-left: auto;
+}
+table.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+table.left {
+  margin-right: auto;
+}
+table .text-left {
+  text-align: left;
+}
+table .text-center {
+  text-align: center;
+}
+table .text-right {
+  text-align: right;
+}
+
+thead, tbody {
+  border: 1px solid var(--line-color);
+}
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 5px 10px;
+}
+th {
+  background-color: var(--line-color);
+}
+:is(tr:nth-child(2n), thead+tbody > tr:nth-child(2n+1)) > td {
+  background-color: var(--background-color);
+}
+:is(tr:nth-child(2n+1), thead+tbody > tr:nth-child(2n)) > td {
+  background-color: var(--highlight-color);
+}
+table caption {
+  margin: 0;
+  padding: 3px 0 3px 1em;
+}
+table p {
+  margin: 0;
+}
+
+/* pilcrow */
+a.pilcrow {
+  margin-left: 3px;
+  opacity: 0.2;
+  user-select: none;
+  &[href] {
+    color: var(--pilcrow-weak);
+    &:hover { text-decoration: none; }
+  }
+}
+@media not print {
+  :hover > a.pilcrow {
+    opacity: 1;
+  }
+  a.pilcrow[href]:hover {
+    color: var(--pilcrow-strong);
+    background-color: transparent;
+  }
+}
+@media print {
+  a.pilcrow {
+    display: none;
+  }
+}
+
+/* misc */
+hr {
+  border: 0;
+  border-top: 1px solid var(--line-color);
+}
+.bcp14 {
+  font-variant: small-caps;
+  font-weight: 600;
+  font-size: var(--small-font-size);
+}
+.role {
+  font-variant: all-small-caps;
+}
+sub, sup {
+  line-height: 1;
+  font-size: 80%;
+}
+
+/* info block */
+#identifiers {
+  margin: 0;
+  font-size: var(--small-font-size);
+  line-height: 18px;
+  --identifier-width: 15ch;
+  & dt {
+    width: var(--identifier-width);
+    min-width: var(--identifier-width);
+    clear: left;
+    float: left;
+    text-align: right;
+    margin-right: 1ch;
+  }
+  & dd {
+    margin: 0;
+    margin-left: calc(1em + var(--identifier-width)) !important;
+    min-width: 5em;
+  }
+  & .authors {
+    & .author {
+      display: inline-block;
+      margin-right: 1.5em;
+    }
+    & .org {
+      font-style: italic;
+    }
+  }
+}
+
+/* The prepared/rendered info at the very bottom of the page */
+.docInfo {
+  color: #999;
+  font-size: 0.9em;
+  font-style: italic;
+  margin-top: 2em;
+}
+.docInfo .prepared {
+  float: right;
+}
+
+/* table of contents */
+#toc {
+  padding: 0.75em 0 2em 0;
+  margin-bottom: 1em;
+
+  & nav {
+    & ul {
+      margin: 0 0.5em 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    & li {
+      line-height: 1.3em;
+      margin: 2px 0;
+      padding-left: 1.2em;
+      text-indent: -1.2em;
+    }
+  }
+  & a.xref {
+    white-space: normal;
+  }
+}
+
+.references {
+  & > dt {
+    text-align: right;
+    font-weight: bold;
+    min-width: 10ch;
+    margin-right: 1.5ch;
+    &:target::before {
+      content: "⇒";
+      margin: 0 10px 0 -25px;
+    }
+  }
+  & > dd {
+    margin-left: 12ch !important;
+    overflow: visible;
+    & .refInstance {
+      margin-bottom: 0.8em;
+    }
+    & .ascii {
+      margin-bottom: 0.25em;
+    }
+  }
+}
+
+#rfc\.index\.index + ul {
+  margin-left: 0;
+}
+
+/* authors */
+address.vcard {
+  font-style: normal;
+  max-width: 20em;
+  margin: 1em auto 1em 0;
+
+  & .nameRole {
+    font-weight: 700;
+    margin-left: 0;
+  }
+  & .label {
+    margin: 0.5em 0;
+  }
+  & .type {
+    display: none;
+  }
+  & .alternative-contact {
+    margin: 0.5em 0 0.25em 0;
+  }
+  & .non-ascii {
+    margin: 0 0 0 2em;
+  }
+  & div.left {
+    text-align: left;
+  }
+  & div.right {
+    text-align: right;
+  }
+}
+
+hr.addr {
+  border-top: 1px dashed;
+  margin: 0;
+  color: #ddd;
+  max-width: calc(100% - 16px);
+}
+@media (min-width: 500px) {
+  #authors-addresses > section {
+    column-count: 2;
+    column-gap: 20px;
+  }
+  #authors-addresses > section > h2 {
+    column-span: all;
+  }
+  /* hack for break-inside: avoid-column */
+  #authors-addresses address {
+    display: inline-block;
+    break-inside: avoid-column;
+  }
+}
+
+/* Comments */
+.rfcEditorRemove p:first-of-type {
+  font-style: italic;
+}
+.cref {
+  background-color: rgba(249, 232, 105, 0.3);
+  padding: 2px 4px;
+}
+.crefSource {
+  font-style: italic;
+}
+
+@media screen {
+  #toc nav {
+    font-family: var(--font-title);
+    font-weight: 360;
+    & > ul { margin-bottom: 2em; }
+    & ul {
+      margin: 0 0 0 4px;
+      & :is(p, li) {
+        margin: 2px 0;
+      }
+    }
+  }
+  #toc a.toplink {
+    float: right;
+  }
+}
+@media not screen {
+  #toc a.toplink {
+    display: none;
+  }
+}
+
+
+/* TOC layout for smaller screens */
+@media screen and (max-width: 929px) {
+  #toc {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    padding: 1px 0 0 0;
+    margin: 0;
+    border-bottom: 1px solid #ccc;
+    opacity: 0.6;
+  }
+  #toc h2 {
+    margin: 0;
+    padding: 2px 0 2px 6px;
+    padding-right: 1em;
+    font-size: 18px;
+    line-height: 24px;
+    min-width: 190px;
+    text-align: right;
+    background-color: #444;
+    color: white;
+    cursor: pointer;
+    &::before { /* css hamburger */
+      float: right;
+      position: relative;
+      width: 1em;
+      height: 1px;
+      left: -164px;
+      margin: 8px 0 0 0;
+      background: white none repeat scroll 0 0;
+      box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
+      content: "";
+    }
+  }
+  #toc nav {
+    display: none;
+    background-color: var(--background-color);
+    padding: 0.5em 1em 1em;
+    overflow: auto;
+    overscroll-behavior: contain;
+    height: calc(100vh - 48px);
+    border-left: 1px solid #ddd;
+  }
+  #toc.active {
+    opacity: 1;
+    & nav { display: block; }
+  }
+  /* Make the collapsed ToC header render white on gray also when it's a link */
+  #toc h2 a,
+  #toc h2 a:is(:link, :focus, :hover),
+  #toc a.toplink,
+  #toc a.toplink:hover {
+    color: white;
+    background-color: #444;
+    text-decoration: none;
+  }
+  #toc a.toplink {
+    margin: 2px 0.5em 0;
+  }
+}
+
+/* TOC layout for wide screens */
+@media screen and (min-width: 930px) {
+  body {
+    padding-right: 360px;
+    padding-right: calc(min(180px + 20%, 500px));
+  }
+  #toc {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    right: calc(50vw - 480px);
+    width: 312px;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+  }
+  #toc h2 {
+    margin: 0;
+    padding: 0.25em 1em 1em 0;
+  }
+  #toc nav {
+    display: block;
+    height: calc(90vh - 84px);
+    bottom: 0;
+    padding: 0.5em 0 2em;
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+  img { /* future proofing */
+    max-width: 100%;
+    height: auto;
+  }
+  #toc a.toplink {
+    margin: 8px 0.5em 0;
+  }
+}
+
+/* pagination */
+@media print {
+  body {
+    width: 100%;
+  }
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+  #n-copyright-notice {
+    border-bottom: none;
+  }
+  #toc, #n-introduction {
+    page-break-before: always;
+  }
+  #toc {
+    border-top: none;
+    padding-top: 0;
+  }
+  figure, pre, .vcard {
+    page-break-inside: avoid;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+  :is(h2, h3, h4, h5, h6)+*, dd {
+    page-break-before: avoid;
+  }
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 10pt;
+  }
+  table {
+    border: 1px solid #ddd;
+  }
+  td {
+    border-top: 1px solid #ddd;
+  }
+}
+
+@page :first {
+  padding-top: 0;
+  @top-left {
+    content: normal;
+    border: none;
+  }
+  @top-center {
+    content: normal;
+    border: none;
+  }
+  @top-right {
+    content: normal;
+    border: none;
+  }
+}
+
+@page {
+  size: A4;
+  margin-bottom: 45mm;
+  padding-top: 20px;
+}
+
+/* Dark mode. */
+@media (prefers-color-scheme: dark) {
+:root {
+  --background-color: #121212;
+  --text-color: #f0f0f0;
+  --title-color: #fff;
+  --link-color: #4da4f0;
+  --highlight-color: #282828;
+  --line-color: #444;
+  --pilcrow-weak: #444;
+  --pilcrow-strong: #666;
+  scrollbar-color: #777 #333;
+}
+}
+
+/* SVG Trick: a prefix match works because only black and white are allowed */
+svg :is([stroke="black"], [stroke^="#000"]) {
+  stroke: var(--text-color);
+}
+svg :is([stroke="white"], [stroke^="#fff"]) {
+  stroke: var(--background-color);
+}
+svg :is([fill="black"], [fill^="#000"], :not([fill])) {
+  fill: var(--text-color);
+}
+svg :is([fill="white"], [fill^="#fff"]) {
+  fill: var(--background-color);
+}
+</style>
+
+</head>
+<body class="xml2rfc">
+<table class="ears">
+<thead><tr>
+<td class="left">Internet-Draft</td>
+<td class="center">ETH Topology Transport YANG Model</td>
+<td class="right">November 2024</td>
+</tr></thead>
+<tfoot><tr>
+<td class="left">Yu, et al.</td>
+<td class="center">Expires 24 May 2025</td>
+<td class="right">[Page]</td>
+</tr></tfoot>
+</table>
+<div id="external-metadata" class="document-information"></div>
+<div id="internal-metadata" class="document-information">
+<dl id="identifiers">
+<dt class="label-workgroup">Workgroup:</dt>
+<dd class="workgroup">Common Control and Measurement Plane</dd>
+<dt class="label-internet-draft">Internet-Draft:</dt>
+<dd class="internet-draft">draft-ietf-ccamp-eth-client-te-topo-yang-latest</dd>
+<dt class="label-published">Published:</dt>
+<dd class="published">
+<time datetime="2024-11-20" class="published">20 November 2024</time>
+    </dd>
+<dt class="label-intended-status">Intended Status:</dt>
+<dd class="intended-status">Standards Track</dd>
+<dt class="label-expires">Expires:</dt>
+<dd class="expires"><time datetime="2025-05-24">24 May 2025</time></dd>
+<dt class="label-authors">Authors:</dt>
+<dd class="authors">
+<div class="author">
+      <div class="author-name">C. Yu</div>
+<div class="org">Huawei Technologies</div>
+</div>
+<div class="author">
+      <div class="author-name">H. Zheng</div>
+<div class="org">Huawei Technologies</div>
+</div>
+<div class="author">
+      <div class="author-name">A. Guo</div>
+<div class="org">Futurewei</div>
+</div>
+<div class="author">
+      <div class="author-name">I. Busi</div>
+<div class="org">Huawei Technologies</div>
+</div>
+<div class="author">
+      <div class="author-name">Y. Xu</div>
+<div class="org">CAICT</div>
+</div>
+<div class="author">
+      <div class="author-name">Y. Zhao</div>
+<div class="org">China Mobile</div>
+</div>
+<div class="author">
+      <div class="author-name">X. Liu</div>
+<div class="org">Alef Edge</div>
+</div>
+</dd>
+</dl>
+</div>
+<h1 id="title">A YANG Data Model for Ethernet TE Topology</h1>
+<section id="section-abstract">
+      <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
+<p id="section-abstract-1">This document describes a YANG data model for Ethernet networks when used either as a client-layer network of an underlay transport network (e.g., an Optical Transport Network (OTN)) or as a transport network itself.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+</section>
+<section class="note rfcEditorRemove" id="section-note.1">
+      <h2 id="name-about-this-document">
+<a href="#name-about-this-document" class="section-name selfRef">About This Document</a>
+      </h2>
+<p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
+<p id="section-note.1-2">
+        The latest revision of this draft can be found at <span><a href="https://ietf-ccamp-wg.github.io/draft-ietf-ccamp-eth-client-te-topo-yang/draft-ietf-ccamp-eth-client-te-topo-yang.html">https://ietf-ccamp-wg.github.io/draft-ietf-ccamp-eth-client-te-topo-yang/draft-ietf-ccamp-eth-client-te-topo-yang.html</a></span>.
+        Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-ietf-ccamp-eth-client-te-topo-yang/">https://datatracker.ietf.org/doc/draft-ietf-ccamp-eth-client-te-topo-yang/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
+<p id="section-note.1-3">
+        Discussion of this document takes place on the
+        Common Control and Measurement Plane Working Group mailing list (<span><a href="mailto:ccamp@ietf.org">mailto:ccamp@ietf.org</a></span>),
+        which is archived at <span><a href="https://mailarchive.ietf.org/arch/browse/ccamp/">https://mailarchive.ietf.org/arch/browse/ccamp/</a></span>.
+        Subscribe at <span><a href="https://www.ietf.org/mailman/listinfo/ccamp/">https://www.ietf.org/mailman/listinfo/ccamp/</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
+<p id="section-note.1-4">Source for this draft and an issue tracker can be found at
+        <span><a href="https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-eth-client-te-topo-yang">https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-eth-client-te-topo-yang</a></span>.<a href="#section-note.1-4" class="pilcrow">¶</a></p>
+</section>
+<div id="status-of-memo">
+<section id="section-boilerplate.1">
+        <h2 id="name-status-of-this-memo">
+<a href="#name-status-of-this-memo" class="section-name selfRef">Status of This Memo</a>
+        </h2>
+<p id="section-boilerplate.1-1">
+        This Internet-Draft is submitted in full conformance with the
+        provisions of BCP 78 and BCP 79.<a href="#section-boilerplate.1-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-2">
+        Internet-Drafts are working documents of the Internet Engineering Task
+        Force (IETF). Note that other groups may also distribute working
+        documents as Internet-Drafts. The list of current Internet-Drafts is
+        at <span><a href="https://datatracker.ietf.org/drafts/current/">https://datatracker.ietf.org/drafts/current/</a></span>.<a href="#section-boilerplate.1-2" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-3">
+        Internet-Drafts are draft documents valid for a maximum of six months
+        and may be updated, replaced, or obsoleted by other documents at any
+        time. It is inappropriate to use Internet-Drafts as reference
+        material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-4">
+        This Internet-Draft will expire on 24 May 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="copyright">
+<section id="section-boilerplate.2">
+        <h2 id="name-copyright-notice">
+<a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
+        </h2>
+<p id="section-boilerplate.2-1">
+            Copyright (c) 2024 IETF Trust and the persons identified as the
+            document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.2-2">
+            This document is subject to BCP 78 and the IETF Trust's Legal
+            Provisions Relating to IETF Documents
+            (<span><a href="https://trustee.ietf.org/license-info">https://trustee.ietf.org/license-info</a></span>) in effect on the date of
+            publication of this document. Please review these documents
+            carefully, as they describe your rights and restrictions with
+            respect to this document. Code Components extracted from this
+            document must include Revised BSD License text as described in
+            Section 4.e of the Trust Legal Provisions and are provided without
+            warranty as described in the Revised BSD License.<a href="#section-boilerplate.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="toc">
+<section id="section-toc.1">
+        <a href="#" onclick="scroll(0,0)" class="toplink">▲</a><h2 id="name-table-of-contents">
+<a href="#name-table-of-contents" class="section-name selfRef">Table of Contents</a>
+        </h2>
+<nav class="toc"><ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1">
+            <p id="section-toc.1-1.1.1"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.1">
+                <p id="section-toc.1-1.1.2.1.1" class="keepWithNext"><a href="#section-1.1" class="auto internal xref">1.1</a>.  <a href="#name-terminology-and-notations" class="internal xref">Terminology and Notations</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.2">
+                <p id="section-toc.1-1.1.2.2.1" class="keepWithNext"><a href="#section-1.2" class="auto internal xref">1.2</a>.  <a href="#name-tree-diagram" class="internal xref">Tree Diagram</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.3">
+                <p id="section-toc.1-1.1.2.3.1" class="keepWithNext"><a href="#section-1.3" class="auto internal xref">1.3</a>.  <a href="#name-prefix-in-data-node-names" class="internal xref">Prefix in Data Node Names</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
+            <p id="section-toc.1-1.2.1"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-ethernet-topology-model-ove" class="internal xref">Ethernet Topology Model Overview</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1">
+                <p id="section-toc.1-1.2.2.1.1"><a href="#section-2.1" class="auto internal xref">2.1</a>.  <a href="#name-attributes-augmentation" class="internal xref">Attributes Augmentation</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2">
+                <p id="section-toc.1-1.2.2.2.1"><a href="#section-2.2" class="auto internal xref">2.2</a>.  <a href="#name-te-bandwidth-augmentations" class="internal xref">TE Bandwidth Augmentations</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.3">
+                <p id="section-toc.1-1.2.2.3.1"><a href="#section-2.3" class="auto internal xref">2.3</a>.  <a href="#name-te-label-augmentations" class="internal xref">TE Label Augmentations</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-yang-tree-for-ethernet-topo" class="internal xref">YANG Tree for Ethernet Topology</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-ethernet-topology-yang-code" class="internal xref">Ethernet Topology YANG Code</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-manageability-consideration" class="internal xref">Manageability Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-references" class="internal xref">References</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1">
+                <p id="section-toc.1-1.8.2.1.1"><a href="#section-8.1" class="auto internal xref">8.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2">
+                <p id="section-toc.1-1.8.2.2.1"><a href="#section-8.2" class="auto internal xref">8.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
+            <p id="section-toc.1-1.9.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
+            <p id="section-toc.1-1.10.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-contributors" class="internal xref">Contributors</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
+            <p id="section-toc.1-1.11.1"><a href="#appendix-C" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
+</li>
+        </ul>
+</nav>
+</section>
+</div>
+<div id="introduction">
+<section id="section-1">
+      <h2 id="name-introduction">
+<a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
+      </h2>
+<p id="section-1-1">A transport network is a server-layer network designed to provide
+   connectivity services for a client-layer network to carry the client
+   traffic transparently across the server-layer network resources.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">A transport network typically utilizes several different transport technologies such as the Optical Transport Networks (OTN) or packet transport such as provided by the MPLS-Transport Profile (MPLS-TP).<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">An Ethernet network can be either a client-layer network of an underlay transport network or a transport network itself.<a href="#section-1-3" class="pilcrow">¶</a></p>
+<p id="section-1-4">This document describes a YANG data model for Ethernet networks when used as a client-layer network of an underlay transport network (e.g., an Optical Transport Network (OTN)) or as a transport network technology.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-5">The YANG model defined in this document augments from the TE topology YANG model defined in <span>[<a href="#RFC8795" class="cite xref">RFC8795</a>]</span>, and imports from the generic Ethernet types defined in <span>[<a href="#I-D.ietf-ccamp-client-signal-yang" class="cite xref">I-D.ietf-ccamp-client-signal-yang</a>]</span>.<a href="#section-1-5" class="pilcrow">¶</a></p>
+<p id="section-1-6">The YANG data model in this document conforms to the Network Management Datastore Architecture defined in <span>[<a href="#RFC8342" class="cite xref">RFC8342</a>]</span>.<a href="#section-1-6" class="pilcrow">¶</a></p>
+<div id="terminology-and-notations">
+<section id="section-1.1">
+        <h3 id="name-terminology-and-notations">
+<a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-terminology-and-notations" class="section-name selfRef">Terminology and Notations</a>
+        </h3>
+<p id="section-1.1-1">The following terms are defined in <span>[<a href="#RFC7950" class="cite xref">RFC7950</a>]</span> and are not redefined
+here:<a href="#section-1.1-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-1.1-2.1">
+            <p id="section-1.1-2.1.1">client<a href="#section-1.1-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1.1-2.2">
+            <p id="section-1.1-2.2.1">server<a href="#section-1.1-2.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1.1-2.3">
+            <p id="section-1.1-2.3.1">augment<a href="#section-1.1-2.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1.1-2.4">
+            <p id="section-1.1-2.4.1">data model<a href="#section-1.1-2.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1.1-2.5">
+            <p id="section-1.1-2.5.1">data node<a href="#section-1.1-2.5.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-1.1-3">The following terms are defined in <span>[<a href="#RFC6241" class="cite xref">RFC6241</a>]</span> and are not redefined
+here:<a href="#section-1.1-3" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-1.1-4.1">
+            <p id="section-1.1-4.1.1">configuration data<a href="#section-1.1-4.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1.1-4.2">
+            <p id="section-1.1-4.2.1">state data<a href="#section-1.1-4.2.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-1.1-5">The terminology for describing YANG data models is found in
+<span>[<a href="#RFC7950" class="cite xref">RFC7950</a>]</span>.<a href="#section-1.1-5" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="tree-diagram">
+<section id="section-1.2">
+        <h3 id="name-tree-diagram">
+<a href="#section-1.2" class="section-number selfRef">1.2. </a><a href="#name-tree-diagram" class="section-name selfRef">Tree Diagram</a>
+        </h3>
+<p id="section-1.2-1">A simplified graphical representation of the data model is used in
+<a href="#eth-topology-tree" class="auto internal xref">Section 3</a> of this document.  The meaning of the symbols in these
+diagrams is defined in <span>[<a href="#RFC8340" class="cite xref">RFC8340</a>]</span>.<a href="#section-1.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="prefix-in-data-node-names">
+<section id="section-1.3">
+        <h3 id="name-prefix-in-data-node-names">
+<a href="#section-1.3" class="section-number selfRef">1.3. </a><a href="#name-prefix-in-data-node-names" class="section-name selfRef">Prefix in Data Node Names</a>
+        </h3>
+<p id="section-1.3-1">In this document, the names of data nodes and other data model
+objects are prefixed using the standard prefix associated with the
+corresponding YANG imported modules, as shown in <a href="#tab-prefixes" class="auto internal xref">Table 1</a>.<a href="#section-1.3-1" class="pilcrow">¶</a></p>
+<p id="section-1.3-2">In this document, names of data nodes and other data model objects
+  are prefixed using the standard prefix associated with the
+  corresponding YANG imported modules, as shown in <a href="#tab-prefixes" class="auto internal xref">Table 1</a>.<a href="#section-1.3-2" class="pilcrow">¶</a></p>
+<span id="name-prefixes-and-corresponding-"></span><div id="tab-prefixes">
+<table class="center" id="table-1">
+          <caption>
+<a href="#table-1" class="selfRef">Table 1</a>:
+<a href="#name-prefixes-and-corresponding-" class="selfRef">Prefixes and corresponding YANG modules</a>
+          </caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">Prefix</th>
+              <th class="text-left" rowspan="1" colspan="1">YANG module</th>
+              <th class="text-left" rowspan="1" colspan="1">Reference</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">yang</td>
+              <td class="text-left" rowspan="1" colspan="1">ietf-yang-types</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <span>[<a href="#RFC6991" class="cite xref">RFC6991</a>]</span>
+</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">etht-types</td>
+              <td class="text-left" rowspan="1" colspan="1">ietf-eth-tran-types</td>
+              <td class="text-left" rowspan="1" colspan="1">[RFCYYYY]</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">nw</td>
+              <td class="text-left" rowspan="1" colspan="1">ietf-network</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <span>[<a href="#RFC8345" class="cite xref">RFC8345</a>]</span>
+</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">nt</td>
+              <td class="text-left" rowspan="1" colspan="1">ietf-network-topology</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <span>[<a href="#RFC8345" class="cite xref">RFC8345</a>]</span>
+</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">tet</td>
+              <td class="text-left" rowspan="1" colspan="1">ietf-te-topology</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <span>[<a href="#RFC8795" class="cite xref">RFC8795</a>]</span>
+</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">etht</td>
+              <td class="text-left" rowspan="1" colspan="1">ietf-eth-te-topology</td>
+              <td class="text-left" rowspan="1" colspan="1">RFCXXXX</td>
+            </tr>
+          </tbody>
+        </table>
+</div>
+<p id="section-1.3-4">RFC Editor Note: Please replace YYYY and XXXX with the number
+assigned to the RFC once this draft becomes an RFC.<a href="#section-1.3-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="eth-topo-overview">
+<section id="section-2">
+      <h2 id="name-ethernet-topology-model-ove">
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-ethernet-topology-model-ove" class="section-name selfRef">Ethernet Topology Model Overview</a>
+      </h2>
+<p id="section-2-1">This document aims to describe the data model for Ethernet topology.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<p id="section-2-2">As a classic Traffic-engineering (TE) technology, Ethernet can provide packet
+switching in transport network <span>[<a href="#ITU_G.8021" class="cite xref">ITU_G.8021</a>]</span>.<a href="#section-2-2" class="pilcrow">¶</a></p>
+<p id="section-2-3">Therefore, the YANG
+module presented in this document augments from a more generic
+Traffic Engineered (TE) network topology data model, i.e., the ietf-
+te-topology, as specified in <span>[<a href="#RFC8795" class="cite xref">RFC8795</a>]</span>.  In section 6 of <span>[<a href="#RFC8795" class="cite xref">RFC8795</a>]</span>,
+the guideline for augmenting TE topology model was provided, and in
+this draft, we augment the TE topology model to describe the topology
+in Ethernet network.  Common types, identities and groupings defined in
+<span>[<a href="#I-D.ietf-ccamp-client-signal-yang" class="cite xref">I-D.ietf-ccamp-client-signal-yang</a>]</span> is reused in this document.  <span>[<a href="#RFC8345" class="cite xref">RFC8345</a>]</span>
+describes a network topology model and provides the fundamental model
+for <span>[<a href="#RFC8795" class="cite xref">RFC8795</a>]</span>.  However, this work is not directly augmenting
+<span>[<a href="#RFC8345" class="cite xref">RFC8345</a>]</span>.  <a href="#fig-eth-topo" class="auto internal xref">Figure 1</a> shows the augmentation relationship.<a href="#section-2-3" class="pilcrow">¶</a></p>
+<span id="name-relationship-between-ethern"></span><div id="fig-eth-topo">
+<figure id="figure-1">
+        <div class="alignLeft art-ascii-art art-text artwork" id="section-2-4.1">
+<pre>
+                      +-------------------------+
+         TE generic   |    ietf-te-topology     |
+                      +------------+------------+
+                                   ^
+                                   |
+                                   | Augments
+                                   |
+                      +------------+------------+
+         Ethernet     |  ietf-eth-te-topology   |
+                      +-------------------------+
+</pre>
+</div>
+<figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
+<a href="#name-relationship-between-ethern" class="selfRef">Relationship between Ethernet and TE topology models</a>
+        </figcaption></figure>
+</div>
+<p id="section-2-5">The entities and TE attributes, such as node, termination points and
+   links, are still applicable for describing an Ethernet topology and the
+   model presented in this document only specifies technology-specific
+   attributes/information.<a href="#section-2-5" class="pilcrow">¶</a></p>
+<div id="attributes-augmentation">
+<section id="section-2.1">
+        <h3 id="name-attributes-augmentation">
+<a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-attributes-augmentation" class="section-name selfRef">Attributes Augmentation</a>
+        </h3>
+<p id="section-2.1-1">Given the guidance for augmentation in <span>[<a href="#RFC8795" class="cite xref">RFC8795</a>]</span>, the following
+  technology-specific augmentations need to be provided:<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.1-2.1">
+            <p id="section-2.1-2.1.1">A network-type to indicate that the TE topology is an Ethernet
+Topology, as follow:<a href="#section-2.1-2.1.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<div class="alignLeft art-text artwork" id="section-2.1-3">
+<pre>
+       augment /nw:networks/nw:network/nw:network-types/tet:te-topology:
+         +--rw eth-tran-topology!
+</pre><a href="#section-2.1-3" class="pilcrow">¶</a>
+</div>
+<ul class="normal">
+<li class="normal" id="section-2.1-4.1">
+            <p id="section-2.1-4.1.1">TE Bandwidth Augmentations as described in <a href="#eth-bandwidth" class="auto internal xref">Section 2.2</a>.<a href="#section-2.1-4.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-2.1-4.2">
+            <p id="section-2.1-4.2.1">TE Label Augmentations as described in <a href="#eth-label" class="auto internal xref">Section 2.3</a>.<a href="#section-2.1-4.2.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+</section>
+</div>
+<div id="eth-bandwidth">
+<section id="section-2.2">
+        <h3 id="name-te-bandwidth-augmentations">
+<a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-te-bandwidth-augmentations" class="section-name selfRef">TE Bandwidth Augmentations</a>
+        </h3>
+<p id="section-2.2-1">Following the guidelines in <span>[<a href="#RFC8795" class="cite xref">RFC8795</a>]</span>, the model augments
+all the occurrences of the te-bandwidth container with the Ethernet technology
+specific attributes using the eth-bandwidth grouping defined in <span>[<a href="#I-D.ietf-ccamp-client-signal-yang" class="cite xref">I-D.ietf-ccamp-client-signal-yang</a>]</span>.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="eth-label">
+<section id="section-2.3">
+        <h3 id="name-te-label-augmentations">
+<a href="#section-2.3" class="section-number selfRef">2.3. </a><a href="#name-te-label-augmentations" class="section-name selfRef">TE Label Augmentations</a>
+        </h3>
+<p id="section-2.3-1">The model augments all the occurrences of the label-restriction list
+with Ethernet technology specific attributes using the eth-label-restriction grouping defined in <span>[<a href="#I-D.ietf-ccamp-client-signal-yang" class="cite xref">I-D.ietf-ccamp-client-signal-yang</a>]</span>.<a href="#section-2.3-1" class="pilcrow">¶</a></p>
+<p id="section-2.3-2">Moreover, following the guidelines in <span>[<a href="#RFC8795" class="cite xref">RFC8795</a>]</span>, the model augments
+all the occurrences of the te-label container with the Ethernet technology
+specific attributes using the eth-label and
+eth-label-step groupings defined in <span>[<a href="#I-D.ietf-ccamp-client-signal-yang" class="cite xref">I-D.ietf-ccamp-client-signal-yang</a>]</span>.<a href="#section-2.3-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="eth-topology-tree">
+<section id="section-3">
+      <h2 id="name-yang-tree-for-ethernet-topo">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-yang-tree-for-ethernet-topo" class="section-name selfRef">YANG Tree for Ethernet Topology</a>
+      </h2>
+<span id="name-ethernet-topology-yang-tree"></span><div id="fig-eth-topology-tree">
+<figure id="figure-2">
+        <div class="alignLeft art-ascii-art art-text artwork" id="section-3-1.1">
+<pre>
+module: ietf-eth-te-topology
+
+  augment /nw:networks/nw:network/nw:network-types/tet:te-topology:
+    +--rw eth-tran-topology!
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:te-node-attributes:
+    +--rw eth-node!
+  augment /nw:networks/nw:network/nt:link:
+    +--rw eth-svc!
+  augment /nw:networks/nw:network/nw:node/nt:termination-point:
+    +--rw eth-svc!
+    |  +--rw supported-classification
+    |  |  +--rw port-classification?   boolean
+    |  |  +--rw vlan-classification
+    |  |     +--rw vlan-tag-classification?   boolean
+    |  |     +--rw outer-tag
+    |  |     |  +--rw supported-tag-types*
+    |  |     |  |       etht-types:eth-tag-classify
+    |  |     |  +--rw vlan-bundling?         boolean
+    |  |     |  +--rw vlan-range?
+    |  |     |          etht-types:vid-range-type
+    |  |     +--rw second-tag
+    |  |        +--rw second-tag-classification?   boolean
+    |  |        +--rw supported-tag-types*
+    |  |        |       etht-types:eth-tag-classify
+    |  |        +--rw vlan-bundling?               boolean
+    |  |        +--rw vlan-range?
+    |  |                etht-types:vid-range-type
+    |  +--rw supported-vlan-operations
+    |     +--rw asymmetrical-operations?       boolean
+    |     +--rw transparent-vlan-operations?   boolean
+    |     +--rw vlan-pop
+    |     |  +--rw vlan-pop-operations?   boolean
+    |     |  +--rw max-pop-tags?          uint8
+    |     +--rw vlan-push
+    |        +--rw vlan-push-operation?   boolean
+    |        +--rw outer-tag
+    |        |  +--rw supported-tag-types*   etht-types:eth-tag-type
+    |        |  +--rw vlan-range?
+    |        |          etht-types:vid-range-type
+    |        +--rw second-tag
+    |           +--rw push-second-tag?       boolean
+    |           +--rw supported-tag-types*   etht-types:eth-tag-type
+    |           +--rw vlan-range?
+    |                   etht-types:vid-range-type
+    +--rw eth-link-tp
+       +--rw ltp-mac-address?
+       |       yang:mac-address
+       +--rw port-vlan-id?
+       |       etht-types:vlanid
+       +--rw maximum-frame-size?                       uint16
+       +--rw (direction)?
+          +--:(symmetrical)
+          |  +--rw ingress-egress-bandwidth-profile
+          |     +--rw bandwidth-profile-type?
+          |     |       etht-types:bandwidth-profile-type
+          |     +--rw CIR?                      uint64
+          |     +--rw CBS?                      uint64
+          |     +--rw EIR?                      uint64
+          |     +--rw EBS?                      uint64
+          |     +--rw color-aware?              boolean
+          |     +--rw coupling-flag?            boolean
+          +--:(asymmetrical)
+             +--rw ingress-bandwidth-profile
+             |  +--rw bandwidth-profile-type?
+             |  |       etht-types:bandwidth-profile-type
+             |  +--rw CIR?                      uint64
+             |  +--rw CBS?                      uint64
+             |  +--rw EIR?                      uint64
+             |  +--rw EBS?                      uint64
+             |  +--rw color-aware?              boolean
+             |  +--rw coupling-flag?            boolean
+             +--rw egress-bandwidth-profile
+                +--rw bandwidth-profile-type?
+                |       etht-types:bandwidth-profile-type
+                +--rw CIR?                      uint64
+                +--rw CBS?                      uint64
+                +--rw EIR?                      uint64
+                +--rw EBS?                      uint64
+                +--rw color-aware?              boolean
+                +--rw coupling-flag?            boolean
+  augment /nw:networks/nw:network/nw:node/nt:termination-point/tet:te
+            /tet:interface-switching-capability/tet:max-lsp-bandwidth
+            /tet:te-bandwidth/tet:technology:
+    +--:(eth)
+       +--rw eth-bandwidth?   uint64
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:te-node-attributes/tet:connectivity-matrices
+            /tet:path-constraints/tet:te-bandwidth/tet:technology:
+    +--:(eth)
+       +--rw eth-bandwidth?   uint64
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:te-node-attributes/tet:connectivity-matrices
+            /tet:connectivity-matrix/tet:path-constraints
+            /tet:te-bandwidth/tet:technology:
+    +--:(eth)
+       +--rw eth-bandwidth?   uint64
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:information-source-entry/tet:connectivity-matrices
+            /tet:path-constraints/tet:te-bandwidth/tet:technology:
+    +--:(eth)
+       +--ro eth-bandwidth?   uint64
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:information-source-entry/tet:connectivity-matrices
+            /tet:connectivity-matrix/tet:path-constraints
+            /tet:te-bandwidth/tet:technology:
+    +--:(eth)
+       +--ro eth-bandwidth?   uint64
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:tunnel-termination-point/tet:client-layer-adaptation
+            /tet:switching-capability/tet:te-bandwidth
+            /tet:technology:
+    +--:(eth)
+       +--rw eth-bandwidth?   uint64
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:tunnel-termination-point
+            /tet:local-link-connectivities/tet:path-constraints
+            /tet:te-bandwidth/tet:technology:
+    +--:(eth)
+       +--rw eth-bandwidth?   uint64
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:tunnel-termination-point
+            /tet:local-link-connectivities
+            /tet:local-link-connectivity/tet:path-constraints
+            /tet:te-bandwidth/tet:technology:
+    +--:(eth)
+       +--rw eth-bandwidth?   uint64
+  augment /nw:networks/nw:network/nt:link/tet:te
+            /tet:te-link-attributes
+            /tet:interface-switching-capability/tet:max-lsp-bandwidth
+            /tet:te-bandwidth/tet:technology:
+    +--:(eth)
+       +--rw eth-bandwidth?   uint64
+  augment /nw:networks/nw:network/nt:link/tet:te
+            /tet:te-link-attributes/tet:max-link-bandwidth
+            /tet:te-bandwidth:
+    +--rw eth-bandwidth?   uint64
+  augment /nw:networks/nw:network/nt:link/tet:te
+            /tet:te-link-attributes/tet:max-resv-link-bandwidth
+            /tet:te-bandwidth:
+    +--rw eth-bandwidth?   uint64
+  augment /nw:networks/nw:network/nt:link/tet:te
+            /tet:te-link-attributes/tet:unreserved-bandwidth
+            /tet:te-bandwidth:
+    +--rw eth-bandwidth?   uint64
+  augment /nw:networks/nw:network/nt:link/tet:te
+            /tet:information-source-entry
+            /tet:interface-switching-capability/tet:max-lsp-bandwidth
+            /tet:te-bandwidth/tet:technology:
+    +--:(eth)
+       +--ro eth-bandwidth?   uint64
+  augment /nw:networks/nw:network/nt:link/tet:te
+            /tet:information-source-entry/tet:max-link-bandwidth
+            /tet:te-bandwidth:
+    +--ro eth-bandwidth?   uint64
+  augment /nw:networks/nw:network/nt:link/tet:te
+            /tet:information-source-entry/tet:max-resv-link-bandwidth
+            /tet:te-bandwidth:
+    +--ro eth-bandwidth?   uint64
+  augment /nw:networks/nw:network/nt:link/tet:te
+            /tet:information-source-entry/tet:unreserved-bandwidth
+            /tet:te-bandwidth:
+    +--ro eth-bandwidth?   uint64
+  augment /nw:networks/tet:te/tet:templates/tet:link-template
+            /tet:te-link-attributes
+            /tet:interface-switching-capability/tet:max-lsp-bandwidth
+            /tet:te-bandwidth/tet:technology:
+    +--:(eth)
+       +--rw eth-bandwidth?   uint64
+  augment /nw:networks/tet:te/tet:templates/tet:link-template
+            /tet:te-link-attributes/tet:max-link-bandwidth
+            /tet:te-bandwidth:
+    +--rw eth-bandwidth?   uint64
+  augment /nw:networks/tet:te/tet:templates/tet:link-template
+            /tet:te-link-attributes/tet:max-resv-link-bandwidth
+            /tet:te-bandwidth:
+    +--rw eth-bandwidth?   uint64
+  augment /nw:networks/tet:te/tet:templates/tet:link-template
+            /tet:te-link-attributes/tet:unreserved-bandwidth
+            /tet:te-bandwidth:
+    +--rw eth-bandwidth?   uint64
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:te-node-attributes/tet:connectivity-matrices
+            /tet:label-restrictions/tet:label-restriction:
+    +--rw ethernet-label-range!
+       +--rw tag-type?   etht-types:eth-tag-type
+       +--rw priority?   uint8
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:te-node-attributes/tet:connectivity-matrices
+            /tet:connectivity-matrix/tet:from/tet:label-restrictions
+            /tet:label-restriction:
+    +--rw ethernet-label-range!
+       +--rw tag-type?   etht-types:eth-tag-type
+       +--rw priority?   uint8
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:te-node-attributes/tet:connectivity-matrices
+            /tet:connectivity-matrix/tet:to/tet:label-restrictions
+            /tet:label-restriction:
+    +--rw ethernet-label-range!
+       +--rw tag-type?   etht-types:eth-tag-type
+       +--rw priority?   uint8
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:information-source-entry/tet:connectivity-matrices
+            /tet:label-restrictions/tet:label-restriction:
+    +--ro ethernet-label-range!
+       +--ro tag-type?   etht-types:eth-tag-type
+       +--ro priority?   uint8
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:information-source-entry/tet:connectivity-matrices
+            /tet:connectivity-matrix/tet:from/tet:label-restrictions
+            /tet:label-restriction:
+    +--ro ethernet-label-range!
+       +--ro tag-type?   etht-types:eth-tag-type
+       +--ro priority?   uint8
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:information-source-entry/tet:connectivity-matrices
+            /tet:connectivity-matrix/tet:to/tet:label-restrictions
+            /tet:label-restriction:
+    +--ro ethernet-label-range!
+       +--ro tag-type?   etht-types:eth-tag-type
+       +--ro priority?   uint8
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:tunnel-termination-point
+            /tet:local-link-connectivities/tet:label-restrictions
+            /tet:label-restriction:
+    +--rw ethernet-label-range!
+       +--rw tag-type?   etht-types:eth-tag-type
+       +--rw priority?   uint8
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:tunnel-termination-point
+            /tet:local-link-connectivities
+            /tet:local-link-connectivity/tet:label-restrictions
+            /tet:label-restriction:
+    +--rw ethernet-label-range!
+       +--rw tag-type?   etht-types:eth-tag-type
+       +--rw priority?   uint8
+  augment /nw:networks/nw:network/nt:link/tet:te
+            /tet:te-link-attributes/tet:label-restrictions
+            /tet:label-restriction:
+    +--rw ethernet-label-range!
+       +--rw tag-type?   etht-types:eth-tag-type
+       +--rw priority?   uint8
+  augment /nw:networks/nw:network/nt:link/tet:te
+            /tet:information-source-entry/tet:label-restrictions
+            /tet:label-restriction:
+    +--ro ethernet-label-range!
+       +--ro tag-type?   etht-types:eth-tag-type
+       +--ro priority?   uint8
+  augment /nw:networks/tet:te/tet:templates/tet:link-template
+            /tet:te-link-attributes/tet:label-restrictions
+            /tet:label-restriction:
+    +--rw ethernet-label-range!
+       +--rw tag-type?   etht-types:eth-tag-type
+       +--rw priority?   uint8
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:te-node-attributes/tet:connectivity-matrices
+            /tet:label-restrictions/tet:label-restriction
+            /tet:label-start/tet:te-label/tet:technology:
+    +--:(eth)
+       +--rw vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:te-node-attributes/tet:connectivity-matrices
+            /tet:label-restrictions/tet:label-restriction
+            /tet:label-end/tet:te-label/tet:technology:
+    +--:(eth)
+       +--rw vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:te-node-attributes/tet:connectivity-matrices
+            /tet:label-restrictions/tet:label-restriction
+            /tet:label-step/tet:technology:
+    +--:(eth)
+       +--rw eth-step?   uint16
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:te-node-attributes/tet:connectivity-matrices
+            /tet:underlay/tet:primary-path/tet:path-element/tet:type
+            /tet:label/tet:label-hop/tet:te-label/tet:technology:
+    +--:(eth)
+       +--rw vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:te-node-attributes/tet:connectivity-matrices
+            /tet:underlay/tet:backup-path/tet:path-element/tet:type
+            /tet:label/tet:label-hop/tet:te-label/tet:technology:
+    +--:(eth)
+       +--rw vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:te-node-attributes/tet:connectivity-matrices
+            /tet:optimizations/tet:algorithm/tet:metric
+            /tet:optimization-metric
+            /tet:explicit-route-exclude-objects
+            /tet:route-object-exclude-object/tet:type/tet:label
+            /tet:label-hop/tet:te-label/tet:technology:
+    +--:(eth)
+       +--rw vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:te-node-attributes/tet:connectivity-matrices
+            /tet:optimizations/tet:algorithm/tet:metric
+            /tet:optimization-metric
+            /tet:explicit-route-include-objects
+            /tet:route-object-include-object/tet:type/tet:label
+            /tet:label-hop/tet:te-label/tet:technology:
+    +--:(eth)
+       +--rw vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:te-node-attributes/tet:connectivity-matrices
+            /tet:path-properties/tet:path-route-objects
+            /tet:path-route-object/tet:type/tet:label/tet:label-hop
+            /tet:te-label/tet:technology:
+    +--:(eth)
+       +--ro vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:te-node-attributes/tet:connectivity-matrices
+            /tet:connectivity-matrix/tet:from/tet:label-restrictions
+            /tet:label-restriction/tet:label-start/tet:te-label
+            /tet:technology:
+    +--:(eth)
+       +--rw vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:te-node-attributes/tet:connectivity-matrices
+            /tet:connectivity-matrix/tet:from/tet:label-restrictions
+            /tet:label-restriction/tet:label-end/tet:te-label
+            /tet:technology:
+    +--:(eth)
+       +--rw vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:te-node-attributes/tet:connectivity-matrices
+            /tet:connectivity-matrix/tet:from/tet:label-restrictions
+            /tet:label-restriction/tet:label-step/tet:technology:
+    +--:(eth)
+       +--rw eth-step?   uint16
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:te-node-attributes/tet:connectivity-matrices
+            /tet:connectivity-matrix/tet:to/tet:label-restrictions
+            /tet:label-restriction/tet:label-start/tet:te-label
+            /tet:technology:
+    +--:(eth)
+       +--rw vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:te-node-attributes/tet:connectivity-matrices
+            /tet:connectivity-matrix/tet:to/tet:label-restrictions
+            /tet:label-restriction/tet:label-end/tet:te-label
+            /tet:technology:
+    +--:(eth)
+       +--rw vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:te-node-attributes/tet:connectivity-matrices
+            /tet:connectivity-matrix/tet:to/tet:label-restrictions
+            /tet:label-restriction/tet:label-step/tet:technology:
+    +--:(eth)
+       +--rw eth-step?   uint16
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:te-node-attributes/tet:connectivity-matrices
+            /tet:connectivity-matrix/tet:underlay/tet:primary-path
+            /tet:path-element/tet:type/tet:label/tet:label-hop
+            /tet:te-label/tet:technology:
+    +--:(eth)
+       +--rw vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:te-node-attributes/tet:connectivity-matrices
+            /tet:connectivity-matrix/tet:underlay/tet:backup-path
+            /tet:path-element/tet:type/tet:label/tet:label-hop
+            /tet:te-label/tet:technology:
+    +--:(eth)
+       +--rw vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:te-node-attributes/tet:connectivity-matrices
+            /tet:connectivity-matrix/tet:optimizations/tet:algorithm
+            /tet:metric/tet:optimization-metric
+            /tet:explicit-route-exclude-objects
+            /tet:route-object-exclude-object/tet:type/tet:label
+            /tet:label-hop/tet:te-label/tet:technology:
+    +--:(eth)
+       +--rw vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:te-node-attributes/tet:connectivity-matrices
+            /tet:connectivity-matrix/tet:optimizations/tet:algorithm
+            /tet:metric/tet:optimization-metric
+            /tet:explicit-route-include-objects
+            /tet:route-object-include-object/tet:type/tet:label
+            /tet:label-hop/tet:te-label/tet:technology:
+    +--:(eth)
+       +--rw vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:te-node-attributes/tet:connectivity-matrices
+            /tet:connectivity-matrix/tet:path-properties
+            /tet:path-route-objects/tet:path-route-object/tet:type
+            /tet:label/tet:label-hop/tet:te-label/tet:technology:
+    +--:(eth)
+       +--ro vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:information-source-entry/tet:connectivity-matrices
+            /tet:label-restrictions/tet:label-restriction
+            /tet:label-start/tet:te-label/tet:technology:
+    +--:(eth)
+       +--ro vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:information-source-entry/tet:connectivity-matrices
+            /tet:label-restrictions/tet:label-restriction
+            /tet:label-end/tet:te-label/tet:technology:
+    +--:(eth)
+       +--ro vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:information-source-entry/tet:connectivity-matrices
+            /tet:label-restrictions/tet:label-restriction
+            /tet:label-step/tet:technology:
+    +--:(eth)
+       +--ro eth-step?   uint16
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:information-source-entry/tet:connectivity-matrices
+            /tet:underlay/tet:primary-path/tet:path-element/tet:type
+            /tet:label/tet:label-hop/tet:te-label/tet:technology:
+    +--:(eth)
+       +--ro vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:information-source-entry/tet:connectivity-matrices
+            /tet:underlay/tet:backup-path/tet:path-element/tet:type
+            /tet:label/tet:label-hop/tet:te-label/tet:technology:
+    +--:(eth)
+       +--ro vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:information-source-entry/tet:connectivity-matrices
+            /tet:optimizations/tet:algorithm/tet:metric
+            /tet:optimization-metric
+            /tet:explicit-route-exclude-objects
+            /tet:route-object-exclude-object/tet:type/tet:label
+            /tet:label-hop/tet:te-label/tet:technology:
+    +--:(eth)
+       +--ro vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:information-source-entry/tet:connectivity-matrices
+            /tet:optimizations/tet:algorithm/tet:metric
+            /tet:optimization-metric
+            /tet:explicit-route-include-objects
+            /tet:route-object-include-object/tet:type/tet:label
+            /tet:label-hop/tet:te-label/tet:technology:
+    +--:(eth)
+       +--ro vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:information-source-entry/tet:connectivity-matrices
+            /tet:path-properties/tet:path-route-objects
+            /tet:path-route-object/tet:type/tet:label/tet:label-hop
+            /tet:te-label/tet:technology:
+    +--:(eth)
+       +--ro vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:information-source-entry/tet:connectivity-matrices
+            /tet:connectivity-matrix/tet:from/tet:label-restrictions
+            /tet:label-restriction/tet:label-start/tet:te-label
+            /tet:technology:
+    +--:(eth)
+       +--ro vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:information-source-entry/tet:connectivity-matrices
+            /tet:connectivity-matrix/tet:from/tet:label-restrictions
+            /tet:label-restriction/tet:label-end/tet:te-label
+            /tet:technology:
+    +--:(eth)
+       +--ro vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:information-source-entry/tet:connectivity-matrices
+            /tet:connectivity-matrix/tet:from/tet:label-restrictions
+            /tet:label-restriction/tet:label-step/tet:technology:
+    +--:(eth)
+       +--ro eth-step?   uint16
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:information-source-entry/tet:connectivity-matrices
+            /tet:connectivity-matrix/tet:to/tet:label-restrictions
+            /tet:label-restriction/tet:label-start/tet:te-label
+            /tet:technology:
+    +--:(eth)
+       +--ro vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:information-source-entry/tet:connectivity-matrices
+            /tet:connectivity-matrix/tet:to/tet:label-restrictions
+            /tet:label-restriction/tet:label-end/tet:te-label
+            /tet:technology:
+    +--:(eth)
+       +--ro vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:information-source-entry/tet:connectivity-matrices
+            /tet:connectivity-matrix/tet:to/tet:label-restrictions
+            /tet:label-restriction/tet:label-step/tet:technology:
+    +--:(eth)
+       +--ro eth-step?   uint16
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:information-source-entry/tet:connectivity-matrices
+            /tet:connectivity-matrix/tet:underlay/tet:primary-path
+            /tet:path-element/tet:type/tet:label/tet:label-hop
+            /tet:te-label/tet:technology:
+    +--:(eth)
+       +--ro vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:information-source-entry/tet:connectivity-matrices
+            /tet:connectivity-matrix/tet:underlay/tet:backup-path
+            /tet:path-element/tet:type/tet:label/tet:label-hop
+            /tet:te-label/tet:technology:
+    +--:(eth)
+       +--ro vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:information-source-entry/tet:connectivity-matrices
+            /tet:connectivity-matrix/tet:optimizations/tet:algorithm
+            /tet:metric/tet:optimization-metric
+            /tet:explicit-route-exclude-objects
+            /tet:route-object-exclude-object/tet:type/tet:label
+            /tet:label-hop/tet:te-label/tet:technology:
+    +--:(eth)
+       +--ro vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:information-source-entry/tet:connectivity-matrices
+            /tet:connectivity-matrix/tet:optimizations/tet:algorithm
+            /tet:metric/tet:optimization-metric
+            /tet:explicit-route-include-objects
+            /tet:route-object-include-object/tet:type/tet:label
+            /tet:label-hop/tet:te-label/tet:technology:
+    +--:(eth)
+       +--ro vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:information-source-entry/tet:connectivity-matrices
+            /tet:connectivity-matrix/tet:path-properties
+            /tet:path-route-objects/tet:path-route-object/tet:type
+            /tet:label/tet:label-hop/tet:te-label/tet:technology:
+    +--:(eth)
+       +--ro vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:tunnel-termination-point
+            /tet:local-link-connectivities/tet:label-restrictions
+            /tet:label-restriction/tet:label-start/tet:te-label
+            /tet:technology:
+    +--:(eth)
+       +--rw vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:tunnel-termination-point
+            /tet:local-link-connectivities/tet:label-restrictions
+            /tet:label-restriction/tet:label-end/tet:te-label
+            /tet:technology:
+    +--:(eth)
+       +--rw vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:tunnel-termination-point
+            /tet:local-link-connectivities/tet:label-restrictions
+            /tet:label-restriction/tet:label-step/tet:technology:
+    +--:(eth)
+       +--rw eth-step?   uint16
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:tunnel-termination-point
+            /tet:local-link-connectivities/tet:underlay
+            /tet:primary-path/tet:path-element/tet:type/tet:label
+            /tet:label-hop/tet:te-label/tet:technology:
+    +--:(eth)
+       +--rw vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:tunnel-termination-point
+            /tet:local-link-connectivities/tet:underlay
+            /tet:backup-path/tet:path-element/tet:type/tet:label
+            /tet:label-hop/tet:te-label/tet:technology:
+    +--:(eth)
+       +--rw vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:tunnel-termination-point
+            /tet:local-link-connectivities/tet:optimizations
+            /tet:algorithm/tet:metric/tet:optimization-metric
+            /tet:explicit-route-exclude-objects
+            /tet:route-object-exclude-object/tet:type/tet:label
+            /tet:label-hop/tet:te-label/tet:technology:
+    +--:(eth)
+       +--rw vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:tunnel-termination-point
+            /tet:local-link-connectivities/tet:optimizations
+            /tet:algorithm/tet:metric/tet:optimization-metric
+            /tet:explicit-route-include-objects
+            /tet:route-object-include-object/tet:type/tet:label
+            /tet:label-hop/tet:te-label/tet:technology:
+    +--:(eth)
+       +--rw vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:tunnel-termination-point
+            /tet:local-link-connectivities/tet:path-properties
+            /tet:path-route-objects/tet:path-route-object/tet:type
+            /tet:label/tet:label-hop/tet:te-label/tet:technology:
+    +--:(eth)
+       +--ro vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:tunnel-termination-point
+            /tet:local-link-connectivities
+            /tet:local-link-connectivity/tet:label-restrictions
+            /tet:label-restriction/tet:label-start/tet:te-label
+            /tet:technology:
+    +--:(eth)
+       +--rw vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:tunnel-termination-point
+            /tet:local-link-connectivities
+            /tet:local-link-connectivity/tet:label-restrictions
+            /tet:label-restriction/tet:label-end/tet:te-label
+            /tet:technology:
+    +--:(eth)
+       +--rw vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:tunnel-termination-point
+            /tet:local-link-connectivities
+            /tet:local-link-connectivity/tet:label-restrictions
+            /tet:label-restriction/tet:label-step/tet:technology:
+    +--:(eth)
+       +--rw eth-step?   uint16
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:tunnel-termination-point
+            /tet:local-link-connectivities
+            /tet:local-link-connectivity/tet:underlay
+            /tet:primary-path/tet:path-element/tet:type/tet:label
+            /tet:label-hop/tet:te-label/tet:technology:
+    +--:(eth)
+       +--rw vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:tunnel-termination-point
+            /tet:local-link-connectivities
+            /tet:local-link-connectivity/tet:underlay/tet:backup-path
+            /tet:path-element/tet:type/tet:label/tet:label-hop
+            /tet:te-label/tet:technology:
+    +--:(eth)
+       +--rw vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:tunnel-termination-point
+            /tet:local-link-connectivities
+            /tet:local-link-connectivity/tet:optimizations
+            /tet:algorithm/tet:metric/tet:optimization-metric
+            /tet:explicit-route-exclude-objects
+            /tet:route-object-exclude-object/tet:type/tet:label
+            /tet:label-hop/tet:te-label/tet:technology:
+    +--:(eth)
+       +--rw vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:tunnel-termination-point
+            /tet:local-link-connectivities
+            /tet:local-link-connectivity/tet:optimizations
+            /tet:algorithm/tet:metric/tet:optimization-metric
+            /tet:explicit-route-include-objects
+            /tet:route-object-include-object/tet:type/tet:label
+            /tet:label-hop/tet:te-label/tet:technology:
+    +--:(eth)
+       +--rw vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:tunnel-termination-point
+            /tet:local-link-connectivities
+            /tet:local-link-connectivity/tet:path-properties
+            /tet:path-route-objects/tet:path-route-object/tet:type
+            /tet:label/tet:label-hop/tet:te-label/tet:technology:
+    +--:(eth)
+       +--ro vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nt:link/tet:te
+            /tet:te-link-attributes/tet:underlay/tet:primary-path
+            /tet:path-element/tet:type/tet:label/tet:label-hop
+            /tet:te-label/tet:technology:
+    +--:(eth)
+       +--rw vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nt:link/tet:te
+            /tet:te-link-attributes/tet:underlay/tet:backup-path
+            /tet:path-element/tet:type/tet:label/tet:label-hop
+            /tet:te-label/tet:technology:
+    +--:(eth)
+       +--rw vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nt:link/tet:te
+            /tet:te-link-attributes/tet:label-restrictions
+            /tet:label-restriction/tet:label-start/tet:te-label
+            /tet:technology:
+    +--:(eth)
+       +--rw vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nt:link/tet:te
+            /tet:te-link-attributes/tet:label-restrictions
+            /tet:label-restriction/tet:label-end/tet:te-label
+            /tet:technology:
+    +--:(eth)
+       +--rw vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nt:link/tet:te
+            /tet:te-link-attributes/tet:label-restrictions
+            /tet:label-restriction/tet:label-step/tet:technology:
+    +--:(eth)
+       +--rw eth-step?   uint16
+  augment /nw:networks/nw:network/nt:link/tet:te
+            /tet:information-source-entry/tet:label-restrictions
+            /tet:label-restriction/tet:label-start/tet:te-label
+            /tet:technology:
+    +--:(eth)
+       +--ro vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nt:link/tet:te
+            /tet:information-source-entry/tet:label-restrictions
+            /tet:label-restriction/tet:label-end/tet:te-label
+            /tet:technology:
+    +--:(eth)
+       +--ro vlanid?   etht-types:vlanid
+  augment /nw:networks/nw:network/nt:link/tet:te
+            /tet:information-source-entry/tet:label-restrictions
+            /tet:label-restriction/tet:label-step/tet:technology:
+    +--:(eth)
+       +--ro eth-step?   uint16
+  augment /nw:networks/tet:te/tet:templates/tet:link-template
+            /tet:te-link-attributes/tet:underlay/tet:primary-path
+            /tet:path-element/tet:type/tet:label/tet:label-hop
+            /tet:te-label/tet:technology:
+    +--:(eth)
+       +--rw vlanid?   etht-types:vlanid
+  augment /nw:networks/tet:te/tet:templates/tet:link-template
+            /tet:te-link-attributes/tet:underlay/tet:backup-path
+            /tet:path-element/tet:type/tet:label/tet:label-hop
+            /tet:te-label/tet:technology:
+    +--:(eth)
+       +--rw vlanid?   etht-types:vlanid
+  augment /nw:networks/tet:te/tet:templates/tet:link-template
+            /tet:te-link-attributes/tet:label-restrictions
+            /tet:label-restriction/tet:label-start/tet:te-label
+            /tet:technology:
+    +--:(eth)
+       +--rw vlanid?   etht-types:vlanid
+  augment /nw:networks/tet:te/tet:templates/tet:link-template
+            /tet:te-link-attributes/tet:label-restrictions
+            /tet:label-restriction/tet:label-end/tet:te-label
+            /tet:technology:
+    +--:(eth)
+       +--rw vlanid?   etht-types:vlanid
+  augment /nw:networks/tet:te/tet:templates/tet:link-template
+            /tet:te-link-attributes/tet:label-restrictions
+            /tet:label-restriction/tet:label-step/tet:technology:
+    +--:(eth)
+       +--rw eth-step?   uint16
+</pre>
+</div>
+<figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
+<a href="#name-ethernet-topology-yang-tree" class="selfRef">Ethernet topology YANG tree</a>
+        </figcaption></figure>
+</div>
+</section>
+</div>
+<div id="eth-topology-yang">
+<section id="section-4">
+      <h2 id="name-ethernet-topology-yang-code">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-ethernet-topology-yang-code" class="section-name selfRef">Ethernet Topology YANG Code</a>
+      </h2>
+<span id="name-ethernet-topology-yang-modu"></span><div id="fig-te-yang">
+<figure id="figure-3">
+        <div class="breakable lang-yang sourcecode" id="section-4-1.1">
+<pre>&lt;CODE BEGINS&gt; file "ietf-eth-te-topology@2023-09-08.yang"
+
+module ietf-eth-te-topology {
+  yang-version 1.1;
+  namespace "urn:ietf:params:xml:ns:yang:ietf-eth-te-topology";
+  prefix "etht";
+
+  import ietf-network {
+    prefix "nw";
+    reference
+      "RFC 8345: A YANG Data Model for Network Topologies";
+  }
+
+  import ietf-network-topology {
+    prefix "nt";
+    reference
+      "RFC 8345: A YANG Data Model for Network Topologies";
+  }
+
+  import ietf-te-topology {
+    prefix "tet";
+    reference
+      "RFC 8795: YANG Data Model for Traffic Engineering
+       (TE) Topologies";
+  }
+
+  import ietf-yang-types {
+    prefix "yang";
+    reference
+     "RFC 6991: Common YANG Data Types";
+  }
+
+  import ietf-eth-tran-types {
+    prefix "etht-types";
+    reference
+     "RFC YYYY: A YANG Data Model for Transport Network Client
+     Signals";
+  }
+  // RFC Ed.: replace YYYY with actual RFC number, update date
+  // information and remove this note
+
+  organization
+    "IETF CCAMP Working Group";
+  contact
+    "WG Web: &lt;https://datatracker.ietf.org/wg/ccamp/&gt;
+     WG List: &lt;mailto:ccamp@ietf.org&gt;
+
+     Editor: Haomian Zheng
+       &lt;mailto:zhenghaomian@huawei.com&gt;
+
+     Editor: Italo Busi
+       &lt;mailto:italo.busi@huawei.com&gt;
+
+     Editor: Aihua Guo
+       &lt;mailto:aihuaguo.ietf@gmail.com&gt;
+
+     Editor: Yunbin Xu
+       &lt;mailto:xuyunbin@caict.ac.cn&gt;
+
+     Editor: Yang Zhao
+       &lt;mailto:zhaoyangyjy@chinamobile.com&gt;
+
+     Editor: Xufeng Liu
+       &lt;mailto:xufeng.liu.ietf@gmail.com&gt;";
+
+  description
+    "This module defines a YANG data model for describing
+     layer-2 Ethernet transport topologies. The model fully
+     conforms to the Network Management Datastore
+     Architecture (NMDA).
+
+     Copyright (c) 2023 IETF Trust and the persons identified
+     as authors of the code.  All rights reserved.
+
+     Redistribution and use in source and binary forms, with or
+     without modification, is permitted pursuant to, and subject
+     to the license terms contained in, the Revised BSD License
+     set forth in Section 4.c of the IETF Trust's Legal Provisions
+     Relating to IETF Documents
+     (https://trustee.ietf.org/license-info).
+
+     This version of this YANG module is part of RFC XXXX; see
+     the RFC itself for full legal notices.
+
+     The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL
+     NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'NOT RECOMMENDED',
+     'MAY', and 'OPTIONAL' in this document are to be interpreted as
+     described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
+     they appear in all capitals, as shown here.";
+
+  revision 2023-09-28 {
+    description
+      "Initial Revision";
+    reference
+      "RFC XXXX: A YANG Data Model for Ethernet TE Topology";
+    // RFC Ed.: replace XXXX with actual RFC number, update date
+    // information and remove this note
+  }
+
+  /*
+   * Groupings
+   */
+
+  grouping label-range-info {
+    description
+      "Ethernet technology-specific label range related
+      information with a presence container indicating that the
+      label range is an Ethernet technology-specific label range.
+
+      This grouping SHOULD be used together with the
+      eth-label and eth-label-step groupings to provide Ethernet
+      technology-specific label information to the models which
+      use the label-restriction-info grouping defined in the module
+      ietf-te-types.";
+
+    container ethernet-label-range {
+      presence
+        "Indicates the label range is an Ethernet label range.
+
+        This container must not be present if there are other
+        presence containers or attributes indicating another type
+        of label range.";
+      description
+        "Ethernet-specific label range related information.";
+
+      uses etht-types:eth-label-restriction;
+    }
+  }
+
+  grouping eth-tran-topology-type {
+    description
+      "Identifies the Ethernet Transport topology type";
+
+    container eth-tran-topology {
+      presence "indicates a topology type of
+                Ethernet Transport Network.";
+      description "Eth transport topology type";
+    }
+  }
+
+  grouping ltp-bandwidth-profiles {
+    description
+      "A grouping which represents the bandwidth profile(s)
+      for the ETH LTP.";
+
+    choice direction {
+      description
+        "Whether the bandwidth profiles are symmetrical or
+         asymmetrical";
+      case symmetrical {
+        description
+          "The same bandwidth profile is used to describe the ingress
+           and the egress bandwidth profile.";
+
+        container ingress-egress-bandwidth-profile {
+          description
+            "The bandwith profile used in the ingress and egress
+             direction.";
+          uses etht-types:etht-bandwidth-profiles;
+        }
+      }
+      case asymmetrical {
+        description
+          "Different ingress and egress bandwidth profiles
+           can be specified.";
+        container ingress-bandwidth-profile {
+          description
+            "The bandwidth profile used in the ingress direction.";
+          uses etht-types:etht-bandwidth-profiles;
+        }
+        container egress-bandwidth-profile {
+          description
+            "The bandwidth profile used in the egress direction.";
+          uses etht-types:etht-bandwidth-profiles;
+        }
+      }
+    }
+  }
+
+  grouping eth-ltp-attributes {
+    description
+      "Ethernet transport Link Termination Point (LTP) attributes";
+
+    leaf ltp-mac-address {
+      type yang:mac-address;
+      description
+        "The MAC address of the Ethernet LTP.";
+    }
+    leaf port-vlan-id {
+      type etht-types:vlanid;
+      description
+        "The Port VLAN ID of the Ethernet LTP.";
+      reference
+        "IEEE 802.1Q: Virtual Bridged Local Area Networks";
+    }
+    leaf maximum-frame-size {
+      type uint16 {
+        range "64 .. 65535";
+      }
+      description
+        "Maximum frame size";
+      reference
+        "IEEE 802.1Q: Virtual Bridged Local Area Networks";
+    }
+      uses ltp-bandwidth-profiles;
+  }
+
+  grouping svc-vlan-classification {
+    description
+      "Grouping defining the capabilities for VLAN classification.";
+
+    leaf-list supported-tag-types {
+      type etht-types:eth-tag-classify;
+      description
+        "List of VLAN tag types that can be used for the VLAN
+         classification. In case VLAN classification is not
+         supported, the list is empty.";
+    }
+    leaf vlan-bundling {
+      type boolean;
+      description
+        "In case VLAN classification is supported, indicates whether
+        VLAN bundling classification is also supported.";
+      reference
+        "MEF 10.3: Ethernet Services Attributes Phase 3";
+    }
+    leaf vlan-range {
+      type etht-types:vid-range-type;
+      description
+        "In case VLAN classification is supported, indicates the
+        of available VLAN ID values.";
+    }
+  }
+
+  grouping svc-vlan-push {
+    description
+      "Grouping defining the capabilities for VLAN push or swap
+       operations.";
+
+    leaf-list supported-tag-types {
+      type etht-types:eth-tag-type;
+      description
+        "List of VLAN tag types that can be used to push or swap a
+         VLAN tag. In case VLAN push/swap is not supported, the list
+         is empty.";
+      reference
+        "IEEE 802.1Q: Virtual Bridged Local Area Networks";
+    }
+    leaf vlan-range {
+      type etht-types:vid-range-type;
+      description
+        "In case VLAN push/swap operation is supported, the range
+        of available VLAN ID values.";
+    }
+  }
+
+  grouping eth-svc-attributes {
+    description
+      "Ethernet Link Termination Point (LTP) service attributes.";
+
+    container supported-classification {
+      description
+        "Service classification capability supported by the
+        Ethernet Link Termination Point (LTP).";
+
+      leaf port-classification {
+        type boolean;
+        description
+          "Indicates that the ETH LTP support port-based service
+          classification.";
+      }
+      container vlan-classification {
+        description
+          "Service classification capabilities based on the VLAN
+           tag(s) supported by the ETH LTP.";
+
+        leaf vlan-tag-classification {
+          type boolean;
+          description
+            "Indicates that the ETH LTP supports VLAN service
+            classification.";
+        }
+        container outer-tag {
+          description
+            "Service classification capabilities based on the outer
+             VLAN tag, supported by the ETH LTP.";
+          uses svc-vlan-classification;
+        }
+        container second-tag {
+          description
+            "Service classification capabilities based on the second
+             VLAN tag, supported by the ETH LTP.";
+          leaf second-tag-classification {
+            type boolean;
+            must ". = 'false' or "
+               + "../../vlan-tag-classification = 'true'" {
+              description
+                "VLAN service classification based on the second
+                VLAN tag can be supported only when VLAN service
+                classification";
+            }
+            description
+              "Indicates that the ETH LTP support  VLAN service
+               classification based on the second VLAN tag.";
+          }
+          uses svc-vlan-classification;
+        }
+      }
+    }
+
+    container supported-vlan-operations {
+      description
+        "Reports the VLAN operations supported by the ETH LTP.";
+
+      leaf asymmetrical-operations {
+        type boolean;
+        description
+          "Indicates whether the ETH LTP supports also asymmetrical
+           VLAN operations.It is assumed that symmetrical VLAN
+           operations are alwyas supported.";
+      }
+      leaf transparent-vlan-operations {
+        type boolean;
+        description
+          "Indicates that the ETH LTP supports transparent
+          operations.";
+      }
+      container vlan-pop {
+        description
+          "Indicates VLAN pop or swap operations capabilities.";
+
+        leaf vlan-pop-operations {
+          type boolean;
+          description
+            "Indicates that the ETH LTP supports VLAN pop or
+             swap operations.";
+        }
+        leaf max-pop-tags {
+          type uint8 {
+            range "1..2";
+          }
+          description
+            "Indicates the maximum number of tags that can be
+             popped/swapped.";
+        }
+      }
+      container vlan-push {
+        description
+          "Indicates VLAN push or swap operations capabilities.";
+
+        leaf vlan-push-operation {
+          type boolean;
+          description
+            "Indicates that the ETH LTP supports VLAN push or
+             swap operations.";
+        }
+        container outer-tag {
+          description
+            "Indicates the supported VLAN operation capabilities
+             on the outer VLAN tag.";
+          uses svc-vlan-push;
+        }
+        container second-tag {
+          description
+            "Indicates the supported VLAN operation capabilities
+             on the second VLAN tag.";
+          leaf push-second-tag {
+            type boolean;
+            description
+              "Indicates that the ETH LTP supports VLAN push or swap
+               operations for the second VLAN tag.";
+          }
+          uses svc-vlan-push;
+        }
+      }
+    }
+  }
+
+  /*
+   * Data nodes
+   */
+
+  augment "/nw:networks/nw:network/nw:network-types/"
+        + "tet:te-topology" {
+    description
+      "Augment network types to include ETH transport newtork";
+
+    uses eth-tran-topology-type;
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te"
+        + "/tet:te-node-attributes" {
+    when "../../../nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description "Augment only for Ethernet transport network.";
+    }
+    description "Augment TE node attributes.";
+    container eth-node {
+      presence "The TE node is an Ethernet node.";
+      description
+        "Presence container used only to indicate that the TE node
+        is an Ethernet node.";
+    }
+  }
+
+  augment "/nw:networks/nw:network/nt:link" {
+    when "../nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description "Augment only for Ethernet transport network.";
+    }
+    description "Augment link configuration";
+
+    container eth-svc {
+      presence
+        "When present, indicates that the Link supports Ethernet
+        client signals.";
+      description
+        "Presence container used only to indicate that the link
+        supports Ethernet client signals.";
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/nt:termination-point" {
+    when "../../nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description "Augment only for Ethernet transport network.";
+    }
+    description
+      "Augment ETH LTP attributes";
+
+    container eth-svc {
+      presence
+        "When present, indicates that the Link Termination Point
+        (LTP) supports Ethernet client signals.";
+      description
+        "ETH LTP Service attributes.";
+
+      uses eth-svc-attributes;
+    }
+    container eth-link-tp {
+      description
+        "Attributes of the Ethernet Link Termination Point (LTP).";
+      uses eth-ltp-attributes;
+    }
+  }
+
+  /*
+   * Augment TE bandwidth
+   */
+
+  augment "/nw:networks/nw:network/nw:node/nt:termination-point/"
+        + "tet:te/"
+        + "tet:interface-switching-capability/tet:max-lsp-bandwidth/"
+        + "tet:te-bandwidth/tet:technology" {
+    when "../../../../../../nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
+    }
+    description
+      "Augment maximum LSP TE bandwidth for the link termination
+       point (LTP).";
+    case eth {
+      uses etht-types:eth-bandwidth;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:te-node-attributes/tet:connectivity-matrices/"
+        + "tet:path-constraints/tet:te-bandwidth/tet:technology" {
+    when "../../../../../../nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
+    }
+    description
+      "Augment TE bandwidth path constraints of the TE node
+       connectivity matrices.";
+    case eth {
+      uses etht-types:eth-bandwidth;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:te-node-attributes/tet:connectivity-matrices/"
+        + "tet:connectivity-matrix/"
+        + "tet:path-constraints/tet:te-bandwidth/tet:technology" {
+    when "../../../../../../../nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
+    }
+    description
+      "Augment TE bandwidth path constraints of the
+       connectivity matrix entry.";
+    case eth {
+      uses etht-types:eth-bandwidth;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:information-source-entry/tet:connectivity-matrices/"
+        + "tet:path-constraints/tet:te-bandwidth/tet:technology" {
+    when "../../../../../../nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
+    }
+    description
+      "Augment TE bandwidth path constraints of the TE node
+       connectivity matrices information source.";
+    case eth {
+      uses etht-types:eth-bandwidth;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:information-source-entry/tet:connectivity-matrices/"
+        + "tet:connectivity-matrix/"
+        + "tet:path-constraints/tet:te-bandwidth/tet:technology" {
+    when "../../../../../../../nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
+    }
+    description
+      "Augment TE bandwidth path constraints of the
+       connectivity matrix entry information source";
+    case eth {
+      uses etht-types:eth-bandwidth;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:tunnel-termination-point/"
+        + "tet:client-layer-adaptation/tet:switching-capability/"
+        + "tet:te-bandwidth/tet:technology" {
+    when "../../../../../../nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
+    }
+    description
+      "Augment client TE bandwidth of the tunnel termination point
+       (TTP)";
+    case eth {
+      uses etht-types:eth-bandwidth;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:tunnel-termination-point/"
+        + "tet:local-link-connectivities/tet:path-constraints/"
+        + "tet:te-bandwidth/tet:technology" {
+    when "../../../../../../nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
+    }
+    description
+      "Augment TE bandwidth path constraints for the TTP
+       Local Link Connectivities.";
+    case eth {
+      uses etht-types:eth-bandwidth;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:tunnel-termination-point/"
+        + "tet:local-link-connectivities/"
+        + "tet:local-link-connectivity/tet:path-constraints/"
+        + "tet:te-bandwidth/tet:technology" {
+    when "../../../../../../../nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
+    }
+    description
+      "Augment TE bandwidth path constraints for the TTP
+       Local Link Connectivity entry.";
+    case eth {
+      uses etht-types:eth-bandwidth;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nt:link/tet:te/"
+        + "tet:te-link-attributes/"
+        + "tet:interface-switching-capability/tet:max-lsp-bandwidth/"
+        + "tet:te-bandwidth/tet:technology" {
+    when "../../../../../../nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
+    }
+    description
+      "Augment maximum LSP TE bandwidth for the TE link.";
+    case eth {
+      uses etht-types:eth-bandwidth;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nt:link/tet:te/"
+        + "tet:te-link-attributes/"
+        + "tet:max-link-bandwidth/"
+        + "tet:te-bandwidth" {
+    when "../../../../../nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
+    }
+    description
+      "Augment maximum TE bandwidth for the TE link";
+    uses etht-types:eth-bandwidth;
+  }
+
+  augment "/nw:networks/nw:network/nt:link/tet:te/"
+        + "tet:te-link-attributes/"
+        + "tet:max-resv-link-bandwidth/"
+        + "tet:te-bandwidth" {
+    when "../../../../../nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
+    }
+    description
+      "Augment maximum reservable TE bandwidth for the TE link";
+    uses etht-types:eth-bandwidth;
+  }
+
+  augment "/nw:networks/nw:network/nt:link/tet:te/"
+        + "tet:te-link-attributes/"
+        + "tet:unreserved-bandwidth/"
+        + "tet:te-bandwidth" {
+    when "../../../../../nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
+    }
+    description
+      "Augment unreserved TE bandwidth for the TE Link";
+    uses etht-types:eth-bandwidth;
+  }
+
+  augment "/nw:networks/nw:network/nt:link/tet:te/"
+        + "tet:information-source-entry/"
+        + "tet:interface-switching-capability/"
+        + "tet:max-lsp-bandwidth/"
+        + "tet:te-bandwidth/tet:technology" {
+    when "../../../../../../nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
+    }
+    description
+      "Augment maximum LSP TE bandwidth for the TE link
+       information source";
+    case eth {
+      uses etht-types:eth-bandwidth;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nt:link/tet:te/"
+        + "tet:information-source-entry/"
+        + "tet:max-link-bandwidth/"
+        + "tet:te-bandwidth" {
+    when "../../../../../nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
+    }
+    description
+      "Augment maximum TE bandwidth for the TE link
+       information source";
+    uses etht-types:eth-bandwidth;
+  }
+
+  augment "/nw:networks/nw:network/nt:link/tet:te/"
+        + "tet:information-source-entry/"
+        + "tet:max-resv-link-bandwidth/"
+        + "tet:te-bandwidth" {
+    when "../../../../../nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
+    }
+    description
+      "Augment maximum reservable TE bandwidth for the TE link
+       information-source";
+    uses etht-types:eth-bandwidth;
+  }
+
+  augment "/nw:networks/nw:network/nt:link/tet:te/"
+        + "tet:information-source-entry/"
+        + "tet:unreserved-bandwidth/"
+        + "tet:te-bandwidth" {
+    when "../../../../../nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
+    }
+    description
+      "Augment unreserved TE bandwidth of the TE link
+       information source";
+    uses etht-types:eth-bandwidth;
+  }
+
+  augment "/nw:networks/tet:te/tet:templates/"
+        + "tet:link-template/tet:te-link-attributes/"
+        + "tet:interface-switching-capability/"
+        + "tet:max-lsp-bandwidth/"
+        + "tet:te-bandwidth/tet:technology" {
+    description
+      "Augment maximum LSP TE bandwidth of the TE link
+       template";
+    case eth {
+      uses etht-types:eth-bandwidth;
+    }
+  }
+
+  augment "/nw:networks/tet:te/tet:templates/"
+        + "tet:link-template/tet:te-link-attributes/"
+        + "tet:max-link-bandwidth/"
+        + "tet:te-bandwidth" {
+    description
+      "Augment maximum TE bandwidth the TE link template";
+    uses etht-types:eth-bandwidth;
+  }
+
+  augment "/nw:networks/tet:te/tet:templates/"
+        + "tet:link-template/tet:te-link-attributes/"
+        + "tet:max-resv-link-bandwidth/"
+        + "tet:te-bandwidth" {
+    description
+      "Augment maximum reservable TE bandwidth for the TE link
+       template.";
+    uses etht-types:eth-bandwidth;
+  }
+
+  augment "/nw:networks/tet:te/tet:templates/"
+        + "tet:link-template/tet:te-link-attributes/"
+        + "tet:unreserved-bandwidth/"
+        + "tet:te-bandwidth" {
+    description
+      "Augment unreserved TE bandwidth the TE link template";
+    uses etht-types:eth-bandwidth;
+  }
+
+  /*
+   * Augment TE label range information
+   */
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:te-node-attributes/tet:connectivity-matrices/"
+        + "tet:label-restrictions/tet:label-restriction" {
+    when "../../../../../../nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
+    }
+    description
+      "Augment TE label range information for the TE node
+       connectivity matrices.";
+    uses label-range-info;
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:te-node-attributes/tet:connectivity-matrices/"
+        + "tet:connectivity-matrix/tet:from/"
+        + "tet:label-restrictions/tet:label-restriction" {
+    when "../../../../../../../../nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
+    }
+    description
+      "Augment TE label range information for the source LTP
+       of the connectivity matrix entry.";
+    uses label-range-info;
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:te-node-attributes/tet:connectivity-matrices/"
+        + "tet:connectivity-matrix/tet:to/"
+        + "tet:label-restrictions/tet:label-restriction" {
+    when "../../../../../../../../nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
+    }
+    description
+      "Augment TE label range information for the destination LTP
+       of the connectivity matrix entry.";
+    uses label-range-info;
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:information-source-entry/"
+        + "tet:connectivity-matrices/tet:label-restrictions/"
+        + "tet:label-restriction" {
+    when "../../../../../../nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
+    }
+    description
+      "Augment TE label range information for the TE node
+       connectivity matrices information source.";
+    uses label-range-info;
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:information-source-entry/tet:connectivity-matrices/"
+        + "tet:connectivity-matrix/"
+        + "tet:from/tet:label-restrictions/tet:label-restriction" {
+    when "../../../../../../../../nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
+    }
+    description
+      "Augment TE label range information for the source LTP
+       of the connectivity matrix entry information source.";
+    uses label-range-info;
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:information-source-entry/tet:connectivity-matrices/"
+        + "tet:connectivity-matrix/"
+        + "tet:to/tet:label-restrictions/tet:label-restriction" {
+    when "../../../../../../../../nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
+    }
+    description
+      "Augment TE label range information for the destination LTP
+       of the connectivity matrix entry information source.";
+    uses label-range-info;
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:tunnel-termination-point/"
+        + "tet:local-link-connectivities/"
+        + "tet:label-restrictions/tet:label-restriction" {
+    when "../../../../../../nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
+    }
+    description
+      "Augment TE label range information for the TTP
+       Local Link Connectivities.";
+    uses label-range-info;
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:tunnel-termination-point/"
+        + "tet:local-link-connectivities/"
+        + "tet:local-link-connectivity/"
+        + "tet:label-restrictions/tet:label-restriction" {
+    when "../../../../../../../nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
+    }
+    description
+      "Augment TE label range information for the TTP
+       Local Link Connectivity entry.";
+    uses label-range-info;
+  }
+
+  augment "/nw:networks/nw:network/nt:link/tet:te/"
+        + "tet:te-link-attributes/"
+        + "tet:label-restrictions/tet:label-restriction" {
+    when "../../../../../nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
+    }
+    description
+      "Augment TE label range information for the TE link.";
+    uses label-range-info;
+  }
+
+  augment "/nw:networks/nw:network/nt:link/tet:te/"
+        + "tet:information-source-entry/"
+        + "tet:label-restrictions/tet:label-restriction" {
+    when "../../../../../nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+        Ethernet topology type.";
+    }
+    description
+      "Augment TE label range information for the TE link
+       information source.";
+    uses label-range-info;
+  }
+
+  augment "/nw:networks/tet:te/tet:templates/"
+        + "tet:link-template/tet:te-link-attributes/"
+        + "tet:label-restrictions/tet:label-restriction" {
+    description
+      "Augment TE label range information for the TE link template.";
+    uses label-range-info;
+  }
+
+  /*
+   * Augment TE label.
+   */
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:te-node-attributes/tet:connectivity-matrices/"
+        + "tet:label-restrictions/tet:label-restriction/"
+        + "tet:label-start/"
+        + "tet:te-label/tet:technology" {
+    when "../../../../../../../../nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label range start for the TE node
+       connectivity matrices";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:te-node-attributes/tet:connectivity-matrices/"
+        + "tet:label-restrictions/"
+        + "tet:label-restriction/tet:label-end/"
+        + "tet:te-label/tet:technology" {
+    when "../../../../../../../../nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label range end for the TE node
+       connectivity matrices";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:te-node-attributes/tet:connectivity-matrices/"
+        + "tet:label-restrictions/"
+        + "tet:label-restriction/tet:label-step/"
+        + "tet:technology" {
+    when "../../../../../../../nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label range step for the TE node
+       connectivity matrices";
+    case eth {
+      uses etht-types:eth-label-step;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:te-node-attributes/tet:connectivity-matrices/"
+        + "tet:underlay/tet:primary-path/tet:path-element/"
+        + "tet:type/tet:label/tet:label-hop/"
+        + "tet:te-label/tet:technology" {
+    when "../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label hop for the underlay primary path of the
+       TE node connectivity matrices";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:te-node-attributes/tet:connectivity-matrices/"
+        + "tet:underlay/tet:backup-path/tet:path-element/"
+        + "tet:type/tet:label/tet:label-hop/"
+        + "tet:te-label/tet:technology" {
+    when "../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label hop for the underlay backup path of the
+       TE node connectivity matrices";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:te-node-attributes/tet:connectivity-matrices/"
+        + "tet:optimizations/tet:algorithm/tet:metric/"
+        + "tet:optimization-metric/"
+        + "tet:explicit-route-exclude-objects/"
+        + "tet:route-object-exclude-object/"
+        + "tet:type/tet:label/tet:label-hop/"
+        + "tet:te-label/tet:technology" {
+    when "../../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label hop for the explicit route objects excluded
+       by the path computation of the TE node connectivity
+       matrices";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:te-node-attributes/tet:connectivity-matrices/"
+        + "tet:optimizations/tet:algorithm/tet:metric/"
+        + "tet:optimization-metric/"
+        + "tet:explicit-route-include-objects/"
+        + "tet:route-object-include-object/"
+        + "tet:type/tet:label/tet:label-hop/"
+        + "tet:te-label/tet:technology" {
+    when "../../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label hop for the explicit route objects included
+       by the path computation of the TE node connectivity
+       matrices";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:te-node-attributes/tet:connectivity-matrices/"
+        + "tet:path-properties/tet:path-route-objects/"
+        + "tet:path-route-object/tet:type/tet:label/tet:label-hop/"
+        + "tet:te-label/tet:technology" {
+    when "../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label hop for the computed path route objects
+       of the TE node connectivity matrices";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:te-node-attributes/tet:connectivity-matrices/"
+        + "tet:connectivity-matrix/tet:from/"
+        + "tet:label-restrictions/tet:label-restriction/"
+        + "tet:label-start/"
+        + "tet:te-label/tet:technology" {
+    when "../../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label range start for the source LTP
+       of the connectivity matrix entry.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:te-node-attributes/tet:connectivity-matrices/"
+        + "tet:connectivity-matrix/tet:from/"
+        + "tet:label-restrictions/tet:label-restriction/"
+        + "tet:label-end/"
+        + "tet:te-label/tet:technology" {
+    when "../../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label range end for the source LTP
+       of the connectivity matrix entry.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:te-node-attributes/tet:connectivity-matrices/"
+        + "tet:connectivity-matrix/tet:from/"
+        + "tet:label-restrictions/tet:label-restriction/"
+        + "tet:label-step/"
+        + "tet:technology" {
+    when "../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label range step for the source LTP
+       of the connectivity matrix entry.";
+    case eth {
+      uses etht-types:eth-label-step;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:te-node-attributes/tet:connectivity-matrices/"
+        + "tet:connectivity-matrix/tet:to/"
+        + "tet:label-restrictions/tet:label-restriction/"
+        + "tet:label-start/"
+        + "tet:te-label/tet:technology" {
+    when "../../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label range start for the destination LTP
+       of the connectivity matrix entry.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:te-node-attributes/tet:connectivity-matrices/"
+        + "tet:connectivity-matrix/tet:to/"
+        + "tet:label-restrictions/tet:label-restriction/"
+        + "tet:label-end/"
+        + "tet:te-label/tet:technology" {
+    when "../../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label range end for the destination LTP
+       of the connectivity matrix entry.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:te-node-attributes/tet:connectivity-matrices/"
+        + "tet:connectivity-matrix/tet:to/"
+        + "tet:label-restrictions/tet:label-restriction/"
+        + "tet:label-step/"
+        + "tet:technology" {
+    when "../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label range step for the destination LTP
+       of the connectivity matrix entry.";
+    case eth {
+      uses etht-types:eth-label-step;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:te-node-attributes/tet:connectivity-matrices/"
+        + "tet:connectivity-matrix/"
+        + "tet:underlay/tet:primary-path/tet:path-element/"
+        + "tet:type/tet:label/tet:label-hop/"
+        + "tet:te-label/tet:technology" {
+    when "../../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label hop for the underlay primary path
+       of the connectivity matrix entry.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:te-node-attributes/tet:connectivity-matrices/"
+        + "tet:connectivity-matrix/"
+        + "tet:underlay/tet:backup-path/tet:path-element/"
+        + "tet:type/tet:label/tet:label-hop/"
+        + "tet:te-label/tet:technology" {
+    when "../../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label hop for the underlay backup path
+       of the connectivity matrix entry.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:te-node-attributes/tet:connectivity-matrices/"
+        + "tet:connectivity-matrix/tet:optimizations/"
+        + "tet:algorithm/tet:metric/tet:optimization-metric/"
+        + "tet:explicit-route-exclude-objects/"
+        + "tet:route-object-exclude-object/tet:type/"
+        + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
+    when "../../../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label hop for the explicit route objects excluded
+       by the path computation of the connectivity matrix entry.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:te-node-attributes/tet:connectivity-matrices/"
+        + "tet:connectivity-matrix/tet:optimizations/"
+        + "tet:algorithm/tet:metric/tet:optimization-metric/"
+        + "tet:explicit-route-include-objects/"
+        + "tet:route-object-include-object/tet:type/"
+        + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
+    when "../../../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label hop for the explicit route objects included
+       by the path computation of the connectivity matrix entry.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:te-node-attributes/tet:connectivity-matrices/"
+        + "tet:connectivity-matrix/"
+        + "tet:path-properties/tet:path-route-objects/"
+        + "tet:path-route-object/tet:type/"
+        + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
+    when "../../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label hop for the computed path route objects
+       of the connectivity matrix entry.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:information-source-entry/"
+        + "tet:connectivity-matrices/tet:label-restrictions/"
+        + "tet:label-restriction/"
+        + "tet:label-start/tet:te-label/tet:technology" {
+    when "../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label range start for the TE node connectivity
+       matrices information source.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:information-source-entry/"
+        + "tet:connectivity-matrices/tet:label-restrictions/"
+        + "tet:label-restriction/"
+        + "tet:label-end/tet:te-label/tet:technology" {
+    when "../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label range end for the TE node connectivity
+       matrices information source.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:information-source-entry/"
+        + "tet:connectivity-matrices/tet:label-restrictions/"
+        + "tet:label-restriction/"
+        + "tet:label-step/tet:technology" {
+    when "../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label range step for the TE node connectivity
+       matrices information source.";
+    case eth {
+      uses etht-types:eth-label-step;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:information-source-entry/tet:connectivity-matrices/"
+        + "tet:underlay/tet:primary-path/tet:path-element/tet:type/"
+        + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
+    when "../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label hop for the underlay primary path
+       of the TE node connectivity matrices of the information
+       source entry.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:information-source-entry/tet:connectivity-matrices/"
+        + "tet:underlay/tet:backup-path/tet:path-element/tet:type/"
+        + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
+    when "../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label hop for the underlay backup path
+       of the TE node connectivity matrices of the information
+       source entry.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:information-source-entry/tet:connectivity-matrices/"
+        + "tet:optimizations/tet:algorithm/tet:metric/"
+        + "tet:optimization-metric/"
+        + "tet:explicit-route-exclude-objects/"
+        + "tet:route-object-exclude-object/tet:type/"
+        + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
+    when "../../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label hop for the explicit route objects excluded
+       by the path computation of the TE node connectivity matrices
+       information source.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:information-source-entry/tet:connectivity-matrices/"
+        + "tet:optimizations/tet:algorithm/tet:metric/"
+        + "tet:optimization-metric/"
+        + "tet:explicit-route-include-objects/"
+        + "tet:route-object-include-object/tet:type/"
+        + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
+    when "../../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label hop for the explicit route objects included
+       by the path computation of the TE node connectivity matrices
+       information source.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:information-source-entry/tet:connectivity-matrices/"
+        + "tet:path-properties/tet:path-route-objects/"
+        + "tet:path-route-object/tet:type/"
+        + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
+    when "../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label hop for the computed path route objects
+       of the TE node connectivity matrices information source.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:information-source-entry/tet:connectivity-matrices/"
+        + "tet:connectivity-matrix/"
+        + "tet:from/tet:label-restrictions/"
+        + "tet:label-restriction/"
+        + "tet:label-start/tet:te-label/tet:technology" {
+    when "../../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label range start for the source LTP
+       of the connectivity matrix entry information source.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:information-source-entry/tet:connectivity-matrices/"
+        + "tet:connectivity-matrix/"
+        + "tet:from/tet:label-restrictions/"
+        + "tet:label-restriction/"
+        + "tet:label-end/tet:te-label/tet:technology" {
+    when "../../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label range end for the source LTP
+       of the connectivity matrix entry information source.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:information-source-entry/tet:connectivity-matrices/"
+        + "tet:connectivity-matrix/"
+        + "tet:from/tet:label-restrictions/"
+        + "tet:label-restriction/"
+        + "tet:label-step/tet:technology" {
+    when "../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label range step for the source LTP
+       of the connectivity matrix entry information source.";
+    case eth {
+      uses etht-types:eth-label-step;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:information-source-entry/tet:connectivity-matrices/"
+        + "tet:connectivity-matrix/"
+        + "tet:to/tet:label-restrictions/tet:label-restriction/"
+        + "tet:label-start/tet:te-label/tet:technology" {
+    when "../../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label range start for the destination LTP
+       of the connectivity matrix entry information source.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:information-source-entry/tet:connectivity-matrices/"
+        + "tet:connectivity-matrix/"
+        + "tet:to/tet:label-restrictions/tet:label-restriction/"
+        + "tet:label-end/tet:te-label/tet:technology" {
+    when "../../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label range end for the destination LTP
+       of the connectivity matrix entry information source.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:information-source-entry/tet:connectivity-matrices/"
+        + "tet:connectivity-matrix/"
+        + "tet:to/tet:label-restrictions/tet:label-restriction/"
+        + "tet:label-step/tet:technology" {
+    when "../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label range step for the destination LTP
+       of the connectivity matrix entry information source.";
+    case eth {
+      uses etht-types:eth-label-step;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:information-source-entry/tet:connectivity-matrices/"
+        + "tet:connectivity-matrix/"
+        + "tet:underlay/tet:primary-path/tet:path-element/tet:type/"
+        + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
+    when "../../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label hop for the underlay primary path
+       of the connectivity matrix entry information source.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:information-source-entry/tet:connectivity-matrices/"
+        + "tet:connectivity-matrix/"
+        + "tet:underlay/tet:backup-path/tet:path-element/tet:type/"
+        + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
+    when "../../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label hop for the underlay backup path
+       of the connectivity matrix entry information source.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:information-source-entry/tet:connectivity-matrices/"
+        + "tet:connectivity-matrix/"
+        + "tet:optimizations/tet:algorithm/tet:metric/"
+        + "tet:optimization-metric/"
+        + "tet:explicit-route-exclude-objects/"
+        + "tet:route-object-exclude-object/tet:type/"
+        + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
+    when "../../../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label hop for the explicit route objects excluded
+       by the path computation of the connectivity matrix entry
+       information source.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:information-source-entry/tet:connectivity-matrices/"
+        + "tet:connectivity-matrix/"
+        + "tet:optimizations/tet:algorithm/tet:metric/"
+        + "tet:optimization-metric/"
+        + "tet:explicit-route-include-objects/"
+        + "tet:route-object-include-object/tet:type/"
+        + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
+    when "../../../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label hop for the explicit route objects included
+       by the path computation of the connectivity matrix entry
+       information source.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:information-source-entry/tet:connectivity-matrices/"
+        + "tet:connectivity-matrix/"
+        + "tet:path-properties/tet:path-route-objects/"
+        + "tet:path-route-object/tet:type/"
+        + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
+    when "../../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label hop for the computed path route objects
+       of the connectivity matrix entry information source.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+      + "tet:tunnel-termination-point/"
+      + "tet:local-link-connectivities/"
+      + "tet:label-restrictions/tet:label-restriction/"
+      + "tet:label-start/"
+      + "tet:te-label/tet:technology" {
+    when "../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label range start for the TTP
+       Local Link Connectivities.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:tunnel-termination-point/"
+        + "tet:local-link-connectivities/"
+        + "tet:label-restrictions/tet:label-restriction/"
+        + "tet:label-end/"
+        + "tet:te-label/tet:technology"{
+    when "../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label range end for the TTP
+       Local Link Connectivities.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:tunnel-termination-point/"
+        + "tet:local-link-connectivities/"
+        + "tet:label-restrictions/tet:label-restriction/"
+        + "tet:label-step/"
+        + "tet:technology"{
+    when "../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label range step for the TTP
+       Local Link Connectivities.";
+    case eth {
+      uses etht-types:eth-label-step;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:tunnel-termination-point/"
+        + "tet:local-link-connectivities/"
+        + "tet:underlay/tet:primary-path/tet:path-element/tet:type/"
+        + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
+    when "../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label hop for the underlay primary path
+       of the TTP Local Link Connectivities.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:tunnel-termination-point/"
+        + "tet:local-link-connectivities/"
+        + "tet:underlay/tet:backup-path/tet:path-element/tet:type/"
+        + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
+    when "../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label hop for the underlay backup path
+       of the TTP Local Link Connectivities.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:tunnel-termination-point/"
+        + "tet:local-link-connectivities/"
+        + "tet:optimizations/tet:algorithm/tet:metric/"
+        + "tet:optimization-metric/"
+        + "tet:explicit-route-exclude-objects/"
+        + "tet:route-object-exclude-object/tet:type/"
+        + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
+    when "../../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label hop for the explicit route objects excluded
+       by the path computation of the TTP Local Link
+       Connectivities.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:tunnel-termination-point/"
+        + "tet:local-link-connectivities/"
+        + "tet:optimizations/tet:algorithm/tet:metric/"
+        + "tet:optimization-metric/"
+        + "tet:explicit-route-include-objects/"
+        + "tet:route-object-include-object/tet:type/"
+        + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
+    when "../../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label hop for the explicit route objects included
+       by the path computation of the TTP Local Link
+       Connectivities.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:tunnel-termination-point/"
+        + "tet:local-link-connectivities/"
+        + "tet:path-properties/tet:path-route-objects/"
+        + "tet:path-route-object/tet:type/"
+        + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
+    when "../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label hop for the computed path route objects
+       of the TTP Local Link Connectivities.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:tunnel-termination-point/"
+        + "tet:local-link-connectivities/"
+        + "tet:local-link-connectivity/"
+        + "tet:label-restrictions/tet:label-restriction/"
+        + "tet:label-start/tet:te-label/tet:technology" {
+    when "../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label range start for the TTP
+       Local Link Connectivity entry.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:tunnel-termination-point/"
+        + "tet:local-link-connectivities/"
+        + "tet:local-link-connectivity/"
+        + "tet:label-restrictions/tet:label-restriction/"
+        + "tet:label-end/tet:te-label/tet:technology" {
+    when "../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label range end for the TTP
+       Local Link Connectivity entry.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:tunnel-termination-point/"
+        + "tet:local-link-connectivities/"
+        + "tet:local-link-connectivity/"
+        + "tet:label-restrictions/tet:label-restriction/"
+        + "tet:label-step/tet:technology" {
+    when "../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label range step for the TTP
+       Local Link Connectivity entry.";
+    case eth {
+      uses etht-types:eth-label-step;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:tunnel-termination-point/"
+        + "tet:local-link-connectivities/"
+        + "tet:local-link-connectivity/"
+        + "tet:underlay/tet:primary-path/tet:path-element/tet:type/"
+        + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
+    when "../../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label hop for the underlay primary path
+       of the TTP Local Link Connectivity entry.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:tunnel-termination-point/"
+        + "tet:local-link-connectivities/"
+        + "tet:local-link-connectivity/"
+        + "tet:underlay/tet:backup-path/tet:path-element/tet:type/"
+        + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
+    when "../../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label hop for the underlay backup path
+       of the TTP Local Link Connectivity entry.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:tunnel-termination-point/"
+        + "tet:local-link-connectivities/"
+        + "tet:local-link-connectivity/"
+        + "tet:optimizations/tet:algorithm/tet:metric/"
+        + "tet:optimization-metric/"
+        + "tet:explicit-route-exclude-objects/"
+        + "tet:route-object-exclude-object/tet:type/"
+        + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
+    when "../../../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label hop for the explicit route objects excluded
+       by the path computation of the TTP Local Link
+       Connectivity entry.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:tunnel-termination-point/"
+        + "tet:local-link-connectivities/"
+        + "tet:local-link-connectivity/"
+        + "tet:optimizations/tet:algorithm/tet:metric/"
+        + "tet:optimization-metric/"
+        + "tet:explicit-route-include-objects/"
+        + "tet:route-object-include-object/tet:type/"
+        + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
+    when "../../../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label hop for the explicit route objects included
+       by the path computation of the TTP Local Link
+       Connectivity entry.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:tunnel-termination-point/"
+        + "tet:local-link-connectivities/"
+        + "tet:local-link-connectivity/"
+        + "tet:path-properties/tet:path-route-objects/"
+        + "tet:path-route-object/tet:type/"
+        + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
+    when "../../../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label hop for the computed path route objects
+       of the TTP Local Link Connectivity entry.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+  augment "/nw:networks/nw:network/nt:link/tet:te/"
+        + "tet:te-link-attributes/"
+        + "tet:underlay/tet:primary-path/tet:path-element/tet:type/"
+        + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
+    when "../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label hop for the underlay primary path
+       of the TE link.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nt:link/tet:te/"
+        + "tet:te-link-attributes/"
+        + "tet:underlay/tet:backup-path/tet:path-element/tet:type/"
+        + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
+    when "../../../../../../../../"
+       + "nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label hop for the underlay backup path
+       of the TE link.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nt:link/tet:te/"
+        + "tet:te-link-attributes/"
+        + "tet:label-restrictions/tet:label-restriction/"
+        + "tet:label-start/tet:te-label/tet:technology" {
+    when "../../../../../../../nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label range start for the TE link.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nt:link/tet:te/"
+        + "tet:te-link-attributes/"
+        + "tet:label-restrictions/tet:label-restriction/"
+        + "tet:label-end/tet:te-label/tet:technology" {
+    when "../../../../../../../nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label range end for the TE link.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nt:link/tet:te/"
+        + "tet:te-link-attributes/"
+        + "tet:label-restrictions/tet:label-restriction/"
+        + "tet:label-step/tet:technology" {
+    when "../../../../../../nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label range step for the TE link.";
+    case eth {
+      uses etht-types:eth-label-step;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nt:link/tet:te/"
+        + "tet:information-source-entry/"
+        + "tet:label-restrictions/tet:label-restriction/"
+        + "tet:label-start/tet:te-label/tet:technology" {
+    when "../../../../../../../nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label range start for the TE link
+       information source.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nt:link/tet:te/"
+        + "tet:information-source-entry/"
+        + "tet:label-restrictions/tet:label-restriction/"
+        + "tet:label-end/tet:te-label/tet:technology" {
+    when "../../../../../../../nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label range end for the TE link
+       information source.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/nw:network/nt:link/tet:te/"
+        + "tet:information-source-entry/"
+        + "tet:label-restrictions/tet:label-restriction/"
+        + "tet:label-step/tet:technology" {
+    when "../../../../../../nw:network-types/tet:te-topology/"
+       + "etht:eth-tran-topology" {
+      description
+        "Augmentation parameters apply only for networks with
+         Ethernet topology type.";
+    }
+    description
+      "Augment TE label range step for the TE link
+       information source.";
+    case eth {
+      uses etht-types:eth-label-step;
+    }
+  }
+
+  augment "/nw:networks/tet:te/tet:templates/"
+        + "tet:link-template/tet:te-link-attributes/"
+        + "tet:underlay/tet:primary-path/tet:path-element/tet:type/"
+        + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
+    description
+      "Augment TE label hop for the underlay primary path
+       of the TE link template.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/tet:te/tet:templates/"
+        + "tet:link-template/tet:te-link-attributes/"
+        + "tet:underlay/tet:backup-path/tet:path-element/tet:type/"
+        + "tet:label/tet:label-hop/tet:te-label/tet:technology" {
+    description
+      "Augment TE label hop for the underlay backup path
+       of the TE link template.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/tet:te/tet:templates/"
+        + "tet:link-template/tet:te-link-attributes/"
+        + "tet:label-restrictions/tet:label-restriction/"
+        + "tet:label-start/tet:te-label/tet:technology" {
+    description
+      "Augment TE label range start for the TE link template.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/tet:te/tet:templates/"
+        + "tet:link-template/tet:te-link-attributes/"
+        + "tet:label-restrictions/tet:label-restriction/"
+        + "tet:label-end/tet:te-label/tet:technology" {
+    description
+      "Augment TE label range end for the TE link template.";
+    case eth {
+      uses etht-types:eth-label;
+    }
+  }
+
+  augment "/nw:networks/tet:te/tet:templates/"
+        + "tet:link-template/tet:te-link-attributes/"
+        + "tet:label-restrictions/tet:label-restriction/"
+        + "tet:label-step/tet:technology" {
+    description
+      "Augment TE label range step for the TE link template.";
+    case eth {
+      uses etht-types:eth-label-step;
+    }
+  }
+
+}
+
+&lt;CODE ENDS&gt;</pre>
+</div>
+<figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
+<a href="#name-ethernet-topology-yang-modu" class="selfRef">Ethernet topology YANG module</a>
+        </figcaption></figure>
+</div>
+</section>
+</div>
+<div id="manageability-considerations">
+<section id="section-5">
+      <h2 id="name-manageability-consideration">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-manageability-consideration" class="section-name selfRef">Manageability Considerations</a>
+      </h2>
+<p id="section-5-1">TBD.<a href="#section-5-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="security-considerations">
+<section id="section-6">
+      <h2 id="name-security-considerations">
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+      </h2>
+<p id="section-6-1">The data following the model defined in this document is exchanged
+   via, for example, the interface between an orchestrator and a
+   transport network controller.  The security concerns mentioned in
+   <span>[<a href="#RFC8795" class="cite xref">RFC8795</a>]</span> for using ietf-te-topology.yang model also applies to this
+   document.<a href="#section-6-1" class="pilcrow">¶</a></p>
+<p id="section-6-2">The YANG module defined in this document can be accessed via the
+   RESTCONF protocol defined in <span>[<a href="#RFC8040" class="cite xref">RFC8040</a>]</span>, or maybe via the NETCONF
+   protocol <span>[<a href="#RFC6241" class="cite xref">RFC6241</a>]</span>.<a href="#section-6-2" class="pilcrow">¶</a></p>
+<p id="section-6-3">There are a number of data nodes defined in the YANG module which are
+   writable/creatable/deletable (i.e., config true, which is the
+   default).  These data nodes may be considered sensitive or vulnerable
+   in some network environments.  Write operations (e.g., POST) to these
+   data nodes without proper protection can have a negative effect on
+   network operations.<a href="#section-6-3" class="pilcrow">¶</a></p>
+<p id="section-6-4">Editors note: to list specific subtrees and data nodes and their
+   sensitivity/vulnerability.<a href="#section-6-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="iana-considerations">
+<section id="section-7">
+      <h2 id="name-iana-considerations">
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+      </h2>
+<p id="section-7-1">It is proposed that IANA should assign new URIs from the "IETF XML
+   Registry" <span>[<a href="#RFC3688" class="cite xref">RFC3688</a>]</span> as follows:<a href="#section-7-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-7-2">
+<pre>
+      URI: urn:ietf:params:xml:ns:yang:ietf-eth-te-topology
+      Registrant Contact:  The IESG.
+      XML: N/A, the requested URI is an XML namespace.
+</pre><a href="#section-7-2" class="pilcrow">¶</a>
+</div>
+<p id="section-7-3">This document registers following YANG modules in the YANG Module
+   Names registry <span>[<a href="#RFC7950" class="cite xref">RFC7950</a>]</span>.<a href="#section-7-3" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-7-4">
+<pre>
+      name:      ietf-eth-te-topology
+      namespace: urn:ietf:params:xml:ns:yang:ietf-eth-te-topology
+      prefix:    etht
+      reference: RFC XXXX
+</pre><a href="#section-7-4" class="pilcrow">¶</a>
+</div>
+<p id="section-7-5">RFC Editor: Please replace XXXX with the RFC number assigned to this document.<a href="#section-7-5" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="sec-combined-references">
+<section id="section-8">
+      <h2 id="name-references">
+<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-references" class="section-name selfRef">References</a>
+      </h2>
+<div id="sec-normative-references">
+<section id="section-8.1">
+        <h3 id="name-normative-references">
+<a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+        </h3>
+<dl class="references">
+<dt id="I-D.ietf-ccamp-client-signal-yang">[I-D.ietf-ccamp-client-signal-yang]</dt>
+        <dd>
+<span class="refAuthor">Zheng, H.</span>, <span class="refAuthor">Guo, A.</span>, <span class="refAuthor">Busi, I.</span>, <span class="refAuthor">Snitser, A.</span>, and <span class="refAuthor">C. Yu</span>, <span class="refTitle">"A YANG Data Model for Transport Network Client Signals"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-ccamp-client-signal-yang-13</span>, <time datetime="2024-08-01" class="refDate">1 August 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-ccamp-client-signal-yang-13">https://datatracker.ietf.org/doc/html/draft-ietf-ccamp-client-signal-yang-13</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="ITU_G.8021">[ITU_G.8021]</dt>
+        <dd>
+<span class="refAuthor">ITU-T Recommendation G.8021</span>, <span class="refTitle">"Characteristics of Ethernet transport network equipment functional blocks"</span>, <span class="seriesInfo">ITU-T G.8021 </span>, <time datetime="2023-04" class="refDate">April 2023</time>. </dd>
+<dd class="break"></dd>
+<dt id="RFC3688">[RFC3688]</dt>
+        <dd>
+<span class="refAuthor">Mealling, M.</span>, <span class="refTitle">"The IETF XML Registry"</span>, <span class="seriesInfo">BCP 81</span>, <span class="seriesInfo">RFC 3688</span>, <span class="seriesInfo">DOI 10.17487/RFC3688</span>, <time datetime="2004-01" class="refDate">January 2004</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3688">https://www.rfc-editor.org/rfc/rfc3688</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6241">[RFC6241]</dt>
+        <dd>
+<span class="refAuthor">Enns, R., Ed.</span>, <span class="refAuthor">Bjorklund, M., Ed.</span>, <span class="refAuthor">Schoenwaelder, J., Ed.</span>, and <span class="refAuthor">A. Bierman, Ed.</span>, <span class="refTitle">"Network Configuration Protocol (NETCONF)"</span>, <span class="seriesInfo">RFC 6241</span>, <span class="seriesInfo">DOI 10.17487/RFC6241</span>, <time datetime="2011-06" class="refDate">June 2011</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6241">https://www.rfc-editor.org/rfc/rfc6241</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6991">[RFC6991]</dt>
+        <dd>
+<span class="refAuthor">Schoenwaelder, J., Ed.</span>, <span class="refTitle">"Common YANG Data Types"</span>, <span class="seriesInfo">RFC 6991</span>, <span class="seriesInfo">DOI 10.17487/RFC6991</span>, <time datetime="2013-07" class="refDate">July 2013</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6991">https://www.rfc-editor.org/rfc/rfc6991</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7950">[RFC7950]</dt>
+        <dd>
+<span class="refAuthor">Bjorklund, M., Ed.</span>, <span class="refTitle">"The YANG 1.1 Data Modeling Language"</span>, <span class="seriesInfo">RFC 7950</span>, <span class="seriesInfo">DOI 10.17487/RFC7950</span>, <time datetime="2016-08" class="refDate">August 2016</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7950">https://www.rfc-editor.org/rfc/rfc7950</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8040">[RFC8040]</dt>
+        <dd>
+<span class="refAuthor">Bierman, A.</span>, <span class="refAuthor">Bjorklund, M.</span>, and <span class="refAuthor">K. Watsen</span>, <span class="refTitle">"RESTCONF Protocol"</span>, <span class="seriesInfo">RFC 8040</span>, <span class="seriesInfo">DOI 10.17487/RFC8040</span>, <time datetime="2017-01" class="refDate">January 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8040">https://www.rfc-editor.org/rfc/rfc8040</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8342">[RFC8342]</dt>
+        <dd>
+<span class="refAuthor">Bjorklund, M.</span>, <span class="refAuthor">Schoenwaelder, J.</span>, <span class="refAuthor">Shafer, P.</span>, <span class="refAuthor">Watsen, K.</span>, and <span class="refAuthor">R. Wilton</span>, <span class="refTitle">"Network Management Datastore Architecture (NMDA)"</span>, <span class="seriesInfo">RFC 8342</span>, <span class="seriesInfo">DOI 10.17487/RFC8342</span>, <time datetime="2018-03" class="refDate">March 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8342">https://www.rfc-editor.org/rfc/rfc8342</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8345">[RFC8345]</dt>
+        <dd>
+<span class="refAuthor">Clemm, A.</span>, <span class="refAuthor">Medved, J.</span>, <span class="refAuthor">Varga, R.</span>, <span class="refAuthor">Bahadur, N.</span>, <span class="refAuthor">Ananthakrishnan, H.</span>, and <span class="refAuthor">X. Liu</span>, <span class="refTitle">"A YANG Data Model for Network Topologies"</span>, <span class="seriesInfo">RFC 8345</span>, <span class="seriesInfo">DOI 10.17487/RFC8345</span>, <time datetime="2018-03" class="refDate">March 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8345">https://www.rfc-editor.org/rfc/rfc8345</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8795">[RFC8795]</dt>
+      <dd>
+<span class="refAuthor">Liu, X.</span>, <span class="refAuthor">Bryskin, I.</span>, <span class="refAuthor">Beeram, V.</span>, <span class="refAuthor">Saad, T.</span>, <span class="refAuthor">Shah, H.</span>, and <span class="refAuthor">O. Gonzalez de Dios</span>, <span class="refTitle">"YANG Data Model for Traffic Engineering (TE) Topologies"</span>, <span class="seriesInfo">RFC 8795</span>, <span class="seriesInfo">DOI 10.17487/RFC8795</span>, <time datetime="2020-08" class="refDate">August 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8795">https://www.rfc-editor.org/rfc/rfc8795</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</div>
+<div id="sec-informative-references">
+<section id="section-8.2">
+        <h3 id="name-informative-references">
+<a href="#section-8.2" class="section-number selfRef">8.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+        </h3>
+<dl class="references">
+<dt id="RFC8340">[RFC8340]</dt>
+      <dd>
+<span class="refAuthor">Bjorklund, M.</span> and <span class="refAuthor">L. Berger, Ed.</span>, <span class="refTitle">"YANG Tree Diagrams"</span>, <span class="seriesInfo">BCP 215</span>, <span class="seriesInfo">RFC 8340</span>, <span class="seriesInfo">DOI 10.17487/RFC8340</span>, <time datetime="2018-03" class="refDate">March 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8340">https://www.rfc-editor.org/rfc/rfc8340</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</div>
+</section>
+</div>
+<div id="acknowledgments">
+<section id="appendix-A">
+      <h2 id="name-acknowledgments">
+<a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
+      </h2>
+<p id="appendix-A-1">We would like to thank Igor Bryskin and Daniel King for their
+   comments and discussions.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="contributors">
+<section id="appendix-B">
+      <h2 id="name-contributors">
+<a href="#name-contributors" class="section-name selfRef">Contributors</a>
+      </h2>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Zhe Liu</span></div>
+<div dir="auto" class="left"><span class="org">Huawei Technologies</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:liuzhe123@huawei.com" class="email">liuzhe123@huawei.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Sergio Belotti</span></div>
+<div dir="auto" class="left"><span class="org">Nokia</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:sergio.belotti@nokia.com" class="email">sergio.belotti@nokia.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Yingxi Yao</span></div>
+<div dir="auto" class="left"><span class="org">Shanghai Bell</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:yingxi.yao@nokia-sbell.com" class="email">yingxi.yao@nokia-sbell.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Giuseppe Fioccola</span></div>
+<div dir="auto" class="left"><span class="org">Huawei Technologies</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:giuseppe.fioccola@huawei.com" class="email">giuseppe.fioccola@huawei.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">To-Be-Added</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:To-Be-Added" class="email">To-Be-Added</a>
+</div>
+</address>
+</section>
+</div>
+<div id="authors-addresses">
+<section id="appendix-C">
+      <h2 id="name-authors-addresses">
+<a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
+      </h2>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Chaode Yu</span></div>
+<div dir="auto" class="left"><span class="org">Huawei Technologies</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:yuchaode@huawei.com" class="email">yuchaode@huawei.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Haomian Zheng</span></div>
+<div dir="auto" class="left"><span class="org">Huawei Technologies</span></div>
+<div dir="auto" class="left"><span class="street-address">H1, Huawei Xiliu Beipo Village, Songshan Lake</span></div>
+<div dir="auto" class="left"><span class="locality">Dongguan</span></div>
+<div dir="auto" class="left">
+<span class="region">Guangdong</span>, <span class="postal-code">523808</span>
+</div>
+<div dir="auto" class="left"><span class="country-name">China</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:zhenghaomian@huawei.com" class="email">zhenghaomian@huawei.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Aihua Guo</span></div>
+<div dir="auto" class="left"><span class="org">Futurewei</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:aihuaguo@futurewei.com" class="email">aihuaguo@futurewei.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Italo Busi</span></div>
+<div dir="auto" class="left"><span class="org">Huawei Technologies</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:italo.busi@huawei.com" class="email">italo.busi@huawei.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Yunbin Xu</span></div>
+<div dir="auto" class="left"><span class="org">CAICT</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:xuyunbin@caict.ac.cn" class="email">xuyunbin@caict.ac.cn</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Yang Zhao</span></div>
+<div dir="auto" class="left"><span class="org">China Mobile</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:zhaoyangyjy@chinamobile.com" class="email">zhaoyangyjy@chinamobile.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Xufeng Liu</span></div>
+<div dir="auto" class="left"><span class="org">Alef Edge</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:xufeng.liu.ietf@gmail.com" class="email">xufeng.liu.ietf@gmail.com</a>
+</div>
+</address>
+</section>
+</div>
+<script>const toc = document.getElementById("toc");
+toc.querySelector("h2").addEventListener("click", e => {
+  toc.classList.toggle("active");
+});
+toc.querySelector("nav").addEventListener("click", e => {
+  toc.classList.remove("active");
+});
+</script>
+</body>
+</html>
