@@ -21,3 +21,4 @@ draft-ietf-ccamp-eth-client-te-topo-yang.xml
 package-lock.json
 report.xml
 !requirements.txt
+contributor.yml
